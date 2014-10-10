@@ -29,8 +29,14 @@ import jetbrick.util.PathUtils;
 public final class WebServletResourceLoader implements ResourceLoader {
     private String root = "/";
 
+    @Override
+    public String getRoot() {
+        return root;
+    }
+
+    @Override
     public void setRoot(String root) {
-        this.root = PathUtils.separatorsToSystem(root);
+        this.root = PathUtils.normalize(root);
     }
 
     @Override
