@@ -24,12 +24,8 @@ import javax.servlet.ServletContext;
 import jetbrick.config.ConfigLoader;
 import jetbrick.template.*;
 import jetbrick.web.servlet.map.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public final class JetEngineLoader {
-    private static final Logger log = LoggerFactory.getLogger(JetEngineLoader.class);
-
     private static final String CONFIG_LOCATION_PARAMETER = "jetbrick-template-config-location";
     private static ServletContext sc;
     private static JetEngine engine;
@@ -58,6 +54,7 @@ public final class JetEngineLoader {
 
     public static void destory() {
         engine = null;
+        sc = null;
     }
 
     private static JetEngine createWebEngine(ServletContext sc) {
@@ -77,18 +74,18 @@ public final class JetEngineLoader {
         JetGlobalContext ctx = engine.getGlobalContext();
 
         // 加入默认的全局变量
-        ctx.define(javax.servlet.ServletContext.class, JetWebContext.SERVLET_CONTEXT);
+        ctx.define(javax.servlet.ServletContext.class, JetWebContext.APPLICATION);
         ctx.define(javax.servlet.http.HttpSession.class, JetWebContext.SESSION);
         ctx.define(javax.servlet.http.HttpServletRequest.class, JetWebContext.REQUEST);
         ctx.define(javax.servlet.http.HttpServletResponse.class, JetWebContext.RESPONSE);
-        ctx.define(java.util.Map.class, JetWebContext.SERVLET_CONTEXT_SCOPE);
+        ctx.define(java.util.Map.class, JetWebContext.APPLICATION_SCOPE);
         ctx.define(java.util.Map.class, JetWebContext.SESSION_SCOPE);
         ctx.define(java.util.Map.class, JetWebContext.REQUEST_SCOPE);
         ctx.define(java.util.Map.class, JetWebContext.PARAMETER);
         ctx.define(java.util.Map.class, JetWebContext.PARAMETER_VALUES);
 
-        ctx.set(JetWebContext.SERVLET_CONTEXT, sc);
-        ctx.set(JetWebContext.SERVLET_CONTEXT_SCOPE, new ServletContextAttributeMap(sc));
+        ctx.set(JetWebContext.APPLICATION, sc);
+        ctx.set(JetWebContext.APPLICATION_SCOPE, new ServletContextAttributeMap(sc));
 
         return engine;
     }

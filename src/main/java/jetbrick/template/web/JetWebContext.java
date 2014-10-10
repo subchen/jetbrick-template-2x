@@ -28,13 +28,15 @@ import jetbrick.web.servlet.map.*;
 public final class JetWebContext extends HashMap<String, Object> {
     private static final long serialVersionUID = 1L;
 
-    public static final String SERVLET_CONTEXT = "application";
+    public static final String APPLICATION = "application";
     public static final String SESSION = "session";
     public static final String REQUEST = "request";
     public static final String RESPONSE = "response";
-    public static final String SERVLET_CONTEXT_SCOPE = "applicationScope";
+
+    public static final String APPLICATION_SCOPE = "applicationScope";
     public static final String SESSION_SCOPE = "sessionScope";
     public static final String REQUEST_SCOPE = "requestScope";
+
     public static final String PARAMETER = "parameter";
     public static final String PARAMETER_VALUES = "parameterValues";
 
