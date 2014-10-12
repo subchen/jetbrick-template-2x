@@ -25,6 +25,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import jetbrick.web.servlet.map.*;
 
+/**
+ * 处理内置 web 对象.
+ */
 public final class JetWebContext extends HashMap<String, Object> {
     private static final long serialVersionUID = 1L;
 
@@ -54,6 +57,7 @@ public final class JetWebContext extends HashMap<String, Object> {
     //@formatter:on
 
     //-------------------------------------------------------------
+    // 在 分布式环境中，一般不用内置的 session 对象，禁掉后可以提升速度
     private static boolean sessionEnabled = true;
 
     public static void disableSession() {

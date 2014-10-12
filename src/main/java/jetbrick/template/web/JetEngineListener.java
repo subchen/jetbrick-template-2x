@@ -24,6 +24,7 @@ import javax.servlet.ServletContextListener;
 
 /**
  * 自动初始化加载 JetEngine.
+ *
  * <pre><xmp>
  * <context-param>
  *   <param-name>jetbrick-template-config-location</param-name>
@@ -39,11 +40,10 @@ public final class JetEngineListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        JetEngineLoader.initialize(sce.getServletContext());
+        JetWebEngine.create(sce.getServletContext());
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
-        JetEngineLoader.destory();
     }
 }

@@ -25,8 +25,8 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import jetbrick.template.*;
-import jetbrick.template.web.JetEngineLoader;
 import jetbrick.template.web.JetWebContext;
+import jetbrick.template.web.JetWebEngine;
 import jetbrick.web.servlet.RequestUtils;
 
 /**
@@ -48,9 +48,7 @@ public final class JetTemplateFilter implements Filter {
 
     @Override
     public void init(FilterConfig fc) throws ServletException {
-        JetEngineLoader.initialize(fc.getServletContext());
-
-        engine = JetEngineLoader.getEngine();
+        engine = JetWebEngine.create(fc.getServletContext());
         charsetEncoding = engine.getConfig().getOutputEncoding().name();
     }
 

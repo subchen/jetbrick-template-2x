@@ -28,10 +28,28 @@ import jetbrick.web.servlet.map.ServletContextAttributeMap;
 /**
  * 负责初始化 Web 环境下的 JetEngine
  */
-public final class JetEngineLoader {
+public final class JetWebEngine {
+    private static final String JET_ENGINE_KEY_NAME = JetEngine.class.getName();
     private static final String CONFIG_LOCATION_PARAMETER = "jetbrick-template-config-location";
+
     private static ServletContext sc;
     private static JetEngine engine;
+
+    public static JetEngine create(ServletContext sc) {
+        return create(sc, null, null);
+    }
+
+    public static JetEngine create(ServletContext sc, Properties config, String configLocation) {
+        if (engine != null) {
+            throw new IllegalStateException("JetEngine has been created");
+        }
+
+        JetWebEngine.sc = sc;
+        JetWebEngine.engine = doCreateWebEngine(sc, config, configLocation);
+
+        sc.setAttribute(JET_ENGINE_KEY_NAME, engine);
+        return engine;
+    }
 
     public static boolean unavailable() {
         return engine == null;
@@ -45,25 +63,7 @@ public final class JetEngineLoader {
         return engine;
     }
 
-    public static void initialize(ServletContext sc) {
-        initialize(sc, null, null);
-    }
-
-    public static void initialize(ServletContext sc, Properties config, String configLocation) {
-        if (JetEngineLoader.engine != null) {
-            throw new IllegalStateException("JetEngine has been initialized");
-        }
-
-        JetEngineLoader.sc = sc;
-        JetEngineLoader.engine = createWebEngine(sc, config, configLocation);
-    }
-
-    public static void destory() {
-        engine = null;
-        sc = null;
-    }
-
-    private static JetEngine createWebEngine(ServletContext sc, Properties config, String configLocation) {
+    private static JetEngine doCreateWebEngine(ServletContext sc, Properties config, String configLocation) {
         // Web 环境下的默认配置
         Properties options = new Properties();
         options.setProperty(JetConfig.IO_SKIPERRORS, "true");

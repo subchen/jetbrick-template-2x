@@ -25,6 +25,9 @@ import jetbrick.io.resource.ServletResource;
 import jetbrick.template.resource.loader.AbstractResourceLoader;
 import jetbrick.util.PathUtils;
 
+/**
+ * 负责载入 web 模板.
+ */
 public final class ServletResourceLoader extends AbstractResourceLoader {
 
     public ServletResourceLoader() {
@@ -35,7 +38,7 @@ public final class ServletResourceLoader extends AbstractResourceLoader {
     public Resource load(String name) {
         String path = PathUtils.concat(root, name);
 
-        ServletContext sc = JetEngineLoader.getServletContext();
+        ServletContext sc = JetWebEngine.getServletContext();
         ServletResource resource = new ServletResource(sc, path);
         if (!resource.exist()) {
             return null;

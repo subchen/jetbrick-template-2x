@@ -24,8 +24,8 @@ import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import jetbrick.template.*;
-import jetbrick.template.web.JetEngineLoader;
 import jetbrick.template.web.JetWebContext;
+import jetbrick.template.web.JetWebEngine;
 import jetbrick.web.servlet.RequestUtils;
 
 /**
@@ -50,9 +50,7 @@ public final class JetTemplateServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        JetEngineLoader.initialize(getServletContext());
-
-        engine = JetEngineLoader.getEngine();
+        engine = JetWebEngine.create(getServletContext());
         charsetEncoding = engine.getConfig().getOutputEncoding().name();
     }
 
