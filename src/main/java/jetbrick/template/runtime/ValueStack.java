@@ -54,11 +54,13 @@ public final class ValueStack {
      * @param symbols           define过的所有变量类型
      * @param privateContext    私有变量(include/macro 参数)
      */
-    public void push(Map<String, Class<?>> symbols, Map<String, Object> privateContext) {
+    public void push(Map<String, Class<?>> symbols, Map<String, Object> privateContext, boolean inherited) {
         if (++index == contexts.length) {
             contexts = Arrays.copyOf(contexts, index + DEFAULT_CAPACITY);
         }
-        current = contexts[index] = new ValueContext(symbols, privateContext);
+
+        ValueContext parent = inherited ? current : null;
+        current = contexts[index] = new ValueContext(parent, symbols, privateContext);
     }
 
     /**
@@ -91,6 +93,24 @@ public final class ValueStack {
         if (value != null) {
             setLocal(name, value); // cache
             return value;
+        }
+
+        // 在找当前作用域的parent作用域 (支持继承)
+        if (current.isInherited()) {
+            ValueContext parent = current.getParent();
+
+            // 先找 parent 当前作用域
+            value = parent.getLocal(name);
+            if (value != null) {
+                return value == NULL ? null : value;
+            }
+
+            // 查找parent 私有作用域(include/macro 参数)
+            value = parent.getPrivate(name);
+            if (value != null) {
+                setLocal(name, value); // cache
+                return value;
+            }
         }
 
         // 查找用户作用域
@@ -133,6 +153,15 @@ public final class ValueStack {
         Class<?> type = which.getType(name);
         if (type != null) {
             return type;
+        }
+
+        // 在找当前作用域的parent作用域 (支持继承)
+        if (which.isInherited()) {
+            ValueContext parent = which.getParent();
+            type = parent.getType(name);
+            if (type != null) {
+                return type;
+            }
         }
 
         // 查找全局作用域

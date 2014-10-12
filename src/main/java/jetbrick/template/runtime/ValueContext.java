@@ -22,15 +22,25 @@ package jetbrick.template.runtime;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ValueContext {
-    protected final Map<String, Class<?>> symbols; // 变量定义
-    protected final Map<String, Object> privateContext; // 私有变量(不允许被修改), 主要是include/macro 参数
-    protected Map<String, Object> localContext; // 本地变量
+final class ValueContext {
+    private final ValueContext parent; // 如果存在 parent，则代表当前作用域允许自动继承父作用域
+    private final Map<String, Class<?>> symbols; // 变量定义
+    private final Map<String, Object> privateContext; // 私有变量(不允许被修改), 主要是include/macro 参数
+    private Map<String, Object> localContext; // 本地变量
 
-    public ValueContext(Map<String, Class<?>> symbols, Map<String, Object> privateContext) {
+    public ValueContext(ValueContext parent, Map<String, Class<?>> symbols, Map<String, Object> privateContext) {
+        this.parent = parent;
         this.symbols = symbols;
         this.privateContext = privateContext;
         this.localContext = null;
+    }
+
+    public boolean isInherited() {
+        return parent != null;
+    }
+
+    public ValueContext getParent() {
+        return parent;
     }
 
     public Class<?> getType(String name) {

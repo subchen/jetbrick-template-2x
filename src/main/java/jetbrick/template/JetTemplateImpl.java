@@ -147,7 +147,7 @@ final class JetTemplateImpl implements JetTemplate {
         InterpretContextImpl ctx = new InterpretContextImpl(engine, writer, context);
         try {
             ctx.getTemplateStack().push(this);
-            ctx.getValueStack().push(config.getSymbols(), null);
+            ctx.getValueStack().push(config.getSymbols(), null, false);
 
             astNode.execute(ctx);
 

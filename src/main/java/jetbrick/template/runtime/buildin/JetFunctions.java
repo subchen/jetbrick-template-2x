@@ -61,7 +61,7 @@ public final class JetFunctions {
     // ------------------------------------------------------------
 
     // 读取子模板内容
-    public static String include(String relativeName) throws TemplateNotFoundException  {
+    public static String include(String relativeName) throws TemplateNotFoundException {
         return include(relativeName, null);
     }
 
@@ -76,7 +76,7 @@ public final class JetFunctions {
         JetWriter writer = JetWriter.create(out, originWriter.getCharset(), false, false);
 
         ctx.setWriter(writer);
-        ctx.invokeInclude(name, parameters, null);
+        ctx.invokeInclude(name, parameters, false, null);
         ctx.setWriter(originWriter); // reset
 
         return out.toString();

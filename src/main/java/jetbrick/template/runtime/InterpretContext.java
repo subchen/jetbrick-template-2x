@@ -56,7 +56,7 @@ public abstract class InterpretContext {
 
     public abstract String getReturnName();
 
-    public abstract void invokeInclude(String file, Map<String, Object> arguments, String returnName);
+    public abstract void invokeInclude(String file, Map<String, Object> arguments, boolean inherited, String returnName);
 
     public abstract void invokeMacro(JetTemplateMacro macro, Object[] arguments);
 }
