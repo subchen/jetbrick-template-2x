@@ -55,6 +55,7 @@ DIRECTIVE_OPEN_RETURN   : '#return'      ARG_START         -> pushMode(INSIDE) ;
 DIRECTIVE_OPEN_INCLUDE  : '#include'     ARG_START         -> pushMode(INSIDE) ;
 
 DIRECTIVE_OPEN_TAG      : '#tag'         NAME_ARG_START    -> pushMode(INSIDE) ;
+DIRECTIVE_OPEN_CALL     : '#call'        NAME_ARG_START    -> pushMode(INSIDE) ;
 DIRECTIVE_OPEN_MACRO    : '#macro'       NAME_ARG_START    -> pushMode(INSIDE) ;
 
 DIRECTIVE_ELSE          : '#else'        EMPTY_ARG?        ;
@@ -81,6 +82,7 @@ DIRECTIVE_ELSEIF        : '#elseif'                        ;
 DIRECTIVE_FOR           : '#for'                           ;
 DIRECTIVE_INCLUDE       : '#include'                       ;
 DIRECTIVE_TAG           : '#tag'                           ;
+DIRECTIVE_CALL          : '#call'                          ;
 DIRECTIVE_MACRO         : '#macro'                         ;
 
 

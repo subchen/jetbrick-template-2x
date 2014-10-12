@@ -58,6 +58,7 @@ directive   :   directive_options
             |   directive_include
             |   directive_return
             |   directive_tag
+            |   directive_call
             |   directive_macro
             |   directive_invalid
             ;
@@ -123,6 +124,10 @@ directive_tag
             :   DIRECTIVE_OPEN_TAG expression_list? ')' block DIRECTIVE_END
             ;
 
+directive_call
+            :   DIRECTIVE_OPEN_CALL expression_list? ')'
+            ;
+
 directive_macro
             :   DIRECTIVE_OPEN_MACRO directive_macro_arguments? ')' block DIRECTIVE_END
             ;
@@ -139,6 +144,7 @@ directive_invalid
             |   DIRECTIVE_FOR
             |   DIRECTIVE_INCLUDE
             |   DIRECTIVE_TAG
+            |   DIRECTIVE_CALL
             |   DIRECTIVE_MACRO
             ;
 

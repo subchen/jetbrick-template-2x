@@ -33,6 +33,10 @@ public final class JetTagContext {
      * 执行 Tag，并获取 Tag 内容的输出
      */
     public String getBodyContent() {
+        if (statements == null) {
+            return "";
+        }
+
         InterpretContext ctx = getInterpretContext();
         JetWriter originWriter = ctx.getWriter();
 
@@ -52,8 +56,10 @@ public final class JetTagContext {
      * 执行 Tag
      */
     public void invoke() {
-        InterpretContext ctx = getInterpretContext();
-        statements.execute(ctx);
+        if (statements != null) {
+            InterpretContext ctx = getInterpretContext();
+            statements.execute(ctx);
+        }
     }
 
     public InterpretContext getInterpretContext() {

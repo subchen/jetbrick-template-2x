@@ -27,6 +27,7 @@ import jetbrick.template.runtime.parser.grammer.JetTemplateParser.BlockContext;
 import jetbrick.template.runtime.parser.grammer.JetTemplateParser.ConstantContext;
 import jetbrick.template.runtime.parser.grammer.JetTemplateParser.DirectiveContext;
 import jetbrick.template.runtime.parser.grammer.JetTemplateParser.Directive_breakContext;
+import jetbrick.template.runtime.parser.grammer.JetTemplateParser.Directive_callContext;
 import jetbrick.template.runtime.parser.grammer.JetTemplateParser.Directive_continueContext;
 import jetbrick.template.runtime.parser.grammer.JetTemplateParser.Directive_defineContext;
 import jetbrick.template.runtime.parser.grammer.JetTemplateParser.Directive_define_expressionContext;
@@ -380,6 +381,18 @@ public final class AstCodeVisitor extends AbstractParseTreeVisitor<AstNode> impl
         AstExpressionList expressionList = accept(ctx.expression_list());
         AstStatementList block = accept(ctx.block());
         return new AstDirectiveTag(name, expressionList, block, position);
+    }
+
+    @Override
+    public AstNode visitDirective_call(Directive_callContext ctx) {
+        Token token = ((TerminalNode) ctx.getChild(0)).getSymbol();
+        Position position = new Position(token.getLine(), token.getCharPositionInLine() + 6);
+
+        String name = ctx.getChild(0).getText();
+        name = StringUtils.substringBetween(name, " ", "(").trim();
+
+        AstExpressionList expressionList = accept(ctx.expression_list());
+        return new AstDirectiveTag(name, expressionList, null, position);
     }
 
     @Override
