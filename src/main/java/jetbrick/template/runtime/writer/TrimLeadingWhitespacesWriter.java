@@ -19,14 +19,16 @@
  */
 package jetbrick.template.runtime.writer;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.Writer;
 
-public final class TrimLeadingWhitespacesWriter extends FilterWriter {
+public final class TrimLeadingWhitespacesWriter extends Writer {
+    private final Writer out;
     private boolean first;
 
     public TrimLeadingWhitespacesWriter(Writer out) {
-        super(out);
-        first = true;
+        this.out = out;
+        this.first = true;
     }
 
     @Override
@@ -38,5 +40,41 @@ public final class TrimLeadingWhitespacesWriter extends FilterWriter {
             first = false;
         }
         out.write(c);
+    }
+
+    @Override
+    public void write(char[] cbuf, int off, int len) throws IOException {
+        if (first) {
+            if ((off | len | (cbuf.length - (len + off)) | (off + len)) < 0) {
+                throw new IndexOutOfBoundsException();
+            }
+
+            int max = off + len;
+            while (off < max) {
+                if (cbuf[off] <= 32) { // Character.isWhitespace(b)
+                    off++;
+                } else {
+                    first = false;
+                    break;
+                }
+            }
+
+            len = max - off;
+            if (len == 0) {
+                return;
+            }
+        }
+
+        out.write(cbuf, off, len);
+    }
+
+    @Override
+    public void flush() throws IOException {
+        out.flush();
+    }
+
+    @Override
+    public void close() throws IOException {
+        out.close();
     }
 }
