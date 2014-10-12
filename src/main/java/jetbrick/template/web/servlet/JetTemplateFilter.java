@@ -22,11 +22,12 @@ package jetbrick.template.web.servlet;
 import java.io.IOException;
 import java.util.Map;
 import javax.servlet.*;
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import jetbrick.template.*;
-import jetbrick.template.web.JetWebContext;
 import jetbrick.template.web.JetEngineLoader;
-import jetbrick.web.servlet.*;
+import jetbrick.template.web.JetWebContext;
+import jetbrick.web.servlet.RequestUtils;
 
 /**
  * 直接作为 Filter 使用。需要在 web.xml 中作如下配置。

@@ -19,10 +19,10 @@
  */
 package jetbrick.template.web;
 
-import java.util.Map;
 import java.util.HashMap;
-import javax.servlet.*;
-import javax.servlet.http.*;
+import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import jetbrick.web.servlet.map.*;
 
 public final class JetWebContext extends HashMap<String, Object> {
@@ -53,23 +53,31 @@ public final class JetWebContext extends HashMap<String, Object> {
     }
     //@formatter:on
 
-    private final HttpServletRequest request;
-    private final boolean sessionSupport;
+    //-------------------------------------------------------------
+    private static boolean sessionEnabled = true;
 
-    public JetWebContext(HttpServletRequest request, HttpServletResponse response) {
-        this(request, response, true);
+    public static void disableSession() {
+        sessionEnabled = false;
     }
 
-    public JetWebContext(HttpServletRequest request, HttpServletResponse response, boolean sessionSupport) {
+    //-------------------------------------------------------------
+    private final HttpServletRequest request;
+    private final Map<String, Object> context;
+
+    public JetWebContext(HttpServletRequest request, HttpServletResponse response) {
+        this(request, response, null);
+    }
+
+    public JetWebContext(HttpServletRequest request, HttpServletResponse response, Map<String, Object> context) {
         this.request = request;
-        this.sessionSupport = sessionSupport;
+        this.context = context;
 
         put(REQUEST, request);
         put(REQUEST_SCOPE, TYPE.REQUEST_SCOPE);
 
         put(RESPONSE, response);
 
-        if (sessionSupport) {
+        if (sessionEnabled) {
             put(SESSION, TYPE.SESSION);
             put(SESSION_SCOPE, TYPE.SESSION_SCOPE);
         }
@@ -87,7 +95,16 @@ public final class JetWebContext extends HashMap<String, Object> {
         String name = (String) key;
         if (name == null) return null;
 
-        Object value = super.get(name);
+        Object value;
+
+        if (context != null) {
+            value = context.get(name);
+            if (value != null) {
+                return value;
+            }
+        }
+
+        value = super.get(name);
         if (value != null) {
             if (value instanceof TYPE) {
                 value = createImplicitWebObject((TYPE) value);
@@ -101,7 +118,7 @@ public final class JetWebContext extends HashMap<String, Object> {
             return value;
         }
 
-        if (sessionSupport) {
+        if (sessionEnabled) {
             value = request.getSession().getAttribute(name);
             if (value != null) {
                 return value;

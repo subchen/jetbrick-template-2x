@@ -19,24 +19,16 @@
  */
 package jetbrick.template.web;
 
-import javax.servlet.*;
+import javax.servlet.ServletContext;
+import jetbrick.io.resource.Resource;
 import jetbrick.io.resource.ServletResource;
-import jetbrick.template.resource.loader.*;
-import jetbrick.template.JetEngine;
-import jetbrick.template.resource.*;
+import jetbrick.template.resource.loader.AbstractResourceLoader;
 import jetbrick.util.PathUtils;
 
-public final class WebServletResourceLoader implements ResourceLoader {
-    private String root = "/";
+public final class ServletResourceLoader extends AbstractResourceLoader {
 
-    @Override
-    public String getRoot() {
-        return root;
-    }
-
-    @Override
-    public void setRoot(String root) {
-        this.root = PathUtils.normalize(root);
+    public ServletResourceLoader() {
+        root = "/";
     }
 
     @Override
@@ -49,6 +41,7 @@ public final class WebServletResourceLoader implements ResourceLoader {
             return null;
         }
 
-        return new TemplateResource(resource, name);
+        resource.setPath(name); // use relative name
+        return resource;
     }
 }

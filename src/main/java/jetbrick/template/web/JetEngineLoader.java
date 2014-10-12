@@ -21,9 +21,8 @@ package jetbrick.template.web;
 
 import java.util.Properties;
 import javax.servlet.ServletContext;
-import jetbrick.config.ConfigLoader;
 import jetbrick.template.*;
-import jetbrick.web.servlet.map.*;
+import jetbrick.web.servlet.map.ServletContextAttributeMap;
 
 public final class JetEngineLoader {
     private static final String CONFIG_LOCATION_PARAMETER = "jetbrick-template-config-location";
@@ -42,14 +41,17 @@ public final class JetEngineLoader {
         return engine;
     }
 
-    // 允许非 ServletContextListener 方式初始化
     public static void initialize(ServletContext sc) {
+        initialize(sc, null, null);
+    }
+
+    public static void initialize(ServletContext sc, Properties config, String configLocation) {
         if (JetEngineLoader.engine != null) {
             throw new IllegalStateException("JetEngine has been initialized");
         }
 
         JetEngineLoader.sc = sc;
-        JetEngineLoader.engine = createWebEngine(sc);
+        JetEngineLoader.engine = createWebEngine(sc, config, configLocation);
     }
 
     public static void destory() {
@@ -57,20 +59,26 @@ public final class JetEngineLoader {
         sc = null;
     }
 
-    private static JetEngine createWebEngine(ServletContext sc) {
+    private static JetEngine createWebEngine(ServletContext sc, Properties config, String configLocation) {
         // Web 环境下的默认配置
-        Properties config = new Properties();
-        config.setProperty(JetConfig.IO_SKIPERRORS, "true");
-        config.setProperty(JetConfig.TEMPLATE_LOADER, WebServletResourceLoader.class.getName());
+        Properties options = new Properties();
+        options.setProperty(JetConfig.IO_SKIPERRORS, "true");
+        options.setProperty(JetConfig.TEMPLATE_LOADER, ServletResourceLoader.class.getName());
+
+        if (config != null) {
+            options.putAll(config);
+        }
 
         // 用户配置文件
-        String configLocation = sc.getInitParameter(CONFIG_LOCATION_PARAMETER);
-        if (configLocation != null && configLocation.length() > 0) {
-            configLocation = JetConfig.DEFAULT_CONFIG_FILE;
+        if (configLocation == null) {
+            configLocation = sc.getInitParameter(CONFIG_LOCATION_PARAMETER);
+            if (configLocation != null && configLocation.length() > 0) {
+                configLocation = JetConfig.DEFAULT_CONFIG_FILE;
+            }
         }
 
         // create engine
-        JetEngine engine = JetEngine.create(config, configLocation);
+        JetEngine engine = JetEngine.create(options, configLocation);
         JetGlobalContext ctx = engine.getGlobalContext();
 
         // 加入默认的全局变量

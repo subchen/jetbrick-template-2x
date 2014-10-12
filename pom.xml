@@ -14,7 +14,7 @@
     <version>2.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>${project.groupId}</name>
+    <name>${project.artifactId}</name>
     <description>web integrate for jetbrick-template 2.x</description>
     <url>http://subchen.github.io/jetbrick-template</url>
 
