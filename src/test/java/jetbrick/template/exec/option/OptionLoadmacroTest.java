@@ -1,10 +1,10 @@
-package jetbrick.template.exec.directive;
+package jetbrick.template.exec.option;
 
 import jetbrick.template.exec.AbstractJetxFileTest;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class DirectiveMacroLoadTest extends AbstractJetxFileTest {
+public class OptionLoadmacroTest extends AbstractJetxFileTest {
 
     static {
         StringBuilder s = new StringBuilder();
