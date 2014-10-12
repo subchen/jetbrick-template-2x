@@ -22,8 +22,12 @@ package jetbrick.template.web;
 import java.util.Properties;
 import javax.servlet.ServletContext;
 import jetbrick.template.*;
+import jetbrick.template.web.buildin.JetWebTags;
 import jetbrick.web.servlet.map.ServletContextAttributeMap;
 
+/**
+ * 负责初始化 Web 环境下的 JetEngine
+ */
 public final class JetEngineLoader {
     private static final String CONFIG_LOCATION_PARAMETER = "jetbrick-template-config-location";
     private static ServletContext sc;
@@ -95,6 +99,10 @@ public final class JetEngineLoader {
         ctx.set(JetWebContext.APPLICATION, sc);
         ctx.set(JetWebContext.APPLICATION_SCOPE, new ServletContextAttributeMap(sc));
 
+        // 内置 tag
+        engine.getGlobalResolver().registerTags(JetWebTags.class);
+
+        // 返回
         return engine;
     }
 
