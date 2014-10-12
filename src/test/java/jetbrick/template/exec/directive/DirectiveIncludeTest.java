@@ -29,7 +29,7 @@ public class DirectiveIncludeTest extends AbstractJetxFileTest {
         s = new StringBuilder();
         s.append("${a}-${b}");
         sourceMap.put("/s4.jetx", s.toString());
-        
+
         //--------------------------------
         s = new StringBuilder();
         s.append("${X}");
@@ -40,7 +40,7 @@ public class DirectiveIncludeTest extends AbstractJetxFileTest {
         s = new StringBuilder();
         s.append("#return(12345)");
         sourceMap.put("/s6.jetx", s.toString());
-        
+
     }
 
     @Test

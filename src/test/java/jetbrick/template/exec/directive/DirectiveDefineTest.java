@@ -16,7 +16,7 @@ public class DirectiveDefineTest extends AbstractJetxSourceTest {
     public void testRedefine() {
         eval("#define(int a)#define(int a)");
     }
-    
+
     @Test(expected = SyntaxException.class)
     public void testDefineAfterUse() {
         eval("${a}, #define(int a)");

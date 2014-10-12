@@ -1,3 +1,22 @@
+/**
+ * Copyright 2013-2014 Guoqiang Chen, Shanghai, China. All rights reserved.
+ *
+ *   Author: Guoqiang Chen
+ *    Email: subchen@gmail.com
+ *   WebURL: https://github.com/subchen
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package jetbrick.template.runtime.buildin;
 
 import java.text.DecimalFormat;
@@ -7,7 +26,7 @@ import jetbrick.util.*;
 public final class JetMethods {
 
     //---- json ----------------------------------------------------------
-     
+
     public static String toJson(Object object) {
         return JSONUtils.toJSONString(object);
     }
@@ -21,7 +40,7 @@ public final class JetMethods {
     public static String format(Number value, String format) {
         return new DecimalFormat(format).format(value);
     }
-    
+
     public static String format(Date value) {
         return DateUtils.format(value, "yyyy-MM-dd HH:mm:ss");
     }
@@ -34,7 +53,7 @@ public final class JetMethods {
     public static String capitalize(String s) {
         return IdentifiedNameUtils.capitalize(s);
     }
-    
+
     public static String toUnderlineName(String s) {
         return IdentifiedNameUtils.toUnderlineName(s);
     }

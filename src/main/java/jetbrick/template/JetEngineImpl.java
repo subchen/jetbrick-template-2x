@@ -5,14 +5,14 @@
  *    Email: subchen@gmail.com
  *   WebURL: https://github.com/subchen
  *
- * Licensed under the Apache License, Version 2.0 (the License);
+ * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
  *   http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an AS IS BASIS,
+ * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
@@ -141,7 +141,7 @@ final class JetEngineImpl extends JetEngine {
         if (name.startsWith("../")) {
             throw new ResourceNotFoundException("path is not under template root: " + name);
         }
-        
+
         for (ResourceLoader loader : loaders) {
             Resource resource = loader.load(name);
             if (resource != null) {
@@ -160,17 +160,17 @@ final class JetEngineImpl extends JetEngine {
         for (String className : config.getImportClasses()) {
             resolver.importClass(className);
         }
-        
+
         resolver.registerMethods(JetMethods.class);
         for (String className : config.getImportMethods()) {
             resolver.registerMethods(className);
         }
-        
+
         resolver.registerFunctions(JetFunctions.class);
         for (String className : config.getImportFunctions()) {
             resolver.registerFunctions(className);
         }
-        
+
         resolver.registerTags(JetTags.class);
         for (String className : config.getImportTags()) {
             resolver.registerTags(className);
