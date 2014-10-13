@@ -64,7 +64,6 @@ import jetbrick.template.runtime.parser.grammer.JetTemplateParser.Expression_new
 import jetbrick.template.runtime.parser.grammer.JetTemplateParser.Expression_primaryContext;
 import jetbrick.template.runtime.parser.grammer.JetTemplateParser.Expression_ternary_operatorContext;
 import jetbrick.template.runtime.parser.grammer.JetTemplateParser.Expression_unary_operator_prefixContext;
-import jetbrick.template.runtime.parser.grammer.JetTemplateParser.Expression_unary_operator_suffixContext;
 import jetbrick.template.runtime.parser.grammer.JetTemplateParser.Hash_map_entryContext;
 import jetbrick.template.runtime.parser.grammer.JetTemplateParser.IdentifierContext;
 import jetbrick.template.runtime.parser.grammer.JetTemplateParser.TemplateContext;
@@ -509,17 +508,6 @@ public final class AstCodeVisitor extends AbstractParseTreeVisitor<AstNode> impl
     }
 
     @Override
-    public AstNode visitExpression_unary_operator_suffix(Expression_unary_operator_suffixContext ctx) {
-        AstExpression expression = accept(ctx.getChild(0));
-        Token token = ((TerminalNode) ctx.getChild(1)).getSymbol();
-        if (token.getType() == JetTemplateLexer.INC) {
-            return new AstOperatorIncDec(Tokens.INC_AFTER, expression, pos(ctx));
-        } else {
-            return new AstOperatorIncDec(Tokens.DEC_AFTER, expression, pos(ctx));
-        }
-    }
-
-    @Override
     public AstNode visitExpression_unary_operator_prefix(Expression_unary_operator_prefixContext ctx) {
         Position position = pos(ctx);
 
@@ -530,10 +518,6 @@ public final class AstCodeVisitor extends AbstractParseTreeVisitor<AstNode> impl
             return new AstOperatorUnary(Tokens.PLUS, expression, position);
         case JetTemplateLexer.MINUS:
             return new AstOperatorUnary(Tokens.MINUS, expression, position);
-        case JetTemplateLexer.INC:
-            return new AstOperatorIncDec(Tokens.INC_BEFORE, expression, position);
-        case JetTemplateLexer.DEC:
-            return new AstOperatorIncDec(Tokens.DEC_BEFORE, expression, position);
         case JetTemplateLexer.NOT:
             return new AstOperatorEquals(Tokens.NOT, expression, null, position);
         case JetTemplateLexer.BIT_NOT:

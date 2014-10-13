@@ -22,7 +22,7 @@ package jetbrick.template.parser.ast;
 import jetbrick.template.runtime.InterpretContext;
 import jetbrick.template.runtime.ValueStack;
 
-public final class AstIdentifier extends AstExpression implements ResetableValueExpression {
+public final class AstIdentifier extends AstExpression {
     private final String name;
 
     public AstIdentifier(String name, Position position) {
@@ -46,10 +46,5 @@ public final class AstIdentifier extends AstExpression implements ResetableValue
             return object == null ? null : object.getClass();
         }
         return type;
-    }
-
-    @Override
-    public void setValue(ValueStack valueStack, Object value) throws ClassCastException {
-        valueStack.setLocal(name, value);
     }
 }

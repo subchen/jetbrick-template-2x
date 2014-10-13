@@ -134,8 +134,6 @@ MINUS                   : '-'                              ;
 MUL                     : '*'                              ;
 DIV                     : '/'                              ;
 MOD                     : '%'                              ;
-INC                     : '++'                             ;
-DEC                     : '--'                             ;
 
 // Bitwise Operators
 BIT_AND                 : '&'                              ;

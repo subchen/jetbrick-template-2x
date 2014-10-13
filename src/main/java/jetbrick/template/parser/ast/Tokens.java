@@ -45,12 +45,8 @@ public final class Tokens {
     public static final int OR = 21;
 
     // unary operator
-    public static final int INC_BEFORE = 22; // ++i
-    public static final int DEC_BEFORE = 23; // --i
-    public static final int INC_AFTER = 24; // i++
-    public static final int DEC_AFTER = 25; // i--
-    public static final int BIT_NOT = 26;
-    public static final int NOT = 27;
+    public static final int BIT_NOT = 22;
+    public static final int NOT = 23;
 
     //@formatter:off
     public static final String[] NAMES = new String[] {
@@ -60,7 +56,7 @@ public final class Tokens {
         "<", "<=", ">", ">=",
         "==", "!=", "===", "!==",
         "&&", "||",
-        "++", "--", "++", "--", "~", "!"
+        "~", "!"
     };
     //@formatter:on
 

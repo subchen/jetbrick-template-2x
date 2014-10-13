@@ -14,11 +14,4 @@ public class UnaryOperatorTest extends AbstractJetxSourceTest {
         Assert.assertEquals("-2.1", eval("${-2.1}"));
     }
 
-    @Test
-    public void testIncDec() {
-        Assert.assertEquals("2,2", eval("#set(i=1)${++i},${i}"));
-        Assert.assertEquals("0,0", eval("#set(i=1)${--i},${i}"));
-        Assert.assertEquals("1,2", eval("#set(i=1)${i++},${i}"));
-        Assert.assertEquals("1,0", eval("#set(i=1)${i--},${i}"));
-    }
 }
