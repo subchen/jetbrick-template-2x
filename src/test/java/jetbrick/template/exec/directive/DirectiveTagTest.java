@@ -8,8 +8,8 @@ import org.junit.*;
 
 public class DirectiveTagTest extends AbstractJetxSourceTest {
 
-    @BeforeClass
-    public static void setup() {
+    @Override
+    public void initializeEngine() {
         engine.getGlobalResolver().registerTags(Tags.class);
     }
 

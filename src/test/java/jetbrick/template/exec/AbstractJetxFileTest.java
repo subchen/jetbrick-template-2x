@@ -8,39 +8,19 @@ import jetbrick.template.*;
 import jetbrick.template.resource.SourceResource;
 import jetbrick.template.resource.loader.AbstractResourceLoader;
 import jetbrick.util.ExceptionUtils;
-import org.junit.BeforeClass;
-import org.junit.AfterClass;
+import org.junit.*;
 
-public abstract class AbstractJetxFileTest {
+public abstract class AbstractJetxFileTest extends AbstractJetxSourceTest {
     protected static final Map<String, String> sourceMap = new HashMap<String, String>();
-    protected static JetEngine engine;
 
-    @BeforeClass
-    public static void initialize() {
-        Properties config = new Properties();
+    @Override
+    public void initializeConfig() {
         config.put(JetConfig.TEMPLATE_LOADER, SourceResourceLoader.class.getName());
-        engine = JetEngine.create(config);
     }
 
-    @AfterClass
-    public static void destory() {
-        engine = null;
-    }
-
-    protected String eval(String name) {
-        return eval(name, null);
-    }
-
-    protected String eval(String name, Map<String, Object> context) {
-        JetTemplate template = engine.getTemplate(name);
-
-        Writer out = new StringWriter();
-        try {
-            template.render(context, out);
-            return out.toString();
-        } catch (Exception e) {
-            throw ExceptionUtils.unchecked(e);
-        }
+    @Override
+    protected JetTemplate getTemplate(String name) {
+        return engine.getTemplate(name);
     }
 
     public static class SourceResourceLoader extends AbstractResourceLoader {

@@ -8,9 +8,7 @@ import org.junit.*;
 public class InvokeIndexGetTest extends AbstractJetxSourceTest {
     private static Map<String, Object> ctx;
 
-    @SuppressWarnings("serial")
-    @BeforeClass
-    public static void beforeClass() {
+    static {
         ctx = new HashMap<String, Object>();
         ctx.put("index", 1);
         ctx.put("key", "bb");

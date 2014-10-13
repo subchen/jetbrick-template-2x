@@ -6,8 +6,8 @@ import org.junit.*;
 
 public class InvokeFunctionTest extends AbstractJetxSourceTest {
 
-    @BeforeClass
-    public static void beforeClass() {
+    @Override
+    public void initializeEngine() {
         engine.getGlobalResolver().registerFunctions(StringUtils.class);
     }
 

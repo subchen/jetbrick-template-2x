@@ -6,8 +6,8 @@ import org.junit.*;
 
 public class InvokeMethodExtensionTest extends AbstractJetxSourceTest {
 
-    @BeforeClass
-    public static void beforeClass() {
+    @Override
+    public void initializeEngine() {
         engine.getGlobalResolver().registerMethods(StringUtils.class);
         engine.getGlobalResolver().registerMethods(String.class);
     }

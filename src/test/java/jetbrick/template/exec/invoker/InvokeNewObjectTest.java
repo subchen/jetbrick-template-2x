@@ -7,8 +7,8 @@ import org.junit.*;
 
 public class InvokeNewObjectTest extends AbstractJetxSourceTest {
 
-    @BeforeClass
-    public static void beforeClass() {
+    @Override
+    public void initializeEngine() {
         engine.getGlobalResolver().importClass(Model.class.getPackage().getName() + ".*");
         engine.getGlobalResolver().importClass(Model.class.getName());
     }

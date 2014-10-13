@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import jetbrick.template.runtime.InterpretContext;
 
-public class AstStatementList extends AstStatement {
+public final class AstStatementList extends AstStatement {
     private static final AstStatement[] EMPTY_ARRAY = new AstStatement[0];
     private final AstStatement[] statements;
 
