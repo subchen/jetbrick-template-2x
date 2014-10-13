@@ -51,24 +51,4 @@ public class ALUTest {
         Assert.assertEquals(Double.class, ALU.div(b, d).getClass());
     }
 
-    @Test
-    public void testInc() {
-        Assert.assertEquals(Byte.class, ALU.inc(b).getClass());
-        Assert.assertEquals(Short.class, ALU.inc(s).getClass());
-        Assert.assertEquals(Integer.class, ALU.inc(i).getClass());
-        Assert.assertEquals(Long.class, ALU.inc(l).getClass());
-        Assert.assertEquals(Float.class, ALU.inc(f).getClass());
-        Assert.assertEquals(Double.class, ALU.inc(d).getClass());
-    }
-
-    @Test
-    public void testDec() {
-        Assert.assertEquals(Byte.class, ALU.dec(b).getClass());
-        Assert.assertEquals(Short.class, ALU.dec(s).getClass());
-        Assert.assertEquals(Integer.class, ALU.dec(i).getClass());
-        Assert.assertEquals(Long.class, ALU.dec(l).getClass());
-        Assert.assertEquals(Float.class, ALU.dec(f).getClass());
-        Assert.assertEquals(Double.class, ALU.dec(d).getClass());
-    }
-
 }
