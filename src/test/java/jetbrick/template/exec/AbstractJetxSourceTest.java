@@ -15,11 +15,11 @@ public abstract class AbstractJetxSourceTest {
 
     static {
         //System.setProperty(org.slf4j.impl.SimpleLogger.DEFAULT_LOG_LEVEL_KEY, "ERROR");
+        //AsmFactory.setThreshold(Integer.MAX_VALUE);
     }
 
     @BeforeClass
     public static void initialize() {
-        AsmFactory.setThreshold(Integer.MAX_VALUE);
         engine = JetEngine.create();
     }
 
