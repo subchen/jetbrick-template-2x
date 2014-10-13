@@ -217,50 +217,6 @@ public final class ALU {
         throw new InterpretException(Errors.OP_UNARY_UNDEFINED, "-", Errors.typeName(o));
     }
 
-    // a++, ++a
-    public static Object inc(Object o) throws InterpretException {
-        Class<?> cls = o.getClass();
-        if (Number.class.isAssignableFrom(cls)) {
-            Number n = (Number) o;
-            if (cls == Integer.class) {
-                return Integer.valueOf(n.intValue() + 1);
-            } else if (cls == Long.class) {
-                return Long.valueOf(n.longValue() + 1L);
-            } else if (cls == Double.class) {
-                return Double.valueOf(n.doubleValue() + 1.0D);
-            } else if (cls == Float.class) {
-                return Float.valueOf(n.floatValue() + 1.0F);
-            } else if (cls == Short.class) {
-                return Short.valueOf((short) (n.shortValue() + 1));
-            } else if (cls == Byte.class) {
-                return Byte.valueOf((byte) (n.byteValue() + 1));
-            }
-        }
-        throw new InterpretException(Errors.OP_UNARY_UNDEFINED, "++", Errors.typeName(o));
-    }
-
-    // a--, --a
-    public static Object dec(Object o) throws InterpretException {
-        Class<?> cls = o.getClass();
-        if (Number.class.isAssignableFrom(cls)) {
-            Number n = (Number) o;
-            if (cls == Integer.class) {
-                return Integer.valueOf(n.intValue() - 1);
-            } else if (cls == Long.class) {
-                return Long.valueOf(n.longValue() - 1L);
-            } else if (cls == Double.class) {
-                return Double.valueOf(n.doubleValue() - 1.0D);
-            } else if (cls == Float.class) {
-                return Float.valueOf(n.floatValue() - 1.0F);
-            } else if (cls == Short.class) {
-                return Short.valueOf((short) (n.shortValue() - 1));
-            } else if (cls == Byte.class) {
-                return Byte.valueOf((byte) (n.byteValue() - 1));
-            }
-        }
-        throw new InterpretException(Errors.OP_UNARY_UNDEFINED, "--", Errors.typeName(o));
-    }
-
     //-----------------------------------------------------------------------
     // a & b
     public static Object bitAnd(Object o1, Object o2) throws InterpretException {
