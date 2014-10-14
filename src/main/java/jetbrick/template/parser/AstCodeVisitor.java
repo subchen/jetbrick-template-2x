@@ -95,7 +95,28 @@ public final class AstCodeVisitor extends AbstractParseTreeVisitor<AstNode> impl
     @Override
     public AstStatementList visitBlock(BlockContext ctx) {
         List<AstStatement> statements = accept(ctx.children);
-        return new AstStatementList(statements);
+
+        int block;
+        ParseTree parent = ctx.getParent();
+        if (parent instanceof TemplateContext) {
+            block = Tokens.AST_BLOCK_TEMPLATE;
+        } else if (parent instanceof Directive_forContext) {
+            block = Tokens.AST_BLOCK_FOR;
+        } else if (parent instanceof Directive_ifContext) {
+            block = Tokens.AST_BLOCK_IF;
+        } else if (parent instanceof Directive_elseifContext) {
+            block = Tokens.AST_BLOCK_ELSEIF;
+        } else if (parent instanceof Directive_elseContext) {
+            block = Tokens.AST_BLOCK_ELSE;
+        } else if (parent instanceof Directive_macroContext) {
+            block = Tokens.AST_BLOCK_MACRO;
+        } else if (parent instanceof Directive_tagContext) {
+            block = Tokens.AST_BLOCK_TAG;
+        } else {
+            throw new IllegalStateException();
+        }
+
+        return new AstStatementList(statements, block, parseCtx);
     }
 
     @Override
@@ -110,7 +131,7 @@ public final class AstCodeVisitor extends AbstractParseTreeVisitor<AstNode> impl
             text = text.substring(1);
             break;
         }
-        return new AstText(text);
+        return new AstText(text, token.getLine());
     }
 
     @Override
@@ -210,7 +231,7 @@ public final class AstCodeVisitor extends AbstractParseTreeVisitor<AstNode> impl
     @Override
     public AstStatementList visitDirective_set(Directive_setContext ctx) {
         List<AstStatement> statements = accept(ctx.directive_set_expression());
-        return new AstStatementList(statements);
+        return new AstStatementList(statements, Tokens.AST_BLOCK_SET, parseCtx);
     }
 
     @Override

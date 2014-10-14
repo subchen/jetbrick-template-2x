@@ -32,13 +32,13 @@ public abstract class AbstractJetxSourceTest {
         config = null;
         engine = null;
     }
-    
+
     protected void initializeConfig() {
     }
-    
+
     protected void initializeEngine() {
     }
-    
+
     protected String eval(String source) {
         return eval(source, null);
     }
@@ -54,7 +54,7 @@ public abstract class AbstractJetxSourceTest {
             throw ExceptionUtils.unchecked(e);
         }
     }
-    
+
     protected JetTemplate getTemplate(String source) {
         return engine.createTemplate(source);
     }

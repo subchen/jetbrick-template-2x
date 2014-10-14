@@ -60,4 +60,14 @@ public final class Tokens {
     };
     //@formatter:on
 
+    // block node
+    public static final int AST_BLOCK_TEMPLATE = 1;
+    public static final int AST_BLOCK_FOR = 2;
+    public static final int AST_BLOCK_IF = 3;
+    public static final int AST_BLOCK_ELSEIF = 4;
+    public static final int AST_BLOCK_ELSE = 5;
+    public static final int AST_BLOCK_MACRO = 6;
+    public static final int AST_BLOCK_TAG = 7;
+    public static final int AST_BLOCK_SET = 8;
+
 }

@@ -26,7 +26,7 @@ import jetbrick.template.resolver.tag.TagInvoker;
 import jetbrick.template.runtime.*;
 import jetbrick.util.ArrayUtils;
 
-public final class AstDirectiveTag extends AstStatement {
+public final class AstDirectiveTag extends AstDirective {
     private final String name;
     private final AstExpressionList argumentList;
     private final Position position;

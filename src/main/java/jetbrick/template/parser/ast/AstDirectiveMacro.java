@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Map;
 import jetbrick.template.runtime.InterpretContext;
 
-public final class AstDirectiveMacro extends AstStatement {
+public final class AstDirectiveMacro extends AstDirective {
     private final String name;
     private final List<String> argumentNames;
     private final Map<String, Class<?>> symbols;

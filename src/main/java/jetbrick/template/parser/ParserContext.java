@@ -34,6 +34,11 @@ public final class ParserContext {
     private boolean strict;
     private boolean safecall;
     private boolean trimLeadingWhitespaces;
+    // config
+    private boolean trimDirectiveWhitespaces;
+    private boolean trimDirectiveComments;
+    private String trimDirectiveCommentsPrefix;
+    private String trimDirectiveCommentsSuffix;
 
     // class resolver (#import)
     private final GlobalResolver globalResolver;
@@ -80,6 +85,40 @@ public final class ParserContext {
 
     public void setTrimLeadingWhitespaces(boolean trimLeadingWhitespaces) {
         this.trimLeadingWhitespaces = trimLeadingWhitespaces;
+    }
+
+    // ---- config (global) --------------------------------------------
+
+    public boolean isTrimDirectiveWhitespaces() {
+        return trimDirectiveWhitespaces;
+    }
+
+    public void setTrimDirectiveWhitespaces(boolean trimDirectiveWhitespaces) {
+        this.trimDirectiveWhitespaces = trimDirectiveWhitespaces;
+    }
+
+    public boolean isTrimDirectiveComments() {
+        return trimDirectiveComments;
+    }
+
+    public void setTrimDirectiveComments(boolean trimDirectiveComments) {
+        this.trimDirectiveComments = trimDirectiveComments;
+    }
+
+    public String getTrimDirectiveCommentsPrefix() {
+        return trimDirectiveCommentsPrefix;
+    }
+
+    public void setTrimDirectiveCommentsPrefix(String trimDirectiveCommentsPrefix) {
+        this.trimDirectiveCommentsPrefix = trimDirectiveCommentsPrefix;
+    }
+
+    public String getTrimDirectiveCommentsSuffix() {
+        return trimDirectiveCommentsSuffix;
+    }
+
+    public void setTrimDirectiveCommentsSuffix(String trimDirectiveCommentsSuffix) {
+        this.trimDirectiveCommentsSuffix = trimDirectiveCommentsSuffix;
     }
 
     // ---- class resolver (#import) --------------------------------------------

@@ -21,7 +21,7 @@ package jetbrick.template.parser.ast;
 
 import jetbrick.template.runtime.InterpretContext;
 
-public final class AstDirectiveIf extends AstStatement {
+public final class AstDirectiveIf extends AstDirective {
     private final AstExpression conditionExpression;
     private final AstStatementList thenStatement;
     private final AstStatement elseStatement;

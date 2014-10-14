@@ -22,7 +22,7 @@ package jetbrick.template.parser.ast;
 import jetbrick.template.parser.Symbols;
 import jetbrick.template.runtime.*;
 
-public final class AstDirectiveFor extends AstStatement {
+public final class AstDirectiveFor extends AstDirective {
     private final String identifier;
     private final AstExpression expression;
     private final AstStatementList statement;

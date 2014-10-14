@@ -41,22 +41,22 @@ final class JetTemplateImpl implements JetTemplate {
 
     private final JetEngine engine;
     private final Resource resource;
-    private final Charset outputEncoding;
+    private final JetConfig config;
 
     private final boolean reloadable;
     private volatile long lastModified;
 
     private Source source;
     private AstTemplate astNode;
-    private JetTemplateConfig config;
+    private JetTemplateConfig options;
 
     private final MacroResolver macroResolver;
 
     public JetTemplateImpl(JetEngine engine, Resource resource) {
         this.engine = engine;
         this.resource = resource;
-        this.outputEncoding = engine.getConfig().getOutputEncoding();
-        this.reloadable = engine.getConfig().isTemplateReload();
+        this.config = engine.getConfig();
+        this.reloadable = config.isTemplateReload();
         this.lastModified = 0;
         this.macroResolver = new MacroResolver();
     }
@@ -92,22 +92,26 @@ final class JetTemplateImpl implements JetTemplate {
     private void rebuildAstNodeAndConfig() {
         // create source
         String filename = resource.getPath();
-        char[] contents = resource.toCharArray(engine.getConfig().getInputEncoding());
+        char[] contents = resource.toCharArray(config.getInputEncoding());
         source = new Source(filename, contents);
 
         log.info("Loading template: {}", filename);
 
         // create ctx
         ParserContext ctx = new ParserContext(engine.getGlobalResolver(), engine.getGlobalContext());
-        ctx.setStrict(engine.getConfig().isSyntaxStrict());
-        ctx.setSafecall(engine.getConfig().isSyntaxSafecall());
-        ctx.setTrimLeadingWhitespaces(engine.getConfig().isTrimLeadingWhitespaces());
+        ctx.setStrict(config.isSyntaxStrict());
+        ctx.setSafecall(config.isSyntaxSafecall());
+        ctx.setTrimLeadingWhitespaces(config.isTrimLeadingWhitespaces());
+        ctx.setTrimDirectiveWhitespaces(config.isTrimDirectiveWhitespaces());
+        ctx.setTrimDirectiveComments(config.isTrimDirectiveComments());
+        ctx.setTrimDirectiveCommentsPrefix(config.getTrimDirectiveCommentsPrefix());
+        ctx.setTrimDirectiveCommentsSuffix(config.getTrimDirectiveCommentsSuffix());
 
         // 解析模板，然后生成 AST
         astNode = AstBuilder.create(source, ctx);
 
         // 重置配置
-        config = new JetTemplateConfig(ctx);
+        options = new JetTemplateConfig(ctx);
 
         // 重建 MacroResolver
         macroResolver.clear();
@@ -131,15 +135,13 @@ final class JetTemplateImpl implements JetTemplate {
 
     @Override
     public void render(Map<String, Object> context, Writer out) {
-        boolean skipErrors = engine.getConfig().isIoSkiperrors();
-        JetWriter writer = JetWriter.create(out, outputEncoding, config.isTrimLeadingWhitespaces(), skipErrors);
+        JetWriter writer = JetWriter.create(out, config.getOutputEncoding(), options.isTrimLeadingWhitespaces(), config.isIoSkiperrors());
         doInterpret(context, writer);
     }
 
     @Override
     public void render(Map<String, Object> context, OutputStream out) {
-        boolean skipErrors = engine.getConfig().isIoSkiperrors();
-        JetWriter writer = JetWriter.create(out, outputEncoding, config.isTrimLeadingWhitespaces(), skipErrors);
+        JetWriter writer = JetWriter.create(out, config.getOutputEncoding(), options.isTrimLeadingWhitespaces(), config.isIoSkiperrors());
         doInterpret(context, writer);
     }
 
@@ -147,7 +149,7 @@ final class JetTemplateImpl implements JetTemplate {
         InterpretContextImpl ctx = new InterpretContextImpl(engine, writer, context);
         try {
             ctx.getTemplateStack().push(this);
-            ctx.getValueStack().push(config.getSymbols(), null, false);
+            ctx.getValueStack().push(options.getSymbols(), null, false);
 
             astNode.execute(ctx);
 
@@ -182,7 +184,7 @@ final class JetTemplateImpl implements JetTemplate {
 
     @Override
     public JetTemplateConfig getConfig() {
-        return config;
+        return options;
     }
 
     @Override
