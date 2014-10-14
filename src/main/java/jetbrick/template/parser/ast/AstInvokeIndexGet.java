@@ -40,7 +40,7 @@ public final class AstInvokeIndexGet extends AstExpression {
     public Object execute(InterpretContext ctx) throws InterpretException {
         Object object = objectExpression.execute(ctx);
         if (object == null) {
-            if (ctx.getTemplate().getConfig().isSafecall()) {
+            if (ctx.getTemplate().getOption().isSafecall()) {
                 return null;
             }
             throw new InterpretException(Errors.OBJECT_IS_NULL).set(objectExpression.getPosition());

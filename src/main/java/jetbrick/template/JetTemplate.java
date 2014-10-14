@@ -44,7 +44,7 @@ public interface JetTemplate {
 
     public long getLastModified();
 
-    public JetTemplateConfig getConfig();
+    public JetTemplateOption getOption();
 
     public AstTemplate getAstNode();
 

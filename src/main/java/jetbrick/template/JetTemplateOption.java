@@ -25,13 +25,13 @@ import jetbrick.template.parser.ParserContext;
 /**
  * 模板运行时选项支持.
  */
-public final class JetTemplateConfig {
+public final class JetTemplateOption {
     private final boolean strict;
     private final boolean safecall;
     private final boolean trimLeadingWhitespaces;
     private final Map<String, Class<?>> symbols;
 
-    protected JetTemplateConfig(ParserContext ctx) {
+    protected JetTemplateOption(ParserContext ctx) {
         this.strict = ctx.isStrict();
         this.safecall = ctx.isSafecall();
         this.trimLeadingWhitespaces = ctx.isTrimLeadingWhitespaces();

@@ -113,7 +113,7 @@ public final class InterpretContextImpl extends InterpretContext {
         this.returnName = returnName; // use new name
 
         templateStack.push(template);
-        valueStack.push(template.getConfig().getSymbols(), arguments, inherited);
+        valueStack.push(template.getOption().getSymbols(), arguments, inherited);
 
         template.getAstNode().execute(this);
 

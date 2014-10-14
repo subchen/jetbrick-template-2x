@@ -48,7 +48,7 @@ final class JetTemplateImpl implements JetTemplate {
 
     private Source source;
     private AstTemplate astNode;
-    private JetTemplateConfig options;
+    private JetTemplateOption option;
 
     private final MacroResolver macroResolver;
 
@@ -111,7 +111,7 @@ final class JetTemplateImpl implements JetTemplate {
         astNode = AstBuilder.create(source, ctx);
 
         // 重置配置
-        options = new JetTemplateConfig(ctx);
+        option = new JetTemplateOption(ctx);
 
         // 重建 MacroResolver
         macroResolver.clear();
@@ -135,13 +135,13 @@ final class JetTemplateImpl implements JetTemplate {
 
     @Override
     public void render(Map<String, Object> context, Writer out) {
-        JetWriter writer = JetWriter.create(out, config.getOutputEncoding(), options.isTrimLeadingWhitespaces(), config.isIoSkiperrors());
+        JetWriter writer = JetWriter.create(out, config.getOutputEncoding(), option.isTrimLeadingWhitespaces(), config.isIoSkiperrors());
         doInterpret(context, writer);
     }
 
     @Override
     public void render(Map<String, Object> context, OutputStream out) {
-        JetWriter writer = JetWriter.create(out, config.getOutputEncoding(), options.isTrimLeadingWhitespaces(), config.isIoSkiperrors());
+        JetWriter writer = JetWriter.create(out, config.getOutputEncoding(), option.isTrimLeadingWhitespaces(), config.isIoSkiperrors());
         doInterpret(context, writer);
     }
 
@@ -149,7 +149,7 @@ final class JetTemplateImpl implements JetTemplate {
         InterpretContextImpl ctx = new InterpretContextImpl(engine, writer, context);
         try {
             ctx.getTemplateStack().push(this);
-            ctx.getValueStack().push(options.getSymbols(), null, false);
+            ctx.getValueStack().push(option.getSymbols(), null, false);
 
             astNode.execute(ctx);
 
@@ -183,8 +183,8 @@ final class JetTemplateImpl implements JetTemplate {
     }
 
     @Override
-    public JetTemplateConfig getConfig() {
-        return options;
+    public JetTemplateOption getOption() {
+        return option;
     }
 
     @Override
