@@ -8,6 +8,8 @@ import jetbrick.util.ExceptionUtils;
 
 public class PerformanceTest {
     static boolean WAIT = true;
+    static int warm = 20000;
+    static int loop = 500000;
 
     public static void main(String[] args) throws Throwable {
         Properties config = new Properties();
@@ -18,9 +20,6 @@ public class PerformanceTest {
         Map<String, Object> context = new HashMap<String, Object>();
         context.put("outputEncoding", "utf-8");
         context.put("items", Model.dummyItems());
-
-        int warm = 20000;
-        int loop = 100000;
 
         System.out.println("warming ....");
         for (int i = 0; i < warm; i++) {
@@ -54,6 +53,7 @@ public class PerformanceTest {
         Writer out = new StringWriter();
         try {
             template.render(context, out);
+            //System.out.println(out.toString());
         } catch (Exception e) {
             throw ExceptionUtils.unchecked(e);
         }
