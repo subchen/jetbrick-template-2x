@@ -34,7 +34,7 @@ public final class AstValue extends AstStatement {
     @Override
     public void execute(InterpretContext ctx) throws InterpretException {
         Object value = expression.execute(ctx);
-        if (value != null) {
+        if (value != null && value != ALU.VOID) {
             try {
                 ctx.getWriter().print(value.toString());
             } catch (IOException e) {

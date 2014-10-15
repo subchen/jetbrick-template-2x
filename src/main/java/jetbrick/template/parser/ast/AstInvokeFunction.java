@@ -71,7 +71,7 @@ public final class AstInvokeFunction extends AstExpression {
         } catch (IllegalArgumentException e) {
             if (useLatest && Errors.isReflectArgumentNotMatch(e)) {
                 // 重新查找匹配的 Invoker
-                doInvoke(ctx, null, arguments);
+                return doInvoke(ctx, null, arguments);
             }
             throw new InterpretException(Errors.FUNCTION_INVOKE_ERROR).cause(e).set(position);
         }

@@ -68,11 +68,16 @@ public final class AstInvokeMethodStatic extends AstExpression {
         }
 
         try {
-            return invoker.invoke(null, arguments);
+            Object result = invoker.invoke(null, arguments);
+            if (result != null) {
+                return result;
+            } else {
+                return (invoker.isVoidResult()) ? ALU.VOID : null;
+            }
         } catch (IllegalArgumentException e) {
             if (useLatest && Errors.isReflectArgumentNotMatch(e)) {
                 // 重新查找匹配的 Invoker
-                doInvoke(ctx, null, arguments);
+                return doInvoke(ctx, null, arguments);
             }
             throw new InterpretException(Errors.STATIC_METHOD_INVOKE_ERROR).cause(e).set(position);
         }

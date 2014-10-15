@@ -44,6 +44,8 @@ public final class AstInvokeField extends AstExpression {
                 return null;
             }
             throw new InterpretException(Errors.OBJECT_IS_NULL).set(position);
+        } else if (object == ALU.VOID) {
+            throw new InterpretException(Errors.OBJECT_IS_VOID).set(position);
         }
 
         return doInvokeGetter(ctx, last, object);
@@ -69,7 +71,7 @@ public final class AstInvokeField extends AstExpression {
         } catch (IllegalArgumentException e) {
             if (useLatest && Errors.isReflectArgumentNotMatch(e)) {
                 // 重新查找匹配的 Getter
-                doInvokeGetter(ctx, null, object);
+                return doInvokeGetter(ctx, null, object);
             }
             throw new InterpretException(Errors.PROPERTY_GET_ERROR).cause(e).set(position);
         }

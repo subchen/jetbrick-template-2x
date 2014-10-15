@@ -28,6 +28,8 @@ import jetbrick.template.runtime.InterpretException;
  * Arithmetic Logical Unit
  */
 public final class ALU {
+    // VOID object
+    public static final Object VOID = new Object();
 
     // number type
     //@formatter:off

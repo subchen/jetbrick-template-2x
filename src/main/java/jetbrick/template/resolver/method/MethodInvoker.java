@@ -26,4 +26,6 @@ public interface MethodInvoker {
 
     public Object invoke(Object object, Object[] arguments);
 
+    public boolean isVoidResult();
+
 }

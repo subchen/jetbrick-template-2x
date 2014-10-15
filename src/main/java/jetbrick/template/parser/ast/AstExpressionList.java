@@ -20,7 +20,9 @@
 package jetbrick.template.parser.ast;
 
 import java.util.List;
+import jetbrick.template.Errors;
 import jetbrick.template.runtime.InterpretContext;
+import jetbrick.template.runtime.InterpretException;
 
 public final class AstExpressionList extends AstExpression {
     private static final AstExpression[] EMPTY_ARRAY = new AstExpression[0];
@@ -36,7 +38,11 @@ public final class AstExpressionList extends AstExpression {
         int length = expressions.length;
         Object[] objects = new Object[length];
         for (int i = 0; i < length; i++) {
-            objects[i] = expressions[i].execute(ctx);
+            Object obj = expressions[i].execute(ctx);
+            if (obj == ALU.VOID) {
+                throw new InterpretException(Errors.ARGUMENT_IS_VOID).set(expressions[i].getPosition());
+            }
+            objects[i] = obj;
         }
         return objects;
     }

@@ -41,4 +41,9 @@ final class ClassBuildinMethodInvoker implements MethodInvoker {
         arguments = ParameterUtils.getActualArguments(arguments, length, isVarArgs, 0);
         return method.invoke(object, arguments);
     }
+
+    @Override
+    public boolean isVoidResult() {
+        return method.getReturnType() == Void.TYPE;
+    }
 }

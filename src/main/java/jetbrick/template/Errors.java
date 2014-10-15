@@ -76,6 +76,9 @@ public final class Errors {
     public static final String STATIC_FIELD_GET_ERROR = "static field get error: %s#%s";
     public static final String PROPERTY_GET_ERROR = "property get error: %s";
     public static final String FOR_ITERATOR_ERROR = "iterator error when index = %s";
+    public static final String OBJECT_IS_VOID = "object is Void";
+    public static final String INDEX_IS_VOID = "index is Void";
+    public static final String ARGUMENT_IS_VOID = "argument is Void";
 
     // 判断是否是因为参数不匹配导致的错误
     public static boolean isReflectArgumentNotMatch(IllegalArgumentException e) {

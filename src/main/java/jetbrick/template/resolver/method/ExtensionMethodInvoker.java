@@ -44,4 +44,8 @@ final class ExtensionMethodInvoker implements MethodInvoker {
         return method.invoke(object, arguments);
     }
 
+    @Override
+    public boolean isVoidResult() {
+        return method.getReturnType() == Void.TYPE;
+    }
 }

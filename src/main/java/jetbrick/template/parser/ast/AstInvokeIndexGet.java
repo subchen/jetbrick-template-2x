@@ -44,11 +44,15 @@ public final class AstInvokeIndexGet extends AstExpression {
                 return null;
             }
             throw new InterpretException(Errors.OBJECT_IS_NULL).set(objectExpression.getPosition());
+        } else if (object == ALU.VOID) {
+            throw new InterpretException(Errors.OBJECT_IS_VOID).set(objectExpression.getPosition());
         }
 
         Object index = indexExpression.execute(ctx);
         if (index == null) {
             throw new InterpretException(Errors.INDEX_IS_NULL).set(indexExpression.getPosition());
+        } else if (index == ALU.VOID) {
+            throw new InterpretException(Errors.INDEX_IS_VOID).set(indexExpression.getPosition());
         }
 
         Class<?> objectClass = object.getClass();

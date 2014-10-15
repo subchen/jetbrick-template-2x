@@ -34,9 +34,9 @@ public final class AstValueEscaped extends AstStatement {
 
     @Override
     public void execute(InterpretContext ctx) throws InterpretException {
-        Object result = expression.execute(ctx);
-        if (result != null) {
-            String xml = StringEscapeUtils.escapeXml(result.toString());
+        Object value = expression.execute(ctx);
+        if (value != null && value != ALU.VOID) {
+            String xml = StringEscapeUtils.escapeXml(value.toString());
             try {
                 ctx.getWriter().print(xml);
             } catch (IOException e) {
