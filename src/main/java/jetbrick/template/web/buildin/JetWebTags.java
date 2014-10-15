@@ -49,7 +49,7 @@ public final class JetWebTags {
             value = ctx.getBodyContent();
             cache.put(name, value, timeout * 1000);
         }
-        ctx.getWriter().print(value);
+        ctx.getWriter().print(value.toString());
     }
 
     /**
@@ -71,6 +71,6 @@ public final class JetWebTags {
             value = ctx.getBodyContent();
             cache.put(name, value, timeout * 1000);
         }
-        ctx.getWriter().print(value);
+        ctx.getWriter().print(value.toString());
     }
 }
