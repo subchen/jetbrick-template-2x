@@ -19,7 +19,6 @@
  */
 package jetbrick.template.parser.ast;
 
-import java.util.ArrayList;
 import java.util.List;
 import jetbrick.template.parser.ParserContext;
 import jetbrick.template.runtime.InterpretContext;

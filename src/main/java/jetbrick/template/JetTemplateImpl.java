@@ -21,7 +21,6 @@ package jetbrick.template;
 
 import java.io.OutputStream;
 import java.io.Writer;
-import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Map;
 import jetbrick.io.resource.Resource;

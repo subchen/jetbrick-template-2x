@@ -6,6 +6,7 @@ import jetbrick.template.runtime.InterpretException;
 import org.junit.Assert;
 import org.junit.Test;
 
+@SuppressWarnings("serial")
 public class InvokeIndexGetTest extends AbstractJetxSourceTest {
     private static Map<String, Object> ctx;
 
