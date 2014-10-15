@@ -103,7 +103,11 @@ public final class ValueStack {
             // 先找 parent 当前作用域
             value = parent.getLocal(name);
             if (value != null) {
-                return value == NULL ? null : value;
+                if (value == NULL) {
+                    return null;
+                }
+                setLocal(name, value); // cache
+                return value;
             }
 
             // 查找parent 私有作用域(include/macro 参数)
