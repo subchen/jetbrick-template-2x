@@ -111,7 +111,7 @@ final class JetEngineImpl extends JetEngine {
         // 将一个模板路径名称转为标准格式
         name = PathUtils.normalize(name);
         if (name.startsWith("../")) {
-            throw new TemplateNotFoundException("path is not under template root: " + name);
+            throw new ResourceNotFoundException(name);
         }
 
         JetTemplate template = cache.get(name);
@@ -139,7 +139,7 @@ final class JetEngineImpl extends JetEngine {
         // 将一个路径名称转为标准格式
         name = PathUtils.normalize(name);
         if (name.startsWith("../")) {
-            throw new ResourceNotFoundException("path is not under template root: " + name);
+            throw new ResourceNotFoundException(name);
         }
 
         for (ResourceLoader loader : loaders) {
