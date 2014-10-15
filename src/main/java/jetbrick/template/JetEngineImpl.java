@@ -79,7 +79,7 @@ final class JetEngineImpl extends JetEngine {
     }
 
     @Override
-    public boolean templateExists(String name) {
+    public boolean checkTemplate(String name) {
         return internalGetTemplate(name) != null;
     }
 

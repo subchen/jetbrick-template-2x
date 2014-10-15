@@ -102,7 +102,7 @@ public abstract class JetEngine {
      * @param name  模板名称
      * @return      模板是否存在
      */
-    public abstract boolean templateExists(String name);
+    public abstract boolean checkTemplate(String name);
 
     /**
      * 获取模板对象.
