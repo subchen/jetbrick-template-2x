@@ -48,6 +48,6 @@ public final class AstDirectiveReturn extends AstDirective {
             }
         }
 
-        ctx.setSignal(ALU.SINGAL_RETURN);
+        ctx.setSignal(InterpretContext.SINGAL_RETURN);
     }
 }

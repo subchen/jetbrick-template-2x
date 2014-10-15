@@ -56,12 +56,12 @@ public final class AstDirectiveFor extends AstDirective {
 
                 // 处理 break, continue, return, stop 语句
                 int signal = ctx.getSignal();
-                if (signal != ALU.SINGAL_NONE) {
-                    if (signal == ALU.SINGAL_BREAK) {
-                        ctx.setSignal(ALU.SINGAL_NONE); // clear signal
+                if (signal != InterpretContext.SINGAL_NONE) {
+                    if (signal == InterpretContext.SINGAL_BREAK) {
+                        ctx.setSignal(InterpretContext.SINGAL_NONE); // clear signal
                         break;
-                    } else if (signal == ALU.SINGAL_CONTINUE) {
-                        ctx.setSignal(ALU.SINGAL_NONE); // clear signal
+                    } else if (signal == InterpretContext.SINGAL_CONTINUE) {
+                        ctx.setSignal(InterpretContext.SINGAL_NONE); // clear signal
                         continue;
                     } else {
                         return;

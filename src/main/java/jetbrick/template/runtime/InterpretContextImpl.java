@@ -22,7 +22,6 @@ package jetbrick.template.runtime;
 import java.util.*;
 import jetbrick.template.*;
 import jetbrick.template.parser.Source;
-import jetbrick.template.parser.ast.ALU;
 import jetbrick.template.resolver.GlobalResolver;
 
 /**
@@ -43,7 +42,7 @@ public final class InterpretContextImpl extends InterpretContext {
         this.templateStack = new TemplateStack();
         this.valueStack = new ValueStack(engine.getGlobalContext(), context);
         this.writer = writer;
-        this.signal = ALU.SINGAL_NONE;
+        this.signal = InterpretContext.SINGAL_NONE;
         threadLocal.set(this);
     }
 

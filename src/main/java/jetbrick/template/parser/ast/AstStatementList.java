@@ -183,7 +183,7 @@ public final class AstStatementList extends AstStatement {
             stmt.execute(ctx);
 
             // 处理 break, continue, return, stop 语句
-            if (ctx.getSignal() != ALU.SINGAL_NONE) {
+            if (ctx.getSignal() != InterpretContext.SINGAL_NONE) {
                 return;
             }
         }

@@ -30,6 +30,13 @@ import jetbrick.template.resolver.GlobalResolver;
 public abstract class InterpretContext {
     protected final static ThreadLocal<InterpretContext> threadLocal = new InheritableThreadLocal<InterpretContext>();
 
+    // signal
+    public static final int SINGAL_NONE = 0;
+    public static final int SINGAL_BREAK = 1;
+    public static final int SINGAL_CONTINUE = 2;
+    public static final int SINGAL_RETURN = 3;
+    public static final int SINGAL_STOP = 4;
+
     public static InterpretContext current() {
         return threadLocal.get();
     }

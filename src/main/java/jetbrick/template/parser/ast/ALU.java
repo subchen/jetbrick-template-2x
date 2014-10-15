@@ -28,12 +28,6 @@ import jetbrick.template.runtime.InterpretException;
  * Arithmetic Logical Unit
  */
 public final class ALU {
-    // signal
-    public static final int SINGAL_NONE = 0;
-    public static final int SINGAL_BREAK = 1;
-    public static final int SINGAL_CONTINUE = 2;
-    public static final int SINGAL_RETURN = 3;
-    public static final int SINGAL_STOP = 4;
 
     // number type
     //@formatter:off

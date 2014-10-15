@@ -36,8 +36,8 @@ public final class AstTemplate extends AstStatement {
     public void execute(InterpretContext ctx) throws InterpretException {
         statements.execute(ctx);
 
-        if (ctx.getSignal() == ALU.SINGAL_RETURN) {
-            ctx.setSignal(ALU.SINGAL_NONE); // clear signal
+        if (ctx.getSignal() == InterpretContext.SINGAL_RETURN) {
+            ctx.setSignal(InterpretContext.SINGAL_NONE); // clear signal
         }
     }
 }
