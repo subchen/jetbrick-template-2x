@@ -37,7 +37,7 @@ public final class JetGlobalContext {
     public void define(Class<?> type, String name) {
         Class<?> old = symbols.put(name, type);
         if (old != null) {
-            throw new IllegalStateException("cannot redefine global variable: " + name);
+            throw new IllegalStateException(Errors.format(Errors.VAR_TYPE_REDEFINE, name));
         }
     }
 
@@ -50,7 +50,7 @@ public final class JetGlobalContext {
         Class<?> type = symbols.get(name);
         if (type != null && value != null) {
             if (!type.isInstance(value)) {
-                throw new IllegalStateException("inconsistent class for variable: " + name);
+                throw new IllegalStateException(Errors.format(Errors.TYPE_INCONSISTENT, name));
             }
         }
         context.put(name, value);

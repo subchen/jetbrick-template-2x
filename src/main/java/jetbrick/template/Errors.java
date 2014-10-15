@@ -26,50 +26,55 @@ import jetbrick.util.StringUtils;
 public final class Errors {
     public static final String JETX_ERROR_SOURCE_DISABLED = "JETX_ERROR_SOURCE_DISABLED";
 
+    // general error
+    public static final String UNREACHABLE_CODE = "unreachable code";
+    public static final String TEMPLATE_PATH_ERROR = "path is not under template root: %s";
+
     // syntax error
     public static final String OPTION_NAME_INVALID = "#option name is unknown: %s";
     public static final String OPTION_VALUE_INVALID = "#option value is invalid: %s";
-    public static final String VAR_UNDEFINED = "Undefined variable found in strict mode: %s";
-    public static final String VAR_REDEFINE = "Cannot redefine variable: %s";
-    public static final String PARAM_TYPE_MISSING = "Missing argument type in strict mode: %s";
+    public static final String VAR_UNDEFINED = "undefined variable found in strict mode: %s";
+    public static final String VAR_TYPE_REDEFINE = "cannot redefine variable: %s";
+    public static final String PARAM_TYPE_MISSING = "missing argument type in strict mode: %s";
     public static final String INCLUDE_PARAM_MORE = "#include cannot accept more than 3 arguments";
-    public static final String RETURN_NAME_INVALID = "Parameter `returnName` is invalid";
-    public static final String DIRECTIVE_PARAM_MISSING = "Missing arguments for directive %s";
-    public static final String UNKNOWN_OP_UNARY = "Unknown unary operator: %s";
-    public static final String UNKNOWN_OP_BINARY = "Unknown binary operator: %s";
-    public static final String UNKNOWN_TOKEN = "Unexpected token type: %s";
-    public static final String ID_IS_KEYWORD = "Syntax error on token `%s`, It is a reserved/keyword identifier";
-    public static final String ID_IS_RESERVED = "Local variable `%s` cannot start with '$', it is a reserved identifier";
+    public static final String RETURN_NAME_INVALID = "parameter `returnName` is invalid";
+    public static final String DIRECTIVE_PARAM_MISSING = "missing arguments for directive %s";
+    public static final String UNKNOWN_OP_UNARY = "unknown unary operator: %s";
+    public static final String UNKNOWN_OP_BINARY = "unknown binary operator: %s";
+    public static final String UNKNOWN_TOKEN = "unexpected token type: %s";
+    public static final String ID_IS_KEYWORD = "syntax error on token `%s`, It is a reserved/keyword identifier";
+    public static final String ID_IS_RESERVED = "local variable `%s` cannot start with '$', it is a reserved identifier";
     public static final String DIRECTIVE_OUTSIDE_FOR = "`%s` cannot be used outside of `#for(...)`";
-    public static final String INVALID_UNICODE_STRING = "Invalid unicode in String";
-    public static final String DUPLICATED_MACRO_NAME = "Duplicated macro name: %s";
+    public static final String INVALID_UNICODE_STRING = "invalid unicode in String";
+    public static final String DUPLICATED_MACRO_NAME = "duplicated macro name: %s";
+    public static final String NOT_IN_MACRO_BLOCK = "not in macro defination";
 
     // interpret error
-    public static final String CLASS_NOT_FOUND = "Cannot resolve class: %s";
-    public static final String CTOR_NOT_FOUND = "Cannot resolve constructor: %s";
-    public static final String METHOD_NOT_FOUND = "Cannot resolve method: %s";
-    public static final String METHOD_STATIC_NOT_FOUND = "Cannot resolve static method: %s";
-    public static final String FIELD_STATIC_NOT_FOUND = "Cannot resolve static field: %s";
-    public static final String PROPERTY_NOT_FOUND = "Cannot resolve property: %s";
-    public static final String FUNCTION_NOT_FOUND = "Cannot resolve function: %s";
-    public static final String TAG_NOT_FOUND = "Cannot resolve tag: %s";
+    public static final String CLASS_NOT_FOUND = "cannot resolve class: %s";
+    public static final String CTOR_NOT_FOUND = "cannot resolve constructor: %s";
+    public static final String METHOD_NOT_FOUND = "cannot resolve method: %s";
+    public static final String METHOD_STATIC_NOT_FOUND = "cannot resolve static method: %s";
+    public static final String FIELD_STATIC_NOT_FOUND = "cannot resolve static field: %s";
+    public static final String PROPERTY_NOT_FOUND = "cannot resolve property: %s";
+    public static final String FUNCTION_NOT_FOUND = "cannot resolve function: %s";
+    public static final String TAG_NOT_FOUND = "cannot resolve tag: %s";
     public static final String OBJECT_IS_NULL = "object is null: %s";
     public static final String INDEX_IS_NULL = "index is null: %s";
-    public static final String TYPE_INCONSISTENT = "Inconsistent class for variable: %s";
-    public static final String OP_UNARY_UNDEFINED = "The operator `%s` is undefined for the argument type: %s";
-    public static final String OP_BINARY_UNDEFINED = "The operator `%s` is undefined for the argument type(s): %s, %s";
-    public static final String OP_LHS_IS_NULL = "Left operand is null";
-    public static final String OP_RHS_IS_NULL = "Right operand is null";
-    public static final String ARRAY_LEN_NULL = "Array length is null";
-    public static final String PARAM_NOT_INT = "Type mismatch: the arguments[%s] is not an Integer";
-    public static final String PARAM_IS_NULL = "The %s argument is null";
-    public static final String TYPE_MISMATCH = "Type mismatch: the %s argument cannot convert from %s to %s";
-    public static final String METHOD_INVOKE_ERROR = "Method invoke error: %s";
-    public static final String STATIC_METHOD_INVOKE_ERROR = "Method invoke error: %s#%s";
-    public static final String FUNCTION_INVOKE_ERROR = "Function invoke error: %s";
-    public static final String NEW_OBJECT_ERROR = "New object error: %s";
-    public static final String STATIC_FIELD_GET_ERROR = "Static field get error: %s#%s";
-    public static final String PROPERTY_GET_ERROR = "Property get error: %s";
+    public static final String TYPE_INCONSISTENT = "inconsistent class for variable: %s";
+    public static final String OP_UNARY_UNDEFINED = "the operator `%s` is undefined for the argument type: %s";
+    public static final String OP_BINARY_UNDEFINED = "the operator `%s` is undefined for the argument type(s): %s, %s";
+    public static final String OP_LHS_IS_NULL = "left operand is null";
+    public static final String OP_RHS_IS_NULL = "right operand is null";
+    public static final String ARRAY_LEN_NULL = "array length is null";
+    public static final String PARAM_NOT_INT = "type mismatch: the arguments[%s] is not an Integer";
+    public static final String PARAM_IS_NULL = "the %s argument is null";
+    public static final String TYPE_MISMATCH = "type mismatch: the %s argument cannot convert from %s to %s";
+    public static final String METHOD_INVOKE_ERROR = "method invoke error: %s";
+    public static final String STATIC_METHOD_INVOKE_ERROR = "method invoke error: %s#%s";
+    public static final String FUNCTION_INVOKE_ERROR = "function invoke error: %s";
+    public static final String NEW_OBJECT_ERROR = "new object error: %s";
+    public static final String STATIC_FIELD_GET_ERROR = "static field get error: %s#%s";
+    public static final String PROPERTY_GET_ERROR = "property get error: %s";
 
     // 判断是否是因为参数不匹配导致的错误
     public static boolean isReflectArgumentNotMatch(IllegalArgumentException e) {

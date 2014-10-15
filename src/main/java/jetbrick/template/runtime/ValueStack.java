@@ -20,6 +20,7 @@
 package jetbrick.template.runtime;
 
 import java.util.*;
+import jetbrick.template.Errors;
 import jetbrick.template.JetGlobalContext;
 import jetbrick.util.ClassUtils;
 
@@ -187,7 +188,7 @@ public final class ValueStack {
             Class<?> type = doGetType(name, current);
             if (type != null) {
                 if (!ClassUtils.isInstance(type, value)) {
-                    throw new IllegalStateException("inconsistent class for variable: " + name);
+                    throw new IllegalStateException(Errors.format(Errors.TYPE_INCONSISTENT, name));
                 }
             }
         }
@@ -215,7 +216,7 @@ public final class ValueStack {
             Class<?> type = doGetType(name, parent);
             if (type != null) {
                 if (!ClassUtils.isInstance(type, value)) {
-                    throw new IllegalStateException("inconsistent class for variable: " + name);
+                    throw new IllegalStateException(Errors.format(Errors.TYPE_INCONSISTENT, name));
                 }
             }
         }

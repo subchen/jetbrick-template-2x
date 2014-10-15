@@ -113,7 +113,7 @@ public final class AstCodeVisitor extends AbstractParseTreeVisitor<AstNode> impl
         } else if (parent instanceof Directive_tagContext) {
             block = Tokens.AST_BLOCK_TAG;
         } else {
-            throw new IllegalStateException();
+            throw new UnsupportedOperationException();
         }
 
         return new AstStatementList(statements, block, parseCtx);
@@ -165,7 +165,7 @@ public final class AstCodeVisitor extends AbstractParseTreeVisitor<AstNode> impl
         String name = nameNode.getText();
         Object value = ((AstConstant) accept(valueNode)).getValue();
 
-        boolean nameInvalid = false;
+        boolean invalidName = false;
         if (Symbols.OPTION_IMPORT.equals(name)) {
             if (value instanceof String) {
                 parseCtx.importClass((String) value);
@@ -192,10 +192,10 @@ public final class AstCodeVisitor extends AbstractParseTreeVisitor<AstNode> impl
                 return null;
             }
         } else {
-            nameInvalid = true;
+            invalidName = true;
         }
 
-        if (nameInvalid) {
+        if (invalidName) {
             throw new SyntaxException(Errors.OPTION_NAME_INVALID, name).set(pos(nameNode));
         } else {
             throw new SyntaxException(Errors.OPTION_VALUE_INVALID, name).set(pos(valueNode));

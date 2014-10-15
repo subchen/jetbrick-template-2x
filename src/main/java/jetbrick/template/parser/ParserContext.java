@@ -168,7 +168,7 @@ public final class ParserContext {
             if (allowSameRedefine && type == old) {
                 return;
             }
-            throw new IllegalStateException(Errors.format(Errors.VAR_REDEFINE, name));
+            throw new IllegalStateException(Errors.format(Errors.VAR_TYPE_REDEFINE, name));
         }
 
         currentSymbols.put(name, type);
@@ -199,7 +199,7 @@ public final class ParserContext {
             }
             return new ArrayList<String>(currentSymbols.keySet());
         }
-        throw new IllegalStateException("Not in macro defination");
+        throw new UnsupportedOperationException(Errors.NOT_IN_MACRO_BLOCK);
     }
 
     // ---- macros (#loadmacro / #macro) --------------------------------------------

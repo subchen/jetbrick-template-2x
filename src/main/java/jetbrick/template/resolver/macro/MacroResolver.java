@@ -20,8 +20,7 @@
 package jetbrick.template.resolver.macro;
 
 import java.util.*;
-import jetbrick.template.JetTemplate;
-import jetbrick.template.JetTemplateMacro;
+import jetbrick.template.*;
 
 public final class MacroResolver {
     private List<JetTemplate> loadedTemplates;
@@ -45,7 +44,7 @@ public final class MacroResolver {
         }
         JetTemplateMacro old = decleardMacros.put(macro.getName(), macro);
         if (old != null) {
-            throw new IllegalStateException("duplicated macro name: " + macro.getName());
+            throw new IllegalStateException(Errors.format(Errors.DUPLICATED_MACRO_NAME, macro.getName()));
         }
     }
 
