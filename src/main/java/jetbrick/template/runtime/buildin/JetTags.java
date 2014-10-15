@@ -70,7 +70,7 @@ public final class JetTags {
         if (value == null) {
             ctx.invoke();
         } else {
-            ctx.getWriter().print(value);
+            ctx.getWriter().print(value.toString());
         }
     }
 

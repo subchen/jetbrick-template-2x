@@ -75,18 +75,6 @@ public abstract class JetWriter implements Closeable, Flushable {
 
     public abstract void print(String x) throws IOException;
 
-    public final void print(Object x) throws IOException {
-        if (x != null) {
-            if (x instanceof byte[]) {
-                print((byte[]) x);
-            } else if (x instanceof char[]) {
-                print((char[]) x);
-            } else {
-                print(x.toString());
-            }
-        }
-    }
-
     @Override
     public abstract void flush() throws IOException;
 

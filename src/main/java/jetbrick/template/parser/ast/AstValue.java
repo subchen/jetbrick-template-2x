@@ -36,7 +36,7 @@ public final class AstValue extends AstStatement {
         Object value = expression.execute(ctx);
         if (value != null) {
             try {
-                ctx.getWriter().print(value);
+                ctx.getWriter().print(value.toString());
             } catch (IOException e) {
                 throw ExceptionUtils.unchecked(e);
             }
