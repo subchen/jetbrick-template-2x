@@ -10,54 +10,29 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>jetbrick-template-servlet</artifactId>
+    <artifactId>jetbrick-template-web</artifactId>
     <version>2.0-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
 
     <name>${project.artifactId}</name>
     <description>web integrate for jetbrick-template 2.x</description>
     <url>http://subchen.github.io/jetbrick-template</url>
 
+    <modules>
+        <module>jetbrick-template-servlet</module>
+        <module>jetbrick-template-springmvc</module>
+        <module>jetbrick-template-jfinal</module>
+    </modules>
+
     <scm>
-        <url>https://github.com/subchen/jetbrick-template-servlet.git</url>
-        <connection>scm:git:https://github.com/subchen/jetbrick-template-servlet.git</connection>
-        <developerConnection>scm:git:git://github.com/subchen/jetbrick-template-servlet.git</developerConnection>
+        <url>https://github.com/subchen/jetbrick-template-web.git</url>
+        <connection>scm:git:https://github.com/subchen/jetbrick-template-web.git</connection>
+        <developerConnection>scm:git:git://github.com/subchen/jetbrick-template-web.git</developerConnection>
     </scm>
 
     <issueManagement>
         <system>github issue</system>
-        <url>https://github.com/subchen/jetbrick-template-servlet/issues</url>
+        <url>https://github.com/subchen/jetbrick-template-web/issues</url>
     </issueManagement>
-
-    <dependencies>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>jetbrick-template</artifactId>
-            <version>2.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>${servlet.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-            <version>${slf4j.version}</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
 
 </project>
