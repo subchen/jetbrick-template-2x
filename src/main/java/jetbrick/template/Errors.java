@@ -81,13 +81,17 @@ public final class Errors {
     public static final String ARGUMENT_IS_VOID = "argument is Void";
 
     // 判断是否是因为参数不匹配导致的错误
-    public static boolean isReflectArgumentNotMatch(IllegalArgumentException e) {
-        String className = e.getStackTrace()[0].getClassName();
-        //@formatter:off
-        return "sun.reflect.NativeMethodAccessorImpl".equals(className)
-            || "sun.reflect.GeneratedMethodAccessor1".equals(className)
-            || className.startsWith("jetbrick.bean.asm.delegate.");
-        //@formatter:on
+    public static boolean isReflectIllegalArgument(Throwable e) {
+        Class<?> cls = e.getClass();
+        if (cls == IllegalArgumentException.class || cls == ClassCastException.class) {
+            String className = e.getStackTrace()[0].getClassName();
+            //@formatter:off
+            return "sun.reflect.NativeMethodAccessorImpl".equals(className)
+                || "sun.reflect.GeneratedMethodAccessor1".equals(className)
+                || className.startsWith("jetbrick.bean.asm.delegate.");
+            //@formatter:on
+        }
+        return false;
     }
 
     public static String typeName(Object object) {

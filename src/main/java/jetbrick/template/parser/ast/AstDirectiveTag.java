@@ -69,8 +69,8 @@ public final class AstDirectiveTag extends AstDirective {
 
         try {
             invoker.invoke(tagContext, arguments);
-        } catch (IllegalArgumentException e) {
-            if (useLatest && Errors.isReflectArgumentNotMatch(e)) {
+        } catch (RuntimeException e) {
+            if (useLatest && Errors.isReflectIllegalArgument(e)) {
                 // 重新查找匹配的 Invoker
                 doInvoke(ctx, null, arguments);
             }

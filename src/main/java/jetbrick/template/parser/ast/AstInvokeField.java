@@ -68,8 +68,8 @@ public final class AstInvokeField extends AstExpression {
 
         try {
             return getter.get(object);
-        } catch (IllegalArgumentException e) {
-            if (useLatest && Errors.isReflectArgumentNotMatch(e)) {
+        } catch (RuntimeException e) {
+            if (useLatest && Errors.isReflectIllegalArgument(e)) {
                 // 重新查找匹配的 Getter
                 return doInvokeGetter(ctx, null, object);
             }
