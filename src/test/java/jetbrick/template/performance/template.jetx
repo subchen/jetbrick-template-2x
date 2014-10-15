@@ -44,7 +44,7 @@
     </tr>
     </thead>
     <tbody>
-    #for(item : items)
+    #for(Model item : items)
     <tr class="${for.index % 2 == 1 ? "even" : "odd"}">
         <td>${for.index}</td>
         <td>${item.id}</td>
