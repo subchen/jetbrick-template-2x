@@ -51,11 +51,11 @@ final class JetTemplateImpl implements JetTemplate {
 
     private final MacroResolver macroResolver;
 
-    public JetTemplateImpl(JetEngine engine, Resource resource) {
+    public JetTemplateImpl(JetEngine engine, Resource resource, boolean reloadable) {
         this.engine = engine;
         this.resource = resource;
         this.config = engine.getConfig();
-        this.reloadable = config.isTemplateReload();
+        this.reloadable = reloadable;
         this.lastModified = 0;
         this.macroResolver = new MacroResolver();
     }

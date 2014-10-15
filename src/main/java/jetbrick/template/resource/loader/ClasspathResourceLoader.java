@@ -27,6 +27,7 @@ public final class ClasspathResourceLoader extends AbstractResourceLoader {
 
     public ClasspathResourceLoader() {
         root = "";
+        reloadable = false;
     }
 
     @Override

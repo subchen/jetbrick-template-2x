@@ -14,7 +14,6 @@ public class PerformanceTest {
     public static void main(String[] args) throws Throwable {
         Properties config = new Properties();
         config.setProperty(JetConfig.IMPORT_CLASSES, Model.class.getName());
-        config.setProperty(JetConfig.TEMPLATE_RELOAD, "false");
         JetEngine engine = JetEngine.create(config);
 
         Map<String, Object> context = new HashMap<String, Object>();

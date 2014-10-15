@@ -28,6 +28,7 @@ public final class FileSystemResourceLoader extends AbstractResourceLoader {
 
     public FileSystemResourceLoader() {
         root = ".";
+        reloadable = false;
     }
 
     @Override

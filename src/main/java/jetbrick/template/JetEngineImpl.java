@@ -55,9 +55,8 @@ final class JetEngineImpl extends JetEngine {
         // output log
         log.info("JetEngine.version = {}", JetEngine.VERSION);
         for (ResourceLoader loader : loaders) {
-            log.info("JetEngine.loader = {}, root = {}", loader.getClass().getName(), loader.getRoot());
+            log.info("JetEngine.loader = {}, root = {}, reload = {}", loader.getClass().getName(), loader.getClass().getName(), loader.getRoot(), loader.isReloadable());
         }
-        log.info("JetEngine.reload = {}", config.isTemplateReload());
 
         // create globals
         this.globalResolver = doCreateGlobalResolver();
@@ -102,7 +101,7 @@ final class JetEngineImpl extends JetEngine {
     @Override
     public JetTemplate createTemplate(String source) {
         Resource resource = new SourceResource(source);
-        JetTemplate template = new JetTemplateImpl(this, resource);
+        JetTemplate template = new JetTemplateImpl(this, resource, false);
         template.reload();
         return template;
     }
@@ -123,7 +122,7 @@ final class JetEngineImpl extends JetEngine {
             Resource resource = loader.load(name);
             if (resource != null) {
                 // create a new template
-                template = new JetTemplateImpl(this, resource);
+                template = new JetTemplateImpl(this, resource, loader.isReloadable());
                 JetTemplate old = cache.putIfAbsent(name, template);
                 if (old != null) {
                     template = old;
@@ -135,6 +134,7 @@ final class JetEngineImpl extends JetEngine {
         return null;
     }
 
+    @Override
     public Resource getResource(String name) throws ResourceNotFoundException {
         // 将一个路径名称转为标准格式
         name = PathUtils.normalize(name);

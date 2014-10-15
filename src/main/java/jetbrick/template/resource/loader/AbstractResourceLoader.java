@@ -23,6 +23,7 @@ import jetbrick.util.PathUtils;
 
 public abstract class AbstractResourceLoader implements ResourceLoader {
     protected String root;
+    protected boolean reloadable;
 
     @Override
     public String getRoot() {
@@ -32,6 +33,16 @@ public abstract class AbstractResourceLoader implements ResourceLoader {
     @Override
     public void setRoot(String root) {
         this.root = PathUtils.normalize(root);
+    }
+
+    @Override
+    public boolean isReloadable() {
+        return reloadable;
+    }
+
+    @Override
+    public void setReloadable(boolean reloadable) {
+        this.reloadable = reloadable;
     }
 
 }
