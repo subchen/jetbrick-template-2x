@@ -46,25 +46,12 @@ public final class AstInvokeField extends AstExpression {
             throw new InterpretException(Errors.OBJECT_IS_NULL).set(position);
         }
 
-        try {
-            try {
-                // 尝试匹配最近一次使用的 getter
-                return doInvokeGetter(ctx, last, object);
-            } catch (IllegalArgumentException e) {
-                if (Errors.isReflectArgumentNotMatch(e)) {
-                    // 重新查找匹配的 getter
-                    return doInvokeGetter(ctx, null, object);
-                }
-                throw e;
-            }
-        } catch (InterpretException e) {
-            throw e;
-        } catch (RuntimeException e) {
-            throw new InterpretException(Errors.PROPERTY_GET_ERROR, name).cause(e).set(position);
-        }
+        return doInvokeGetter(ctx, last, object);
     }
 
     private Object doInvokeGetter(InterpretContext ctx, Getter getter, Object object) throws InterpretException {
+        boolean useLatest = (getter != null);
+
         if (getter == null) {
             Class<?> objectClass = objectExpression.getResultType(ctx.getValueStack(), object);
             getter = ctx.getGlobalResolver().resolveGetter(objectClass, name);
@@ -77,6 +64,14 @@ public final class AstInvokeField extends AstExpression {
             this.last = getter; // 找到一个新的 getter
         }
 
-        return getter.get(object);
+        try {
+            return getter.get(object);
+        } catch (IllegalArgumentException e) {
+            if (useLatest && Errors.isReflectArgumentNotMatch(e)) {
+                // 重新查找匹配的 Getter
+                doInvokeGetter(ctx, null, object);
+            }
+            throw new InterpretException(Errors.PROPERTY_GET_ERROR).cause(e).set(position);
+        }
     }
 }

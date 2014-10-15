@@ -76,6 +76,8 @@ public final class AstInvokeMethod extends AstExpression {
     }
 
     private Object doInvoke(InterpretContext ctx, MethodInvoker invoker, Object object, Object[] arguments) throws InterpretException {
+        boolean useLatest = (invoker != null);
+
         if (invoker == null) {
             Class<?> objectClass = objectExpression.getResultType(ctx.getValueStack(), object);
             Class<?>[] argumentTypes = ParameterUtils.getParameterTypes(arguments);
@@ -89,6 +91,14 @@ public final class AstInvokeMethod extends AstExpression {
             this.last = invoker; // 找到一个新的  invoker
         }
 
-        return invoker.invoke(object, arguments);
+        try {
+            return invoker.invoke(object, arguments);
+        } catch (IllegalArgumentException e) {
+            if (useLatest && Errors.isReflectArgumentNotMatch(e)) {
+                // 重新查找匹配的 Invoker
+                doInvoke(ctx, null, object, arguments);
+            }
+            throw new InterpretException(Errors.METHOD_INVOKE_ERROR).cause(e).set(position);
+        }
     }
 }

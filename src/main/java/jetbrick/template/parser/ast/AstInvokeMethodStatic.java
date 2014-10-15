@@ -49,25 +49,12 @@ public final class AstInvokeMethodStatic extends AstExpression {
             arguments = argumentList.execute(ctx);
         }
 
-        try {
-            try {
-                // 尝试匹配最近一次使用的 method
-                return doInvoke(ctx, last, arguments);
-            } catch (IllegalArgumentException e) {
-                if (Errors.isReflectArgumentNotMatch(e)) {
-                    // 重新查找匹配的函数
-                    return doInvoke(ctx, null, arguments);
-                }
-                throw e;
-            }
-        } catch (InterpretException e) {
-            throw e;
-        } catch (RuntimeException e) {
-            throw new InterpretException(Errors.STATIC_METHOD_INVOKE_ERROR, cls.getName(), name).cause(e).set(position);
-        }
+        return doInvoke(ctx, last, arguments);
     }
 
     private Object doInvoke(InterpretContext ctx, MethodInvoker invoker, Object[] arguments) throws InterpretException {
+        boolean useLatest = (invoker != null);
+
         if (invoker == null) {
             Class<?>[] argumentTypes = ParameterUtils.getParameterTypes(arguments);
             invoker = ctx.getGlobalResolver().resolveMethod(cls, name, argumentTypes, true);
@@ -80,6 +67,14 @@ public final class AstInvokeMethodStatic extends AstExpression {
             this.last = invoker; // 找到一个新的 function
         }
 
-        return invoker.invoke(null, arguments);
+        try {
+            return invoker.invoke(null, arguments);
+        } catch (IllegalArgumentException e) {
+            if (useLatest && Errors.isReflectArgumentNotMatch(e)) {
+                // 重新查找匹配的 Invoker
+                doInvoke(ctx, null, arguments);
+            }
+            throw new InterpretException(Errors.STATIC_METHOD_INVOKE_ERROR).cause(e).set(position);
+        }
     }
 }

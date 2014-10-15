@@ -152,7 +152,7 @@ public final class AstCodeVisitor extends AbstractParseTreeVisitor<AstNode> impl
     }
 
     @Override
-    public AstStatementList visitDirective_options(Directive_optionsContext ctx) {
+    public AstNode visitDirective_options(Directive_optionsContext ctx) {
         accept(ctx.directive_options_expression());
         return null;
     }
@@ -203,7 +203,7 @@ public final class AstCodeVisitor extends AbstractParseTreeVisitor<AstNode> impl
     }
 
     @Override
-    public AstStatementList visitDirective_define(Directive_defineContext ctx) {
+    public AstNode visitDirective_define(Directive_defineContext ctx) {
         accept(ctx.directive_define_expression());
         return null;
     }

@@ -75,6 +75,7 @@ public final class Errors {
     public static final String NEW_OBJECT_ERROR = "new object error: %s";
     public static final String STATIC_FIELD_GET_ERROR = "static field get error: %s#%s";
     public static final String PROPERTY_GET_ERROR = "property get error: %s";
+    public static final String FOR_ITERATOR_ERROR = "iterator error when index = %s";
 
     // 判断是否是因为参数不匹配导致的错误
     public static boolean isReflectArgumentNotMatch(IllegalArgumentException e) {

@@ -48,25 +48,12 @@ public final class AstInvokeFunction extends AstExpression {
             arguments = argumentList.execute(ctx);
         }
 
-        try {
-            try {
-                // 尝试匹配最近一次使用的 invoker
-                return doInvoke(ctx, last, arguments);
-            } catch (IllegalArgumentException e) {
-                if (Errors.isReflectArgumentNotMatch(e)) {
-                    // 重新查找匹配的 invoker
-                    return doInvoke(ctx, null, arguments);
-                }
-                throw e;
-            }
-        } catch (InterpretException e) {
-            throw e;
-        } catch (RuntimeException e) {
-            throw new InterpretException(Errors.FUNCTION_INVOKE_ERROR, name).cause(e).set(position);
-        }
+        return doInvoke(ctx, last, arguments);
     }
 
     private Object doInvoke(InterpretContext ctx, FunctionInvoker fn, Object[] arguments) throws InterpretException {
+        boolean useLatest = (fn != null);
+
         if (fn == null) {
             Class<?>[] argumentTypes = ParameterUtils.getParameterTypes(arguments);
             fn = resolveFunction(ctx, argumentTypes);
@@ -79,7 +66,15 @@ public final class AstInvokeFunction extends AstExpression {
             this.last = fn; // 找到一个新的 invoker
         }
 
-        return fn.invoke(arguments);
+        try {
+            return fn.invoke(arguments);
+        } catch (IllegalArgumentException e) {
+            if (useLatest && Errors.isReflectArgumentNotMatch(e)) {
+                // 重新查找匹配的 Invoker
+                doInvoke(ctx, null, arguments);
+            }
+            throw new InterpretException(Errors.FUNCTION_INVOKE_ERROR).cause(e).set(position);
+        }
     }
 
     private FunctionInvoker resolveFunction(InterpretContext ctx, Class<?>[] argumentTypes) {

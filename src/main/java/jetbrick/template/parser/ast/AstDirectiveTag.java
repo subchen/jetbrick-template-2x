@@ -49,25 +49,12 @@ public final class AstDirectiveTag extends AstDirective {
             arguments = argumentList.execute(ctx);
         }
 
-        try {
-            try {
-                // 尝试匹配最近一次使用的 function
-                doInvoke(ctx, last, arguments);
-            } catch (IllegalArgumentException e) {
-                if (Errors.isReflectArgumentNotMatch(e)) {
-                    // 重新查找匹配的函数
-                    doInvoke(ctx, null, arguments);
-                }
-                throw e;
-            }
-        } catch (InterpretException e) {
-            throw e;
-        } catch (RuntimeException e) {
-            throw new InterpretException(e).set(position);
-        }
+        doInvoke(ctx, last, arguments);
     }
 
     private void doInvoke(InterpretContext ctx, TagInvoker invoker, Object[] arguments) throws InterpretException {
+        boolean useLatest = (invoker != null);
+
         if (invoker == null) {
             Class<?>[] argumentTypes = ParameterUtils.getParameterTypes(arguments);
             invoker = ctx.getGlobalResolver().resolveTag(name, argumentTypes);
@@ -77,9 +64,17 @@ public final class AstDirectiveTag extends AstDirective {
                 throw new InterpretException(Errors.TAG_NOT_FOUND, signature).set(position);
             }
 
-            this.last = invoker; // 找到一个新的 function
+            this.last = invoker; // 找到一个新的 Invoker
         }
 
-        invoker.invoke(tagContext, arguments);
+        try {
+            invoker.invoke(tagContext, arguments);
+        } catch (IllegalArgumentException e) {
+            if (useLatest && Errors.isReflectArgumentNotMatch(e)) {
+                // 重新查找匹配的 Invoker
+                doInvoke(ctx, null, arguments);
+            }
+            throw new InterpretException(e).set(position);
+        }
     }
 }

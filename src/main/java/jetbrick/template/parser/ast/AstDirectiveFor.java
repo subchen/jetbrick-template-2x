@@ -19,20 +19,21 @@
  */
 package jetbrick.template.parser.ast;
 
+import jetbrick.template.Errors;
 import jetbrick.template.parser.Symbols;
 import jetbrick.template.runtime.*;
 
 public final class AstDirectiveFor extends AstDirective {
     private final String identifier;
     private final AstExpression expression;
-    private final AstStatementList statement;
-    private final AstStatementList elseStatement;
+    private final AstStatementList statements;
+    private final AstStatementList elseStatements;
 
-    public AstDirectiveFor(String identifier, AstExpression expression, AstStatementList statement, AstStatementList elseStatement) {
+    public AstDirectiveFor(String identifier, AstExpression expression, AstStatementList statements, AstStatementList elseStatements) {
         this.identifier = identifier;
         this.expression = expression;
-        this.statement = statement;
-        this.elseStatement = elseStatement;
+        this.statements = statements;
+        this.elseStatements = elseStatements;
     }
 
     @Override
@@ -49,10 +50,13 @@ public final class AstDirectiveFor extends AstDirective {
 
             while (it.hasNext()) {
                 Object item = it.next();
+                try {
+                    valueStack.setLocal(identifier, item);
+                } catch (IllegalStateException e) {
+                    throw new InterpretException(Errors.FOR_ITERATOR_ERROR, it.getIndex()).cause(e).set(expression.getPosition());
+                }
 
-                valueStack.setLocal(identifier, item);
-
-                statement.execute(ctx);
+                statements.execute(ctx);
 
                 // 处理 break, continue, return, stop 语句
                 int signal = ctx.getSignal();
@@ -70,8 +74,8 @@ public final class AstDirectiveFor extends AstDirective {
             }
             // restore out.for
             valueStack.setLocal(Symbols.FOR, old);
-        } else if (elseStatement != null) {
-            elseStatement.execute(ctx);
+        } else if (elseStatements != null) {
+            elseStatements.execute(ctx);
         }
     }
 }
