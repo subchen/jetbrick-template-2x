@@ -57,22 +57,7 @@ public final class AstInvokeMethod extends AstExpression {
             arguments = argumentList.execute(ctx);
         }
 
-        try {
-            try {
-                // 尝试匹配最近一次使用的 invoker
-                return doInvoke(ctx, last, object, arguments);
-            } catch (IllegalArgumentException e) {
-                if (Errors.isReflectArgumentNotMatch(e)) {
-                    // 重新查找匹配的 invoker
-                    return doInvoke(ctx, null, object, arguments);
-                }
-                throw e;
-            }
-        } catch (InterpretException e) {
-            throw e;
-        } catch (RuntimeException e) {
-            throw new InterpretException(Errors.METHOD_INVOKE_ERROR, name).cause(e).set(position);
-        }
+        return doInvoke(ctx, last, object, arguments);
     }
 
     private Object doInvoke(InterpretContext ctx, MethodInvoker invoker, Object object, Object[] arguments) throws InterpretException {
