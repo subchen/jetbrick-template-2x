@@ -32,6 +32,7 @@ public final class ServletResourceLoader extends AbstractResourceLoader {
 
     public ServletResourceLoader() {
         root = "/";
+        reloadable = false;
     }
 
     @Override
