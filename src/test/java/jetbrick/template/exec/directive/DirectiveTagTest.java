@@ -4,7 +4,8 @@ import java.io.IOException;
 import jetbrick.template.exec.AbstractJetxSourceTest;
 import jetbrick.template.runtime.InterpretException;
 import jetbrick.template.runtime.JetTagContext;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Test;
 
 public class DirectiveTagTest extends AbstractJetxSourceTest {
 

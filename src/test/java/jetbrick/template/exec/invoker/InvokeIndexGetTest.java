@@ -3,7 +3,8 @@ package jetbrick.template.exec.invoker;
 import java.util.*;
 import jetbrick.template.exec.AbstractJetxSourceTest;
 import jetbrick.template.runtime.InterpretException;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Test;
 
 public class InvokeIndexGetTest extends AbstractJetxSourceTest {
     private static Map<String, Object> ctx;

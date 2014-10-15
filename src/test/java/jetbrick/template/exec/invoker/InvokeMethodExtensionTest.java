@@ -2,7 +2,8 @@ package jetbrick.template.exec.invoker;
 
 import jetbrick.template.exec.AbstractJetxSourceTest;
 import jetbrick.util.StringUtils;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Test;
 
 public class InvokeMethodExtensionTest extends AbstractJetxSourceTest {
 

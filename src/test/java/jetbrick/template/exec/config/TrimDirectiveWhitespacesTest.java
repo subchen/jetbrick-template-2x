@@ -1,8 +1,8 @@
 package jetbrick.template.exec.config;
 
-import jetbrick.template.JetConfig;
 import jetbrick.template.exec.AbstractJetxSourceTest;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Test;
 
 public class TrimDirectiveWhitespacesTest extends AbstractJetxSourceTest {
 

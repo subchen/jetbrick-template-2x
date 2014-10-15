@@ -3,7 +3,8 @@ package jetbrick.template.exec.invoker;
 import jetbrick.template.exec.AbstractJetxSourceTest;
 import jetbrick.template.parser.SyntaxException;
 import jetbrick.template.runtime.InterpretException;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Test;
 
 public class InvokeNewObjectTest extends AbstractJetxSourceTest {
 

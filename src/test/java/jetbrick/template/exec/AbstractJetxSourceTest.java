@@ -7,7 +7,8 @@ import java.util.Properties;
 import jetbrick.template.JetEngine;
 import jetbrick.template.JetTemplate;
 import jetbrick.util.ExceptionUtils;
-import org.junit.*;
+import org.junit.After;
+import org.junit.Before;
 
 public abstract class AbstractJetxSourceTest {
     protected JetEngine engine;

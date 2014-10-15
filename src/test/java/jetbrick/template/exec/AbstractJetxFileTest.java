@@ -1,14 +1,12 @@
 package jetbrick.template.exec;
 
-import java.io.StringWriter;
-import java.io.Writer;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 import jetbrick.io.resource.Resource;
-import jetbrick.template.*;
+import jetbrick.template.JetConfig;
+import jetbrick.template.JetTemplate;
 import jetbrick.template.resource.SourceResource;
 import jetbrick.template.resource.loader.AbstractResourceLoader;
-import jetbrick.util.ExceptionUtils;
-import org.junit.*;
 
 public abstract class AbstractJetxFileTest extends AbstractJetxSourceTest {
     protected static final Map<String, String> sourceMap = new HashMap<String, String>();
