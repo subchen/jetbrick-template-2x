@@ -31,16 +31,14 @@ public abstract class AbstractResourceLoader implements ResourceLoader {
     }
 
     @Override
-    public void setRoot(String root) {
-        this.root = PathUtils.normalize(root);
-    }
-
-    @Override
     public boolean isReloadable() {
         return reloadable;
     }
 
-    @Override
+    public void setRoot(String root) {
+        this.root = PathUtils.normalize(root);
+    }
+
     public void setReloadable(boolean reloadable) {
         this.reloadable = reloadable;
     }

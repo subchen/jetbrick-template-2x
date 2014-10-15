@@ -31,25 +31,11 @@ public interface ResourceLoader {
     public String getRoot();
 
     /**
-     * 设置根路径.
-     *
-     * @param root  根路径
-     */
-    public void setRoot(String root);
-
-    /**
      * 是否支持热加载.
      *
      * @return 是否支持热加载
      */
     public boolean isReloadable();
-
-    /**
-     * 是否支持热加载.
-     *
-     * @param reloadable 是否支持热加载
-     */
-    public void setReloadable(boolean reloadable);
 
     /**
      * 获取一个代表模板的 Resource.
