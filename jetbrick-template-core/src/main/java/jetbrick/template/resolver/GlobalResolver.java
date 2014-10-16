@@ -28,13 +28,14 @@ import jetbrick.io.finder.ClassFinder;
 import jetbrick.template.*;
 import jetbrick.template.resolver.clazz.ClassResolver;
 import jetbrick.template.resolver.function.FunctionInvoker;
-import jetbrick.template.resolver.function.FunctionResolver;
+import jetbrick.template.resolver.function.FunctionInvokerResolver;
 import jetbrick.template.resolver.macro.MacroResolver;
 import jetbrick.template.resolver.method.MethodInvoker;
 import jetbrick.template.resolver.method.MethodInvokerResolver;
+import jetbrick.template.resolver.property.DefaultGetterResolver;
 import jetbrick.template.resolver.property.GetterResolver;
 import jetbrick.template.resolver.tag.TagInvoker;
-import jetbrick.template.resolver.tag.TagResolver;
+import jetbrick.template.resolver.tag.TagInvokerResolver;
 import jetbrick.util.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,16 +47,18 @@ public final class GlobalResolver {
     private static final Logger log = LoggerFactory.getLogger(GlobalResolver.class);
 
     private final ClassResolver classResolver;
+    private final DefaultGetterResolver defaultGetterResolver;
     private final MethodInvokerResolver methodInvokerResolver;
-    private final FunctionResolver functionResolver;
-    private final TagResolver tagResolver;
+    private final FunctionInvokerResolver functionInvokerResolver;
+    private final TagInvokerResolver tagInvokerResolver;
     private final MacroResolver macroResolver;
 
     public GlobalResolver() {
         classResolver = new ClassResolver(true);
+        defaultGetterResolver = new DefaultGetterResolver();
         methodInvokerResolver = new MethodInvokerResolver();
-        functionResolver = new FunctionResolver();
-        tagResolver = new TagResolver();
+        functionInvokerResolver = new FunctionInvokerResolver();
+        tagInvokerResolver = new TagInvokerResolver();
         macroResolver = new MacroResolver();
     }
 
@@ -101,6 +104,13 @@ public final class GlobalResolver {
     }
 
     /**
+     * 注册一个 GetterResolver
+     */
+    public void registerGetterResolver(GetterResolver resolver) {
+        defaultGetterResolver.register(resolver);
+    }
+
+    /**
      * 注册 method 扩展
      */
     public void registerMethods(String className) {
@@ -133,21 +143,21 @@ public final class GlobalResolver {
         if (cls == null) {
             throw new TemplateException("@JetFunctions class not found: " + className);
         }
-        functionResolver.register(cls);
+        functionInvokerResolver.register(cls);
     }
 
     /**
      * 注册 function 扩展
      */
     public void registerFunctions(Class<?> cls) {
-        functionResolver.register(cls);
+        functionInvokerResolver.register(cls);
     }
 
     /**
      * 注册 function 扩展
      */
     public void registerFunction(MethodInfo method) {
-        functionResolver.register(method);
+        functionInvokerResolver.register(method);
     }
 
     /**
@@ -158,21 +168,21 @@ public final class GlobalResolver {
         if (cls == null) {
             throw new TemplateException("@JetTags class not found: " + className);
         }
-        tagResolver.register(cls);
+        tagInvokerResolver.register(cls);
     }
 
     /**
      * 注册 tag 扩展
      */
     public void registerTags(Class<?> cls) {
-        tagResolver.register(cls);
+        tagInvokerResolver.register(cls);
     }
 
     /**
      * 注册 tag 扩展
      */
     public void registerTag(MethodInfo method) {
-        tagResolver.register(method);
+        tagInvokerResolver.register(method);
     }
 
     /**
@@ -202,14 +212,14 @@ public final class GlobalResolver {
      * 根据参数类型，查找一个匹配的函数
      */
     public FunctionInvoker resolveFunction(String name, Class<?>[] argumentTypes) {
-        return functionResolver.resolve(name, argumentTypes);
+        return functionInvokerResolver.resolve(name, argumentTypes);
     }
 
     /**
      * 根据参数类型，查找一个匹配的 Tag
      */
     public TagInvoker resolveTag(String name, Class<?>[] argumentTypes) {
-        return tagResolver.resolve(name, argumentTypes);
+        return tagInvokerResolver.resolve(name, argumentTypes);
     }
 
     /**
@@ -219,7 +229,10 @@ public final class GlobalResolver {
         return macroResolver.resolve(name, argumentTypes);
     }
 
+    /**
+     * 根据参数名称，查找一个匹配的属性
+     */
     public Getter resolveGetter(Class<?> objectClass, String name) {
-        return GetterResolver.resolve(objectClass, name);
+        return defaultGetterResolver.resolve(objectClass, name);
     }
 }

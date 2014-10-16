@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
 public final class MethodInvokerResolver {
     private static final Logger log = LoggerFactory.getLogger(MethodInvokerResolver.class);
 
-    private static final ConcurrentMap<String, MethodInvoker> cache = new ConcurrentHashMap<String, MethodInvoker>(256);
+    private final ConcurrentMap<String, MethodInvoker> cache = new ConcurrentHashMap<String, MethodInvoker>(256);
     private final Map<String, List<MethodInfo>> extensionMethodMap = new HashMap<String, List<MethodInfo>>(32);
 
     /**

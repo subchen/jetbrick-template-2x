@@ -20,65 +20,13 @@
 package jetbrick.template.resolver.property;
 
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
-import jetbrick.bean.*;
-import jetbrick.template.resolver.SignatureUtils;
+import jetbrick.bean.Getter;
 
 /**
- * 全局用于查找 obj.name 访问
+ * 自定义访问 map.key
  */
-public final class GetterResolver {
-    private static final ConcurrentMap<String, Getter> cache = new ConcurrentHashMap<String, Getter>(256);
-
-    /**
-     * 查找属性访问
-     */
-    public static Getter resolve(Class<?> clazz, String name) {
-        String signature = SignatureUtils.getFieldSignature(clazz, name);
-        Getter found = cache.get(signature);
-        if (found != null) {
-            return found;
-        }
-
-        Getter getter = doGetGetter(clazz, name);
-
-        if (getter != null) {
-            cache.put(signature, getter);
-            return getter;
-        }
-
-        return null;
-    }
-
-    /**
-     * 查找属性访问
-     */
-    private static Getter doGetGetter(Class<?> clazz, String name) {
-        // map.key
-        if (Map.class.isAssignableFrom(clazz)) {
-            return new MapGetter(name);
-        }
-        // array.length
-        if ("length".equals(name) && clazz.isArray()) {
-            return ArrayLengthGetter.INSTANCE;
-        }
-
-        KlassInfo klass = KlassInfo.create(clazz);
-
-        // getXXX() or isXXX()
-        PropertyInfo property = klass.getProperty(name);
-        if (property != null && property.readable()) {
-            return property;
-        }
-
-        // object.field (only public)
-        FieldInfo field = klass.getField(name);
-        if (field != null && field.isPublic()) {
-            return field;
-        }
-
-        return null;
-    }
+public interface GetterResolver {
+    
+    public Getter resolve(Class<?> clazz, String name);
 
 }

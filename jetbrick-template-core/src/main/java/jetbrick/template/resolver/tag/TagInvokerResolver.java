@@ -17,42 +17,46 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package jetbrick.template.resolver.function;
+package jetbrick.template.resolver.tag;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import jetbrick.bean.*;
 import jetbrick.template.resolver.SignatureUtils;
+import jetbrick.template.runtime.JetTagContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * 用于查找全局注册的扩展函数.
+ * 用于查找全局注册的 Tag.
  */
-public final class FunctionResolver {
-    private static final Logger log = LoggerFactory.getLogger(FunctionResolver.class);
+public final class TagInvokerResolver {
+    private static final Logger log = LoggerFactory.getLogger(TagInvokerResolver.class);
 
-    private static final ConcurrentMap<String, FunctionInvoker> cache = new ConcurrentHashMap<String, FunctionInvoker>(64);
-    private final Map<String, List<MethodInfo>> functionMap = new HashMap<String, List<MethodInfo>>(32);
+    private final ConcurrentMap<String, TagInvoker> cache = new ConcurrentHashMap<String, TagInvoker>(64);
+    private final Map<String, List<MethodInfo>> tagMap = new HashMap<String, List<MethodInfo>>(32);
 
     /**
-     * 注册一组 function 扩展
+     * 注册一组 Tag 扩展
      */
     public void register(Class<?> cls) {
         KlassInfo klass = KlassInfo.create(cls);
         int i = 0;
         for (MethodInfo method : klass.getDeclaredMethods()) {
             if (method.isStatic() && method.isPublic()) {
-                register(method);
-                i++;
+                Class<?>[] parameterTypes = method.getParameterTypes();
+                if (parameterTypes.length > 0 && JetTagContext.class.isAssignableFrom(parameterTypes[0])) {
+                    register(method);
+                    i++;
+                }
             }
         }
-        log.info("import {} functions from {}", i, cls);
+        log.info("import {} tags from {}", i, cls);
     }
 
     /**
-     * 注册一个 function 扩展
+     * 注册一个 Tag 扩展
      */
     public void register(MethodInfo method) {
         String name = method.getName();
@@ -68,49 +72,52 @@ public final class FunctionResolver {
                 sb.append(parameterTypes[i].getName());
             }
             sb.append(')');
-            log.debug("import function: {}", sb.toString());
+            log.debug("import tag: {}", sb.toString());
         }
 
-        List<MethodInfo> methods = functionMap.get(name);
+        List<MethodInfo> methods = tagMap.get(name);
         if (methods == null) {
             methods = new ArrayList<MethodInfo>(4);
-            functionMap.put(name, methods);
+            tagMap.put(name, methods);
         }
         methods.add(method);
     }
 
     /**
-     * 根据参数类型，查找一个匹配的 function（带缓存）.
+     * 根据参数类型，查找一个匹配的 Tag（带缓存）.
      */
-    public FunctionInvoker resolve(String name, Class<?>[] argumentTypes) {
+    public TagInvoker resolve(String name, Class<?>[] argumentTypes) {
         String signature = SignatureUtils.getFunctionSignature(name, argumentTypes);
-        FunctionInvoker found = cache.get(signature);
+        TagInvoker found = cache.get(signature);
         if (found != null) {
             return found;
         }
 
-        FunctionInvoker function = doGetFunctionInvoker(name, argumentTypes);
+        TagInvoker tag = doGetTagInvoker(name, argumentTypes);
 
-        if (function != null) {
-            cache.put(signature, function);
-            return function;
+        if (tag != null) {
+            cache.put(signature, tag);
+            return tag;
         }
 
         return null;
     }
 
     /**
-     * 根据参数类型，查找一个匹配的 function.
+     * 根据参数类型，查找一个匹配的 tag.
      */
-    private FunctionInvoker doGetFunctionInvoker(String name, Class<?>[] argumentTypes) {
-        List<MethodInfo> functions = functionMap.get(name);
-        if (functions != null) {
-            MethodInfo function = ExecutableUtils.searchExecutable(functions, null, argumentTypes);
-            if (function != null) {
-                return new ExtensionFunctionInvoker(function);
+    private TagInvoker doGetTagInvoker(String name, Class<?>[] argumentTypes) {
+        List<MethodInfo> tags = tagMap.get(name);
+        if (tags != null) {
+            int length = argumentTypes.length;
+            Class<?>[] types = new Class<?>[length + 1];
+            types[0] = JetTagContext.class;
+            System.arraycopy(argumentTypes, 0, types, 1, length);
+            MethodInfo tag = ExecutableUtils.searchExecutable(tags, null, types);
+            if (tag != null) {
+                return new TagInvoker(tag);
             }
         }
-
         return null;
     }
 
