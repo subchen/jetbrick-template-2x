@@ -23,6 +23,7 @@
         <module>jetbrick-template-springmvc</module>
         <module>jetbrick-template-jfinal</module>
         <module>jetbrick-template-jodd</module>
+        <module>jetbrick-template-struts</module>
     </modules>
 
     <scm>
