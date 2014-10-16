@@ -34,10 +34,10 @@ public final class AstDirectiveStop extends AstDirective {
         if (conditionExpression != null) {
             Object value = conditionExpression.execute(ctx);
             if (ALU.isTrue(value)) {
-                ctx.setSignal(InterpretContext.SINGAL_STOP);
+                ctx.setSignal(InterpretContext.SIGNAL_STOP);
             }
         } else {
-            ctx.setSignal(InterpretContext.SINGAL_STOP);
+            ctx.setSignal(InterpretContext.SIGNAL_STOP);
         }
     }
 }

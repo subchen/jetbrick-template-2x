@@ -33,10 +33,10 @@ public final class AstDirectiveBreak extends AstDirective {
         if (conditionExpression != null) {
             Object value = conditionExpression.execute(ctx);
             if (ALU.isTrue(value)) {
-                ctx.setSignal(InterpretContext.SINGAL_BREAK);
+                ctx.setSignal(InterpretContext.SIGNAL_BREAK);
             }
         } else {
-            ctx.setSignal(InterpretContext.SINGAL_BREAK);
+            ctx.setSignal(InterpretContext.SIGNAL_BREAK);
         }
     }
 

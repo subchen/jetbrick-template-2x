@@ -42,7 +42,7 @@ public final class InterpretContextImpl extends InterpretContext {
         this.templateStack = new TemplateStack();
         this.valueStack = new ValueStack(engine.getGlobalContext(), context);
         this.writer = writer;
-        this.signal = InterpretContext.SINGAL_NONE;
+        this.signal = InterpretContext.SIGNAL_NONE;
         threadLocal.set(this);
     }
 

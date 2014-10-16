@@ -48,6 +48,6 @@ public final class AstDirectiveReturn extends AstDirective {
             }
         }
 
-        ctx.setSignal(InterpretContext.SINGAL_RETURN);
+        ctx.setSignal(InterpretContext.SIGNAL_RETURN);
     }
 }

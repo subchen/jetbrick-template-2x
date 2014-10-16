@@ -33,10 +33,10 @@ public final class AstDirectiveContinue extends AstDirective {
         if (conditionExpression != null) {
             Object value = conditionExpression.execute(ctx);
             if (ALU.isTrue(value)) {
-                ctx.setSignal(InterpretContext.SINGAL_CONTINUE);
+                ctx.setSignal(InterpretContext.SIGNAL_CONTINUE);
             }
         } else {
-            ctx.setSignal(InterpretContext.SINGAL_CONTINUE);
+            ctx.setSignal(InterpretContext.SIGNAL_CONTINUE);
         }
     }
 
