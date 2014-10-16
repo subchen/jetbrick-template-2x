@@ -22,7 +22,6 @@ package jetbrick.template.parser.ast;
 import java.lang.reflect.Array;
 import java.util.*;
 import jetbrick.template.Errors;
-import jetbrick.template.runtime.InterpretException;
 
 /**
  * Arithmetic Logical Unit
@@ -64,7 +63,7 @@ public final class ALU {
     }
 
     // a + b
-    public static Object plus(Object o1, Object o2) throws InterpretException {
+    public static Object plus(Object o1, Object o2) throws IllegalStateException {
         Class<?> c1 = o1.getClass();
         Class<?> c2 = o2.getClass();
         if (c1 == String.class || c2 == String.class) {
@@ -86,11 +85,11 @@ public final class ALU {
                 return Double.valueOf(n1.doubleValue() + n2.doubleValue());
             }
         }
-        throw new InterpretException(Errors.OP_BINARY_UNDEFINED, "+", Errors.typeName(o1), Errors.typeName(o2));
+        throw new IllegalStateException(Errors.format(Errors.OP_BINARY_UNDEFINED, "+", Errors.typeName(o1), Errors.typeName(o2)));
     }
 
     // a - b
-    public static Object minus(Object o1, Object o2) throws InterpretException {
+    public static Object minus(Object o1, Object o2) throws IllegalStateException {
         Class<?> c1 = o1.getClass();
         Class<?> c2 = o2.getClass();
         if (Number.class.isAssignableFrom(c1) && Number.class.isAssignableFrom(c2)) {
@@ -109,11 +108,11 @@ public final class ALU {
                 return Double.valueOf(n1.doubleValue() - n2.doubleValue());
             }
         }
-        throw new InterpretException(Errors.OP_BINARY_UNDEFINED, "-", Errors.typeName(o1), Errors.typeName(o2));
+        throw new IllegalStateException(Errors.format(Errors.OP_BINARY_UNDEFINED, "-", Errors.typeName(o1), Errors.typeName(o2)));
     }
 
     // a * b
-    public static Object mul(Object o1, Object o2) throws InterpretException {
+    public static Object mul(Object o1, Object o2) throws IllegalStateException {
         if (o1 == null || o2 == null) return null;
 
         Class<?> c1 = o1.getClass();
@@ -134,11 +133,11 @@ public final class ALU {
                 return Double.valueOf(n1.doubleValue() * n2.doubleValue());
             }
         }
-        throw new InterpretException(Errors.OP_BINARY_UNDEFINED, "*", Errors.typeName(o1), Errors.typeName(o2));
+        throw new IllegalStateException(Errors.format(Errors.OP_BINARY_UNDEFINED, "*", Errors.typeName(o1), Errors.typeName(o2)));
     }
 
     // a / b
-    public static Object div(Object o1, Object o2) throws InterpretException {
+    public static Object div(Object o1, Object o2) throws IllegalStateException {
         Class<?> c1 = o1.getClass();
         Class<?> c2 = o2.getClass();
         if (Number.class.isAssignableFrom(c1) && Number.class.isAssignableFrom(c2)) {
@@ -157,11 +156,11 @@ public final class ALU {
                 return Double.valueOf(n1.doubleValue() / n2.doubleValue());
             }
         }
-        throw new InterpretException(Errors.OP_BINARY_UNDEFINED, "/", Errors.typeName(o1), Errors.typeName(o2));
+        throw new IllegalStateException(Errors.format(Errors.OP_BINARY_UNDEFINED, "/", Errors.typeName(o1), Errors.typeName(o2)));
     }
 
     // a % b
-    public static Object mod(Object o1, Object o2) throws InterpretException {
+    public static Object mod(Object o1, Object o2) throws IllegalStateException {
         Class<?> c1 = o1.getClass();
         Class<?> c2 = o2.getClass();
         if (Number.class.isAssignableFrom(c1) && Number.class.isAssignableFrom(c2)) {
@@ -180,19 +179,19 @@ public final class ALU {
                 return Double.valueOf(n1.doubleValue() % n2.doubleValue());
             }
         }
-        throw new InterpretException(Errors.OP_BINARY_UNDEFINED, "%", Errors.typeName(o1), Errors.typeName(o2));
+        throw new IllegalStateException(Errors.format(Errors.OP_BINARY_UNDEFINED, "%", Errors.typeName(o1), Errors.typeName(o2)));
     }
 
     // +a
-    public static Object positive(Object o) throws InterpretException {
+    public static Object positive(Object o) throws IllegalStateException {
         if (o instanceof Number) {
             return o;
         }
-        throw new InterpretException(Errors.OP_UNARY_UNDEFINED, "+", Errors.typeName(o));
+        throw new IllegalStateException(Errors.format(Errors.OP_UNARY_UNDEFINED, "+", Errors.typeName(o)));
     }
 
     // -a
-    public static Object negative(Object o) throws InterpretException {
+    public static Object negative(Object o) throws IllegalStateException {
         Class<?> cls = o.getClass();
         if (Number.class.isAssignableFrom(cls)) {
             Number n = (Number) o;
@@ -210,12 +209,12 @@ public final class ALU {
                 return Integer.valueOf(-n.byteValue());
             }
         }
-        throw new InterpretException(Errors.OP_UNARY_UNDEFINED, "-", Errors.typeName(o));
+        throw new IllegalStateException(Errors.format(Errors.OP_UNARY_UNDEFINED, "-", Errors.typeName(o)));
     }
 
     //-----------------------------------------------------------------------
     // a & b
-    public static Object bitAnd(Object o1, Object o2) throws InterpretException {
+    public static Object bitAnd(Object o1, Object o2) throws IllegalStateException {
         Class<?> c1 = o1.getClass();
         Class<?> c2 = o2.getClass();
         if (Number.class.isAssignableFrom(c1) && Number.class.isAssignableFrom(c2)) {
@@ -230,11 +229,11 @@ public final class ALU {
                 return Long.valueOf(n1.longValue() & n2.longValue());
             }
         }
-        throw new InterpretException(Errors.OP_BINARY_UNDEFINED, "&", Errors.typeName(o1), Errors.typeName(o2));
+        throw new IllegalStateException(Errors.format(Errors.OP_BINARY_UNDEFINED, "&", Errors.typeName(o1), Errors.typeName(o2)));
     }
 
     // a | b
-    public static Object bitOr(Object o1, Object o2) throws InterpretException {
+    public static Object bitOr(Object o1, Object o2) throws IllegalStateException {
         Class<?> c1 = o1.getClass();
         Class<?> c2 = o2.getClass();
         if (Number.class.isAssignableFrom(c1) && Number.class.isAssignableFrom(c2)) {
@@ -249,11 +248,11 @@ public final class ALU {
                 return Long.valueOf(n1.longValue() | n2.longValue());
             }
         }
-        throw new InterpretException(Errors.OP_BINARY_UNDEFINED, "|", Errors.typeName(o1), Errors.typeName(o2));
+        throw new IllegalStateException(Errors.format(Errors.OP_BINARY_UNDEFINED, "|", Errors.typeName(o1), Errors.typeName(o2)));
     }
 
     // a ^ b
-    public static Object bitXor(Object o1, Object o2) throws InterpretException {
+    public static Object bitXor(Object o1, Object o2) throws IllegalStateException {
         Class<?> c1 = o1.getClass();
         Class<?> c2 = o2.getClass();
         if (Number.class.isAssignableFrom(c1) && Number.class.isAssignableFrom(c2)) {
@@ -268,11 +267,11 @@ public final class ALU {
                 return Long.valueOf(n1.longValue() ^ n2.longValue());
             }
         }
-        throw new InterpretException(Errors.OP_BINARY_UNDEFINED, "^", Errors.typeName(o1), Errors.typeName(o2));
+        throw new IllegalStateException(Errors.format(Errors.OP_BINARY_UNDEFINED, "^", Errors.typeName(o1), Errors.typeName(o2)));
     }
 
     // ~a
-    public static Object bitNot(Object o) throws InterpretException {
+    public static Object bitNot(Object o) throws IllegalStateException {
         Class<?> cls = o.getClass();
         if (Number.class.isAssignableFrom(cls)) {
             Number n = (Number) o;
@@ -286,12 +285,12 @@ public final class ALU {
                 return Integer.valueOf(~n.byteValue());
             }
         }
-        throw new InterpretException(Errors.OP_UNARY_UNDEFINED, "~", Errors.typeName(o));
+        throw new IllegalStateException(Errors.format(Errors.OP_UNARY_UNDEFINED, "~", Errors.typeName(o)));
     }
 
     //-----------------------------------------------------------------------
     // a << b
-    public static Object shl(Object o1, Object o2) throws InterpretException {
+    public static Object shl(Object o1, Object o2) throws IllegalStateException {
         Class<?> c1 = o1.getClass();
         Class<?> c2 = o2.getClass();
         if (Number.class.isAssignableFrom(c1) && Number.class.isAssignableFrom(c2)) {
@@ -313,11 +312,11 @@ public final class ALU {
                 }
             }
         }
-        throw new InterpretException(Errors.OP_BINARY_UNDEFINED, "<<", Errors.typeName(o1), Errors.typeName(o2));
+        throw new IllegalStateException(Errors.format(Errors.OP_BINARY_UNDEFINED, "<<", Errors.typeName(o1), Errors.typeName(o2)));
     }
 
     // a >> b
-    public static Object shr(Object o1, Object o2) throws InterpretException {
+    public static Object shr(Object o1, Object o2) throws IllegalStateException {
         Class<?> c1 = o1.getClass();
         Class<?> c2 = o2.getClass();
         if (Number.class.isAssignableFrom(c1) && Number.class.isAssignableFrom(c2)) {
@@ -339,11 +338,11 @@ public final class ALU {
                 }
             }
         }
-        throw new InterpretException(Errors.OP_BINARY_UNDEFINED, ">>", Errors.typeName(o1), Errors.typeName(o2));
+        throw new IllegalStateException(Errors.format(Errors.OP_BINARY_UNDEFINED, ">>", Errors.typeName(o1), Errors.typeName(o2)));
     }
 
     // a >>> b
-    public static Object ushr(Object o1, Object o2) throws InterpretException {
+    public static Object ushr(Object o1, Object o2) throws IllegalStateException {
         Class<?> c1 = o1.getClass();
         Class<?> c2 = o2.getClass();
         if (Number.class.isAssignableFrom(c1) && Number.class.isAssignableFrom(c2)) {
@@ -365,7 +364,7 @@ public final class ALU {
                 }
             }
         }
-        throw new InterpretException(Errors.OP_BINARY_UNDEFINED, ">>>", Errors.typeName(o1), Errors.typeName(o2));
+        throw new IllegalStateException(Errors.format(Errors.OP_BINARY_UNDEFINED, ">>>", Errors.typeName(o1), Errors.typeName(o2)));
     }
 
     //-----------------------------------------------------------------------
@@ -401,7 +400,7 @@ public final class ALU {
 
     // a > b
     @SuppressWarnings("unchecked")
-    public static Object gt(Object o1, Object o2) throws InterpretException {
+    public static Object gt(Object o1, Object o2) throws IllegalStateException {
         Class<?> c1 = o1.getClass();
         Class<?> c2 = o2.getClass();
 
@@ -425,12 +424,12 @@ public final class ALU {
         if (c1 == c2 && Comparable.class.isAssignableFrom(c1)) {
             return ((Comparable<Object>) o1).compareTo(o2) > 0 ? Boolean.TRUE : Boolean.FALSE;
         }
-        throw new InterpretException(Errors.OP_BINARY_UNDEFINED, ">", Errors.typeName(o1), Errors.typeName(o2));
+        throw new IllegalStateException(Errors.format(Errors.OP_BINARY_UNDEFINED, ">", Errors.typeName(o1), Errors.typeName(o2)));
     }
 
     // a >= b
     @SuppressWarnings("unchecked")
-    public static Object ge(Object o1, Object o2) throws InterpretException {
+    public static Object ge(Object o1, Object o2) throws IllegalStateException {
         Class<?> c1 = o1.getClass();
         Class<?> c2 = o2.getClass();
 
@@ -456,12 +455,12 @@ public final class ALU {
                 return ((Comparable<Object>) o1).compareTo(o2) >= 0 ? Boolean.TRUE : Boolean.FALSE;
             }
         }
-        throw new InterpretException(Errors.OP_BINARY_UNDEFINED, ">=", Errors.typeName(o1), Errors.typeName(o2));
+        throw new IllegalStateException(Errors.format(Errors.OP_BINARY_UNDEFINED, ">=", Errors.typeName(o1), Errors.typeName(o2)));
     }
 
     // a < b
     @SuppressWarnings("unchecked")
-    public static Object lt(Object o1, Object o2) throws InterpretException {
+    public static Object lt(Object o1, Object o2) throws IllegalStateException {
         Class<?> c1 = o1.getClass();
         Class<?> c2 = o2.getClass();
 
@@ -485,12 +484,12 @@ public final class ALU {
         if (c1 == c2 && Comparable.class.isAssignableFrom(c1)) {
             return ((Comparable<Object>) o1).compareTo(o2) <= 0 ? Boolean.TRUE : Boolean.FALSE;
         }
-        throw new InterpretException(Errors.OP_BINARY_UNDEFINED, "<", Errors.typeName(o1), Errors.typeName(o2));
+        throw new IllegalStateException(Errors.format(Errors.OP_BINARY_UNDEFINED, "<", Errors.typeName(o1), Errors.typeName(o2)));
     }
 
     // a <= b
     @SuppressWarnings("unchecked")
-    public static Object le(Object o1, Object o2) throws InterpretException {
+    public static Object le(Object o1, Object o2) throws IllegalStateException {
         Class<?> c1 = o1.getClass();
         Class<?> c2 = o2.getClass();
 
@@ -514,7 +513,7 @@ public final class ALU {
         if (c1 == c2 && Comparable.class.isAssignableFrom(c1)) {
             return ((Comparable<Object>) o1).compareTo(o2) <= 0 ? Boolean.TRUE : Boolean.FALSE;
         }
-        throw new InterpretException(Errors.OP_BINARY_UNDEFINED, "<=", Errors.typeName(o1), Errors.typeName(o2));
+        throw new IllegalStateException(Errors.format(Errors.OP_BINARY_UNDEFINED, "<=", Errors.typeName(o1), Errors.typeName(o2)));
     }
 
     public static boolean isTrue(Object o) {

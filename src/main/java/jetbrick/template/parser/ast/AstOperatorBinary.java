@@ -125,8 +125,6 @@ public final class AstOperatorBinary extends AstExpression {
 
             return value;
 
-        } catch (InterpretException e) {
-            throw e.set(position);
         } catch (IllegalStateException e) {
             throw new InterpretException(e).set(position);
         }
