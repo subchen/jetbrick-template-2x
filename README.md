@@ -4,14 +4,11 @@
 jetbrick-template 是一个新一代 Java 模板引擎，具有高性能和高扩展性。 适合于动态 HTML 页面输出或者代码生成，可替代 JSP 页面或者 Velocity 等模板。 指令和 Velocity 相似，表达式和 Java 保持一致，易学易用。
 
 * 支持类似于 Velocity 的多种指令
-* 支持静态编译
-* 支持编译缓存
 * 支持热加载
 * 支持类型推导
-* 支持泛型
 * 支持可变参数方法调用
 * 支持方法重载
-* 支持类似于 Groovy 的方法扩展
+* 支持方法扩展
 * 支持函数扩展
 * 支持自定义标签 #tag
 * 支持宏定义 #macro
@@ -28,7 +25,7 @@ http://subchen.github.io/jetbrick-template/
 jetbrick-template 指令集和老牌的模板引擎 Velocity 非常相似，易学易用。
 
 ```html
-#define(List<UserInfo> userlist)
+#define(List userlist)
 <table>
   <tr>
     <td>序号</td>
@@ -76,36 +73,15 @@ template.render(context, writer);
 System.out.println(writer.toString());
 ```
 
-
-卓越性能 Performance
-========================
-
-jetbrick-template 将模板编译成 Java ByteCode 运行，并采用强类型推导，无需反射和减少类型转换。渲染速度等价于 Java 硬编码。比 Velocity 等模板快一个数量级。 比 JSP 也快，因为 JSP 只有 Scriptlet 是编译的，Tag 和 EL 都是解释执行的。 而 jetbrick-template 是全编译的。
-
-![performance](http://subchen.github.io/assets/images/perfermance.png)
-
-在 Stream 模式中(Webapp 采用 OutputStream 将文本输出到浏览器)，由于 Java 硬编码输出字符串需要进行一次编码的转换。 而 jetbrick-template 却在第一次运行期间就缓存了编码转换结果，使得 jetbrick-template 的性能甚至优于 Java 硬编码。
-
-测试平台 platform: Window 7 x64, Intel i5, 16GB RAM, JDK 1.6.0_41 x64
-
-
-作者 Author
-===================
-
-* Author: Guoqiang Chen, Shanghai, China
-* Email: subchen&#64;gmail.com
-* WebSite: http://subchen.github.io/
-* Blog: http://my.oschina.net/sub/blog
-
-
 开源许可 License
 ===================
 
-jetbrick-template  
-http://subchen.github.io/jetbrick-template/
+```
+Copyright 2013-2014 Guoqiang Chen, Shanghai, China. All rights reserved.
 
-Copyright 2010-2014 Guoqiang Chen. All rights reserved.  
-Email: subchen@gmail.com
+  Author: Guoqiang Chen
+   Email: subchen@gmail.com
+  WebURL: https://github.com/subchen
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -118,3 +94,4 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
+```
