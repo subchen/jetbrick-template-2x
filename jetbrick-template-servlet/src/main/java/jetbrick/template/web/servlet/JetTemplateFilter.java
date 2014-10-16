@@ -20,7 +20,6 @@
 package jetbrick.template.web.servlet;
 
 import java.io.IOException;
-import java.util.Map;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -65,7 +64,7 @@ public final class JetTemplateFilter implements Filter {
         String path = RequestUtils.getPathInfo(request);
         try {
             JetTemplate template = engine.getTemplate(path);
-            Map<String, Object> context = new JetWebContext(request, response);
+            JetWebContext context = new JetWebContext(request, response);
             template.render(context, response.getOutputStream());
         } catch (TemplateNotFoundException e) {
             response.sendError(HttpServletResponse.SC_NOT_FOUND, "Template not found: " + path);

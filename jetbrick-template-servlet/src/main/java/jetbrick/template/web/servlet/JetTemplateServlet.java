@@ -20,7 +20,6 @@
 package jetbrick.template.web.servlet;
 
 import java.io.IOException;
-import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import jetbrick.template.*;
@@ -69,7 +68,7 @@ public final class JetTemplateServlet extends HttpServlet {
         String path = RequestUtils.getPathInfo(request);
         try {
             JetTemplate template = engine.getTemplate(path);
-            Map<String, Object> context = new JetWebContext(request, response);
+            JetWebContext context = new JetWebContext(request, response);
             template.render(context, response.getOutputStream());
         } catch (TemplateNotFoundException e) {
             response.sendError(HttpServletResponse.SC_NOT_FOUND, "Template not found: " + path);
