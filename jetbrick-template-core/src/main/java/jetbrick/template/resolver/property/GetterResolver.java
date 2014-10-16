@@ -23,10 +23,10 @@ import java.util.Map;
 import jetbrick.bean.Getter;
 
 /**
- * 自定义访问 map.key
+ * 自定义访问 object.name
  */
 public interface GetterResolver {
-    
+
     public Getter resolve(Class<?> clazz, String name);
 
 }

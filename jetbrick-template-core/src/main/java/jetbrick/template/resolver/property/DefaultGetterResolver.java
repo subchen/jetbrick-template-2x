@@ -92,7 +92,7 @@ public final class DefaultGetterResolver implements GetterResolver {
 
         // get from custom resolver
         if (resolvers != null) {
-            for (GetterResolver resolver: resolvers) {
+            for (GetterResolver resolver : resolvers) {
                 Getter getter = resolver.resolve(clazz, name);
                 if (getter != null) {
                     return getter;

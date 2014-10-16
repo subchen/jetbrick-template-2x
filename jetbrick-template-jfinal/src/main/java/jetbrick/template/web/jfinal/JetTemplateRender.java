@@ -24,7 +24,6 @@ import jetbrick.template.JetEngine;
 import jetbrick.template.JetTemplate;
 import jetbrick.template.web.JetWebContext;
 import jetbrick.template.web.JetWebEngine;
-import com.jfinal.core.JFinal;
 import com.jfinal.render.Render;
 
 public final class JetTemplateRender extends Render {
@@ -37,13 +36,9 @@ public final class JetTemplateRender extends Render {
     @Override
     public void render() {
         JetEngine engine = JetWebEngine.getEngine();
-        if (engine == null) {
-            engine = JetWebEngine.create(JFinal.me().getServletContext());
-        }
-
-        JetWebContext context = new JetWebContext(request, response);
         JetTemplate template = engine.getTemplate(view);
 
+        JetWebContext context = new JetWebContext(request, response);
         try {
             template.render(context, response.getOutputStream());
         } catch (IOException e) {

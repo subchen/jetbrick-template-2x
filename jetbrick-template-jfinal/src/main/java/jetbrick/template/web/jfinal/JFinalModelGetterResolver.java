@@ -19,27 +19,37 @@
  */
 package jetbrick.template.web.jfinal;
 
-import jetbrick.template.JetEngine;
-import jetbrick.template.web.JetWebEngine;
-import com.jfinal.core.JFinal;
-import com.jfinal.render.IMainRenderFactory;
-import com.jfinal.render.Render;
+import com.jfinal.plugin.activerecord.Model;
+import jetbrick.bean.Getter;
+import jetbrick.template.resolver.property.GetterResolver;
 
-public final class JetTemplateRenderFactory implements IMainRenderFactory {
-    private final JetEngine engine;
-
-    public JetTemplateRenderFactory() {
-        engine = JetWebEngine.create(JFinal.me().getServletContext());
-        engine.getGlobalResolver().registerGetterResolver(new JFinalModelGetterResolver());
-    }
+/**
+ * 访问 model.name
+ */
+final class JFinalModelGetterResolver implements GetterResolver {
 
     @Override
-    public Render getRender(String view) {
-        return new JetTemplateRender(view);
+    public Getter resolve(Class<?> clazz, String name) {
+        if (Model.class.isAssignableFrom(clazz)) {
+            return new JFinalModelGetter(name);
+        }
+        return null;
     }
 
-    @Override
-    public String getViewExtension() {
-        return engine.getConfig().getTemplateSuffix();
+    /**
+     * 访问 model.name
+     */
+    static final class JFinalModelGetter implements Getter {
+        private final String name;
+
+        public JFinalModelGetter(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public Object get(Object model) {
+            return ((Model<?>) model).get(name);
+        }
     }
+
 }
