@@ -44,7 +44,7 @@ public final class JetConfig {
     public static final String OUTPUT_ENCODING = "jetx.output.encoding";
     public static final String SYNTAX_STRICT = "jetx.syntax.strict";
     public static final String SYNTAX_SAFECALL = "jetx.syntax.safecall";
-    public static final String TEMPLATE_LOADER = "jetx.template.loader";
+    public static final String TEMPLATE_LOADERS = "jetx.template.loaders";
     public static final String TEMPLATE_SUFFIX = "jetx.template.suffix";
     public static final String IO_SKIPERRORS = "jetx.io.skiperrors";
     public static final String TRIM_LEADING_WHITESPACES = "jetx.trim.leading.whitespaces";
@@ -111,7 +111,7 @@ public final class JetConfig {
         outputEncoding = config.asCharset(OUTPUT_ENCODING, "utf-8");
         syntaxStrict = config.asBoolean(SYNTAX_STRICT, "false");
         syntaxSafecall = config.asBoolean(SYNTAX_SAFECALL, "false");
-        templateLoaders = config.asObjectList(TEMPLATE_LOADER, ResourceLoader.class, ClasspathResourceLoader.class.getName());
+        templateLoaders = config.asObjectList(TEMPLATE_LOADERS, ResourceLoader.class, ClasspathResourceLoader.class.getName());
         templateSuffix = config.asString(TEMPLATE_SUFFIX, ".jetx");
         ioSkiperrors = config.asBoolean(IO_SKIPERRORS, "false");
         trimLeadingWhitespaces = config.asBoolean(TRIM_LEADING_WHITESPACES, "false");

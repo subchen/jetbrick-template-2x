@@ -67,7 +67,7 @@ public final class JetWebEngine {
         // Web 环境下的默认配置
         Properties options = new Properties();
         options.setProperty(JetConfig.IO_SKIPERRORS, "true");
-        options.setProperty(JetConfig.TEMPLATE_LOADER, ServletResourceLoader.class.getName());
+        options.setProperty(JetConfig.TEMPLATE_LOADERS, ServletResourceLoader.class.getName());
 
         if (config != null) {
             options.putAll(config);

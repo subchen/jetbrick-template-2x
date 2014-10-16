@@ -13,7 +13,7 @@ public abstract class AbstractJetxFileTest extends AbstractJetxSourceTest {
 
     @Override
     public void initializeConfig() {
-        config.put(JetConfig.TEMPLATE_LOADER, SourceResourceLoader.class.getName());
+        config.put(JetConfig.TEMPLATE_LOADERS, SourceResourceLoader.class.getName());
     }
 
     @Override
