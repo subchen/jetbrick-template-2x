@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>StockModel - jetx</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=${outputEncoding}"/>
+
+    <style type="text/css">
+        body {
+            color: #333333;
+            line-height: 150%;
+        }
+
+        td {
+            text-align: center;
+        }
+
+        thead {
+            font-weight: bold;
+            background-color: #C8FBAF;
+        }
+
+        .odd {
+            background-color: #F3DEFB;
+        }
+
+        .even {
+            background-color: #EFFFF8;
+        }
+    </style>
+</head>
+<body>
+<h1>StockModel - jetbrick-template</h1>
+<table>
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>id</th>
+        <th>code</th>
+        <th>name</th>
+        <th>price</th>
+        <th>range</th>
+        <th>amount</th>
+        <th>gravity</th>
+    </tr>
+    </thead>
+    <tbody>
+    #for(Model item : items)
+    <tr class="${for.index % 2 == 1 ? "even" : "odd"}">
+        <td>${for.index}</td>
+        <td>${item.id}</td>
+        <td>${item.code}</td>
+        <td style="text-align: left;">${item.name}</td>
+        <td>${item.price}</td>
+        <td style="color: ${item.range>=10?'red':'blue'};">${item.range}%</td>
+        <td>${item.amount}</td>
+        <td style="color: ${item.gravity>=20?'red':'blue'};">${item.gravity}%</td>
+    </tr>
+    #end
+    </tbody>
+</table>
+</body>
+</html>
