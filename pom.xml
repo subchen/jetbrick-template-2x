@@ -24,6 +24,7 @@
         <module>jetbrick-template-jfinal</module>
         <module>jetbrick-template-jodd</module>
         <module>jetbrick-template-struts</module>
+        <module>jetbrick-template-nutz</module>
     </modules>
 
     <scm>
