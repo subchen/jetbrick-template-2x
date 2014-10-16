@@ -110,7 +110,7 @@ final class JetEngineImpl extends JetEngine {
         // 将一个模板路径名称转为标准格式
         name = PathUtils.normalize(name);
         if (name.startsWith("../")) {
-            throw new ResourceNotFoundException(name);
+            throw new TemplateNotFoundException(name);
         }
 
         JetTemplate template = cache.get(name);
