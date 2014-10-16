@@ -20,6 +20,7 @@
 
     <modules>
         <module>jetbrick-template-servlet</module>
+        <module>jetbrick-template-jetbrickmvc</module>
         <module>jetbrick-template-springmvc</module>
         <module>jetbrick-template-jfinal</module>
         <module>jetbrick-template-jodd</module>
