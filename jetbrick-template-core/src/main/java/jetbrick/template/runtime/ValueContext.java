@@ -23,51 +23,71 @@ import java.util.HashMap;
 import java.util.Map;
 
 final class ValueContext {
-    private final ValueContext parent; // 如果存在 parent，则代表当前作用域允许自动继承父作用域
-    private final Map<String, Class<?>> symbols; // 变量定义
+    private final ValueContext inheritedContext; // 如果不为 NULL，则代表当前作用域自动继承父作用域(不允许被修改)
+    private final Map<String, Class<?>> symbols; // 变量类型定义
     private final Map<String, Object> privateContext; // 私有变量(不允许被修改), 主要是include/macro 参数
     private Map<String, Object> localContext; // 本地变量
 
-    public ValueContext(ValueContext parent, Map<String, Class<?>> symbols, Map<String, Object> privateContext) {
-        this.parent = parent;
+    public ValueContext(ValueContext inheritedContext, Map<String, Class<?>> symbols, Map<String, Object> privateContext) {
+        this.inheritedContext = inheritedContext;
         this.symbols = symbols;
         this.privateContext = privateContext;
         this.localContext = null;
     }
 
-    public boolean isInherited() {
-        return parent != null;
-    }
-
-    public ValueContext getParent() {
-        return parent;
-    }
-
     public Class<?> getType(String name) {
-        if (symbols == null) {
-            return null;
+        if (symbols != null) {
+            Class<?> type = symbols.get(name);
+            if (type != null) {
+                return type;
+            }
         }
-        return symbols.get(name);
+
+        if (inheritedContext != null) {
+            return inheritedContext.getType(name);
+        }
+
+        return null;
     }
 
     public Object getLocal(String name) {
-        if (localContext == null) {
-            return null;
+        if (localContext != null) {
+            return localContext.get(name);
         }
-        return localContext.get(name);
+        return null;
     }
 
     public Object getPrivate(String name) {
-        if (privateContext == null) {
-            return null;
+        Object value;
+
+        if (privateContext != null) {
+            value = privateContext.get(name);
+            if (value != null) {
+                return value;
+            }
         }
-        return privateContext.get(name);
+
+        // 获取继承过来的变量
+        if (inheritedContext != null) {
+            value = inheritedContext.getLocal(name);
+            if (value != null) {
+                return value;
+            }
+
+            value = inheritedContext.getPrivate(name);
+            if (value != null) {
+                return value;
+            }
+        }
+
+        return null;
     }
 
     public void setLocal(String name, Object value) {
         if (localContext == null) {
             localContext = new HashMap<String, Object>();
         }
+
         localContext.put(name, value);
     }
 }
