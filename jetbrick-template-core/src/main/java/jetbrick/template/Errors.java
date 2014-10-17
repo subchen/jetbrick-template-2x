@@ -58,6 +58,7 @@ public final class Errors {
     public static final String PROPERTY_NOT_FOUND = "cannot resolve property: %s";
     public static final String FUNCTION_NOT_FOUND = "cannot resolve function: %s";
     public static final String TAG_NOT_FOUND = "cannot resolve tag: %s";
+    public static final String MACRO_NOT_FOUND = "cannot resolve macro: %s";
     public static final String OBJECT_IS_NULL = "object is null: %s";
     public static final String INDEX_IS_NULL = "index is null: %s";
     public static final String TYPE_INCONSISTENT = "inconsistent class for variable: %s";

@@ -13,6 +13,11 @@ public class BuildinFunctionTest extends AbstractJetxSourceTest {
     }
 
     @Test
+    public void testMacro() {
+        Assert.assertEquals("2", eval("#macro inc(int x)${x+1}#end${macro('inc', 1)}"));
+    }
+    
+    @Test
     public void testDebug() {
         eval("${debug('123')}");
     }

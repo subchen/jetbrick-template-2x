@@ -26,9 +26,10 @@ import jetbrick.io.IoUtils;
 import jetbrick.io.resource.Resource;
 import jetbrick.io.resource.ResourceNotFoundException;
 import jetbrick.io.stream.UnsafeCharArrayWriter;
-import jetbrick.template.TemplateNotFoundException;
+import jetbrick.template.*;
 import jetbrick.template.runtime.InterpretContext;
 import jetbrick.template.runtime.JetWriter;
+import jetbrick.template.resolver.ParameterUtils;
 import jetbrick.util.PathUtils;
 
 public final class JetFunctions {
@@ -97,6 +98,30 @@ public final class JetFunctions {
         Resource resource = ctx.getEngine().getResource(name);
 
         return IoUtils.toString(resource.openStream(), encoding);
+    }
+
+    // ------------------------------------------------------------
+
+    // 调用一个 macro，并获取生成的内容
+    public static String macro(String name, Object... arguments) {
+        InterpretContext ctx = InterpretContext.current();
+
+        Class<?>[] argumentTypes = ParameterUtils.getParameterTypes(arguments);
+        JetTemplateMacro macro = ctx.getTemplate().resolveMacro(name, argumentTypes);
+        if (macro == null) {
+            throw new IllegalStateException(Errors.format(Errors.MACRO_NOT_FOUND, name));
+        }
+
+        JetWriter originWriter = ctx.getWriter();
+
+        UnsafeCharArrayWriter out = new UnsafeCharArrayWriter(128);
+        ctx.setWriter(JetWriter.create(out, originWriter.getCharset(), false, false));
+
+        ctx.invokeMacro(macro, arguments);
+
+        ctx.setWriter(originWriter);
+        
+        return out.toString();
     }
 
     // ------------------------------------------------------------
