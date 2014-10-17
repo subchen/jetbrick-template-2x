@@ -51,7 +51,9 @@ public final class InterpretException extends TemplateException {
     }
 
     public InterpretException set(Source source) {
-        this.source = source;
+        if (source == null) {
+            this.source = source;
+        }
         return this;
     }
 

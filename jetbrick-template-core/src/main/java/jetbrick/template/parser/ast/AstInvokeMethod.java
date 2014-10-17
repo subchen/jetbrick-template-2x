@@ -85,6 +85,8 @@ public final class AstInvokeMethod extends AstExpression {
             } else {
                 return (invoker.isVoidResult()) ? ALU.VOID : null;
             }
+        } catch (InterpretException e) {
+            throw e;
         } catch (RuntimeException e) {
             if (useLatest && Errors.isReflectIllegalArgument(e)) {
                 // 重新查找匹配的 Invoker
