@@ -33,7 +33,7 @@ public final class AstConstantMapEntry extends AstExpression {
     }
 
     @Override
-    public Object execute(InterpretContext ctx) {
+    public NameValuePair<String, Object> execute(InterpretContext ctx) {
         Object value = valueExpression.execute(ctx);
         return new NameValuePair<String, Object>(name, value);
     }

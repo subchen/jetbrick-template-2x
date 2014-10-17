@@ -19,9 +19,11 @@
  */
 package jetbrick.template.parser.ast;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import jetbrick.template.runtime.InterpretContext;
+import jetbrick.collection.ListMap;
 
 public final class AstConstantMap extends AstExpression {
     private static final AstConstantMapEntry[] EMPTY_ARRAY = new AstConstantMapEntry[0];
@@ -34,9 +36,9 @@ public final class AstConstantMap extends AstExpression {
 
     @Override
     public Object execute(InterpretContext ctx) {
-        Map<Object, Object> map = new LinkedHashMap<Object, Object>(entries.length);
+        Map<String, Object> map = new ListMap<String, Object>(entries.length);
         for (AstConstantMapEntry entry : entries) {
-            Map.Entry<?, ?> pair = (Entry<?, ?>) entry.execute(ctx);
+            Map.Entry<String, Object> pair = entry.execute(ctx);
             map.put(pair.getKey(), pair.getValue());
         }
         return map;
