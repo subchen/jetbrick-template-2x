@@ -62,12 +62,12 @@ public final class JetFunctions {
     // ------------------------------------------------------------
 
     // 读取子模板内容
-    public static String include(String relativeName) throws TemplateNotFoundException {
+    public static String include(String relativeName) throws ResourceNotFoundException {
         return include(relativeName, null);
     }
 
     // 读取子模板内容
-    public static String include(String relativeName, Map<String, Object> parameters) throws TemplateNotFoundException {
+    public static String include(String relativeName, Map<String, Object> parameters) throws ResourceNotFoundException {
         InterpretContext ctx = InterpretContext.current();
 
         String name = PathUtils.getRelativePath(ctx.getTemplate().getName(), relativeName);

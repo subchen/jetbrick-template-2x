@@ -84,18 +84,18 @@ final class JetEngineImpl extends JetEngine {
     }
 
     @Override
-    public JetTemplate getTemplate(String name) throws TemplateNotFoundException {
+    public JetTemplate getTemplate(String name) throws ResourceNotFoundException {
         JetTemplate template = internalGetTemplate(name);
         if (template != null) {
             try {
                 template.reload();
                 return template;
-            } catch (TemplateNotFoundException e) {
+            } catch (ResourceNotFoundException e) {
                 cache.remove(template.getName());
                 throw e;
             }
         }
-        throw new TemplateNotFoundException(name);
+        throw new ResourceNotFoundException(name);
     }
 
     @Override
@@ -110,7 +110,7 @@ final class JetEngineImpl extends JetEngine {
         // 将一个模板路径名称转为标准格式
         name = PathUtils.normalize(name);
         if (name.startsWith("../")) {
-            throw new TemplateNotFoundException(name);
+            return null;
         }
 
         JetTemplate template = cache.get(name);

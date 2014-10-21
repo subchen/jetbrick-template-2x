@@ -22,6 +22,7 @@ package jetbrick.template;
 import java.io.OutputStream;
 import java.io.Writer;
 import java.util.Map;
+import jetbrick.io.resource.ResourceNotFoundException;
 import jetbrick.template.parser.Source;
 import jetbrick.template.parser.ast.AstTemplate;
 
@@ -30,7 +31,7 @@ import jetbrick.template.parser.ast.AstTemplate;
  */
 public interface JetTemplate {
 
-    public void reload() throws TemplateNotFoundException;
+    public void reload() throws ResourceNotFoundException;
 
     public void render(Map<String, Object> context, Writer out);
 

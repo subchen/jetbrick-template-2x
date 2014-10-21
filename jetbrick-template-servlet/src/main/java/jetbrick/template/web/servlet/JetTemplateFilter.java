@@ -23,6 +23,7 @@ import java.io.IOException;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import jetbrick.io.resource.ResourceNotFoundException;
 import jetbrick.template.*;
 import jetbrick.template.web.JetWebContext;
 import jetbrick.template.web.JetWebEngine;
@@ -66,7 +67,7 @@ public final class JetTemplateFilter implements Filter {
             JetTemplate template = engine.getTemplate(path);
             JetWebContext context = new JetWebContext(request, response);
             template.render(context, response.getOutputStream());
-        } catch (TemplateNotFoundException e) {
+        } catch (ResourceNotFoundException e) {
             response.sendError(HttpServletResponse.SC_NOT_FOUND, "Template not found: " + path);
         }
     }

@@ -110,9 +110,9 @@ public abstract class JetEngine {
      * @param name  模板名称
      * @return      模板对象
      *
-     * @throw TemplateNotFoundException 如果模板不存在，抛出该异常
+     * @throw ResourceNotFoundException 如果模板不存在，抛出该异常
      */
-    public abstract JetTemplate getTemplate(String name) throws TemplateNotFoundException;
+    public abstract JetTemplate getTemplate(String name) throws ResourceNotFoundException;
 
     /**
      * 以模板源代码方式，创建一个模板(无缓存).

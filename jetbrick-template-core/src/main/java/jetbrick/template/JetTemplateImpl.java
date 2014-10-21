@@ -24,6 +24,7 @@ import java.io.Writer;
 import java.util.List;
 import java.util.Map;
 import jetbrick.io.resource.Resource;
+import jetbrick.io.resource.ResourceNotFoundException;
 import jetbrick.template.parser.*;
 import jetbrick.template.parser.ast.AstDirectiveMacro;
 import jetbrick.template.parser.ast.AstTemplate;
@@ -62,14 +63,14 @@ final class JetTemplateImpl implements JetTemplate {
 
     // 检测模板是否已更新/删除
     @Override
-    public void reload() throws TemplateNotFoundException {
+    public void reload() throws ResourceNotFoundException {
         if (reloadable == false && lastModified > 0) {
             return;
         }
 
         long ts = resource.lastModified();
         if (ts <= 0) {
-            throw new TemplateNotFoundException(resource.getPath());
+            throw new ResourceNotFoundException(resource.getPath());
         }
 
         if (lastModified != ts) {
