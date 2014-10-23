@@ -14,7 +14,7 @@ public class BuildinTagTest extends AbstractJetxFileTest {
         s.append("#tag layout_block('b')");
         s.append("bbb");
         s.append("#end");
-        s.append("#call layout('/s2.jetx')");
+        s.append("#include('/s2.jetx')");
         sourceMap.put("/s1.jetx", s.toString());
 
         s = new StringBuilder();
@@ -31,7 +31,7 @@ public class BuildinTagTest extends AbstractJetxFileTest {
         s.append("#tag layout_block('a')");
         s.append("aaa");
         s.append("#end");
-        s.append("#call layout('/s4.jetx', {c:'ccc'})");
+        s.append("#include('/s4.jetx', {c:'ccc'})");
         sourceMap.put("/s3.jetx", s.toString());
 
         s = new StringBuilder();

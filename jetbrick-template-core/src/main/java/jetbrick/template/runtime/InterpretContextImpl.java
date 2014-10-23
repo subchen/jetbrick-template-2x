@@ -106,13 +106,13 @@ public final class InterpretContextImpl extends InterpretContext {
     }
 
     @Override
-    public void invokeInclude(String file, Map<String, Object> arguments, boolean inherited, String returnName) {
+    public void doIncludeCall(String file, Map<String, Object> arguments, String returnName) {
         JetTemplate template = engine.getTemplate(file);
 
         this.returnName = returnName; // use new name
 
         templateStack.push(template);
-        valueStack.push(template.getOption().getSymbols(), arguments, inherited);
+        valueStack.push(template.getOption().getSymbols(), arguments, true);
 
         template.getAstNode().execute(this);
 
@@ -123,7 +123,7 @@ public final class InterpretContextImpl extends InterpretContext {
     }
 
     @Override
-    public void invokeMacro(JetTemplateMacro macro, Object[] arguments) {
+    public void doMacroCall(JetTemplateMacro macro, Object[] arguments) {
         List<String> names = macro.getArgumentNames();
         if (names.size() != arguments.length) {
             throw new IllegalArgumentException("macro arguments do not match: " + macro.getName());
@@ -145,7 +145,7 @@ public final class InterpretContextImpl extends InterpretContext {
                 args.put(names.get(i), arguments[i]);
             }
         }
-        valueStack.push(macro.getSymbols(), args, false);
+        valueStack.push(macro.getSymbols(), args, true);
 
         macro.getAstNode().execute(this);
 

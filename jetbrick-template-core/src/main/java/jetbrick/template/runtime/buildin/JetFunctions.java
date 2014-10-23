@@ -77,7 +77,7 @@ public final class JetFunctions {
         JetWriter writer = JetWriter.create(out, originWriter.getCharset(), false, false);
 
         ctx.setWriter(writer);
-        ctx.invokeInclude(name, parameters, false, null);
+        ctx.doIncludeCall(name, parameters, null);
         ctx.setWriter(originWriter); // reset
 
         return out.toString();
@@ -117,7 +117,7 @@ public final class JetFunctions {
         UnsafeCharArrayWriter out = new UnsafeCharArrayWriter(128);
         ctx.setWriter(JetWriter.create(out, originWriter.getCharset(), false, false));
 
-        ctx.invokeMacro(macro, arguments);
+        ctx.doMacroCall(macro, arguments);
 
         ctx.setWriter(originWriter);
         

@@ -59,7 +59,7 @@ public final class AstDirectiveInclude extends AstDirective {
             }
         }
 
-        ctx.invokeInclude((String) file, (Map<String, Object>) parameters, false, returnName);
+        ctx.doIncludeCall((String) file, (Map<String, Object>) parameters, returnName);
     }
 
 }

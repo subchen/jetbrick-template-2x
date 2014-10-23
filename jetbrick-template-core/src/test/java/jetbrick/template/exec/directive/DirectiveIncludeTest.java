@@ -46,14 +46,14 @@ public class DirectiveIncludeTest extends AbstractJetxFileTest {
     @Test
     public void testInclude() {
         Assert.assertEquals("abcxxx123", eval("/s1.jetx"));
-        Assert.assertEquals("<-b->c", eval("/s3.jetx"));
+        Assert.assertEquals("<-b-c>c", eval("/s3.jetx"));
     }
 
     @Test
     public void testInclude_args() {
         Map<String, Object> ctx = new HashMap<String, Object>();
         ctx.put("a", "a");
-        Assert.assertEquals("a<a-b->c", eval("/s3.jetx", ctx));
+        Assert.assertEquals("a<a-b-c>c", eval("/s3.jetx", ctx));
     }
 
     @Test

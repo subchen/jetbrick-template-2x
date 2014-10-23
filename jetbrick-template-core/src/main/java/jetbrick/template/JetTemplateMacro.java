@@ -60,7 +60,7 @@ public final class JetTemplateMacro implements FunctionInvoker {
     @Override
     public Object invoke(Object[] arguments) {
         InterpretContext ctx = InterpretContext.current();
-        ctx.invokeMacro(this, arguments);
+        ctx.doMacroCall(this, arguments);
         return null;
     }
 
