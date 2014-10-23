@@ -62,12 +62,12 @@ public final class JetFunctions {
     // ------------------------------------------------------------
 
     // 读取子模板内容
-    public static String include(String relativeName) throws ResourceNotFoundException {
-        return include(relativeName, null);
+    public static String includeGet(String relativeName) throws ResourceNotFoundException {
+        return includeGet(relativeName, null);
     }
 
     // 读取子模板内容
-    public static String include(String relativeName, Map<String, Object> parameters) throws ResourceNotFoundException {
+    public static String includeGet(String relativeName, Map<String, Object> parameters) throws ResourceNotFoundException {
         InterpretContext ctx = InterpretContext.current();
 
         String name = PathUtils.getRelativePath(ctx.getTemplate().getName(), relativeName);
@@ -84,14 +84,14 @@ public final class JetFunctions {
     }
 
     // 读取纯文本内容
-    public static String read(String relativeName) throws ResourceNotFoundException {
+    public static String fileGet(String relativeName) throws ResourceNotFoundException {
         InterpretContext ctx = InterpretContext.current();
         String encoding = ctx.getEngine().getConfig().getInputEncoding().name();
-        return read(relativeName, encoding);
+        return fileGet(relativeName, encoding);
     }
 
     // 读取纯文本内容
-    public static String read(String relativeName, String encoding) {
+    public static String fileGet(String relativeName, String encoding) {
         InterpretContext ctx = InterpretContext.current();
 
         String name = PathUtils.getRelativePath(ctx.getTemplate().getName(), relativeName);
@@ -103,7 +103,7 @@ public final class JetFunctions {
     // ------------------------------------------------------------
 
     // 调用一个 macro，并获取生成的内容
-    public static String macro(String name, Object... arguments) {
+    public static String macroGet(String name, Object... arguments) {
         InterpretContext ctx = InterpretContext.current();
 
         Class<?>[] argumentTypes = ParameterUtils.getParameterTypes(arguments);
@@ -127,7 +127,7 @@ public final class JetFunctions {
     // ------------------------------------------------------------
 
     public static void debug(String format, Object... args) {
-        org.slf4j.LoggerFactory.getLogger("jetx::debug").warn(format, args);
+        org.slf4j.LoggerFactory.getLogger("jetx.debug").info(format, args);
     }
 
 }

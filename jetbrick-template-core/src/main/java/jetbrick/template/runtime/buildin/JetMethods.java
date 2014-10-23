@@ -20,14 +20,106 @@
 package jetbrick.template.runtime.buildin;
 
 import java.text.DecimalFormat;
-import java.util.Date;
+import java.util.*;
 import jetbrick.util.*;
 
 public final class JetMethods {
 
+    //---- type cast -------------------------------------------------------
+    public static Boolean asBoolean(Object value) {
+        if (value == null) {
+            return null;
+        }
+        if (value instanceof Boolean) {
+            return (Boolean) value;
+        }
+
+        value = value.toString().toLowerCase();
+        if ("true".equals(value)) return Boolean.TRUE;
+        if ("yes".equals(value)) return Boolean.TRUE;
+        if ("on".equals(value)) return Boolean.TRUE;
+        if ("t".equals(value)) return Boolean.TRUE;
+        if ("y".equals(value)) return Boolean.TRUE;
+        if ("1".equals(value)) return Boolean.TRUE;
+        return Boolean.FALSE;
+    }
+
+    public static Integer asInt(Object value) {
+        if (value == null) {
+            return null;
+        }
+        if (value instanceof Number) {
+            return ((Number) value).intValue();
+        }
+        return Integer.valueOf(value.toString());
+    }
+
+    public static Long asLong(Object value) {
+        if (value == null) {
+            return null;
+        }
+        if (value instanceof Number) {
+            return ((Number) value).longValue();
+        }
+        return Long.valueOf(value.toString());
+    }
+
+    public static Float asFloat(Object value) {
+        if (value == null) {
+            return null;
+        }
+        if (value instanceof Number) {
+            return ((Number) value).floatValue();
+        }
+        return Float.valueOf(value.toString());
+    }
+
+    public static Double asDouble(Object value) {
+        if (value == null) {
+            return null;
+        }
+        if (value instanceof Number) {
+            return ((Number) value).doubleValue();
+        }
+        return Double.valueOf(value.toString());
+    }
+
+    public static Date asDate(String value) {
+        return DateUtils.parse(value);
+    }
+
+    public static Date asDate(String value, String format) {
+        return DateUtils.parse(value, format);
+    }
+
+    public static <T> List<T> asList(Collection<T> values) {
+        if (values == null) {
+            return null;
+        }
+        if (values instanceof List) {
+            return (List<T>) values;
+        }
+        return new ArrayList<T>(values);
+    }
+
+    public static List<Object> asList(Object[] values) {
+        if (values == null) {
+            return Collections.emptyList();
+        }
+        List<Object> list = new ArrayList<Object>(values.length);
+        for (Object value : values) {
+            list.add(value);
+        }
+        return list;
+    }
+
+    public static String asString(Object value) {
+        return value.toString();
+    }
+
     //---- json ----------------------------------------------------------
 
-    public static String toJson(Object object) {
+    public static String asJson(Object object) {
         return JSONUtils.toJSONString(object);
     }
 

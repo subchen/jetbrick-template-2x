@@ -1,7 +1,6 @@
 package jetbrick.template.exec.buildin;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import jetbrick.template.exec.AbstractJetxSourceTest;
 import jetbrick.util.DateUtils;
 import org.junit.Assert;
@@ -11,13 +10,13 @@ public class BuildinMethodTest extends AbstractJetxSourceTest {
 
     @Test
     public void testJson() {
-        Assert.assertEquals("123", eval("${123.toJson()}"));
-        Assert.assertEquals("false", eval("${false.toJson()}"));
-        Assert.assertEquals("\"a\"", eval("${'a'.toJson()}"));
-        Assert.assertEquals("[]", eval("${[].toJson()}"));
-        Assert.assertEquals("[1,false]", eval("${[1,false].toJson()}"));
-        Assert.assertEquals("{}", eval("${{}.toJson()}"));
-        Assert.assertEquals("{\"a\":1}", eval("${{a:1}.toJson()}"));
+        Assert.assertEquals("123", eval("${123.asJson()}"));
+        Assert.assertEquals("false", eval("${false.asJson()}"));
+        Assert.assertEquals("\"a\"", eval("${'a'.asJson()}"));
+        Assert.assertEquals("[]", eval("${[].asJson()}"));
+        Assert.assertEquals("[1,false]", eval("${[1,false].asJson()}"));
+        Assert.assertEquals("{}", eval("${{}.asJson()}"));
+        Assert.assertEquals("{\"a\":1}", eval("${{a:1}.asJson()}"));
     }
 
     @Test
@@ -32,6 +31,12 @@ public class BuildinMethodTest extends AbstractJetxSourceTest {
         ctx.put("d", DateUtils.parse("2014-01-01 12:00:00"));
         Assert.assertEquals("2014-01-01 12:00:00", eval("${d.format()}", ctx));
         Assert.assertEquals("140101", eval("${d.format('yyMMdd')}", ctx));
+    }
+
+    @Test
+    public void testAsDate() {
+        Assert.assertEquals("2014-01-01 12:00:00", eval("${'2014-01-01 12:00:00'.asDate().format()}"));
+        Assert.assertEquals("2014-01-01 00:00:00", eval("${'2014-01-01'.asDate('yyyy-MM-dd').format()}"));
     }
 
     @Test
