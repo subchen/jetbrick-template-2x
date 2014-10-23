@@ -16,7 +16,7 @@ public class BuildinFunctionTest extends AbstractJetxSourceTest {
     public void testMacroGet() {
         Assert.assertEquals("2", eval("#macro inc(int x)${x+1}#end${macroGet('inc', 1)}"));
     }
-    
+
     @Test
     public void testDebug() {
         eval("${debug('123')}");

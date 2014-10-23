@@ -47,7 +47,7 @@ public final class AstDirectiveCall extends AstDirective {
         }
 
         JetTemplateMacro macro = last;
-        if (macro == null) { 
+        if (macro == null) {
             Class<?>[] argumentTypes = ParameterUtils.getParameterTypes(arguments);
             macro = ctx.getTemplate().resolveMacro(name, argumentTypes);
             if (macro == null) {

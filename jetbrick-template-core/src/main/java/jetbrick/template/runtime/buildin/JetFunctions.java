@@ -120,7 +120,7 @@ public final class JetFunctions {
         ctx.doMacroCall(macro, arguments);
 
         ctx.setWriter(originWriter);
-        
+
         return out.toString();
     }
 
