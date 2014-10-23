@@ -412,7 +412,7 @@ public final class AstCodeVisitor extends AbstractParseTreeVisitor<AstNode> impl
         name = StringUtils.substringBetween(name, " ", "(").trim();
 
         AstExpressionList expressionList = accept(ctx.expression_list());
-        return new AstDirectiveTag(name, expressionList, null, position);
+        return new AstDirectiveCall(name, expressionList, position);
     }
 
     @Override
