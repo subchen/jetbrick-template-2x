@@ -20,7 +20,6 @@
 package jetbrick.template.runtime.buildin;
 
 import java.io.IOException;
-import java.util.Map;
 import jetbrick.template.runtime.JetTagContext;
 
 /**

@@ -21,9 +21,8 @@ package jetbrick.template.parser.ast;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import jetbrick.template.runtime.InterpretContext;
 import jetbrick.collection.ListMap;
+import jetbrick.template.runtime.InterpretContext;
 
 public final class AstConstantMap extends AstExpression {
     private static final AstConstantMapEntry[] EMPTY_ARRAY = new AstConstantMapEntry[0];

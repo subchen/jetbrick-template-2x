@@ -19,7 +19,6 @@
  */
 package jetbrick.template.resolver.property;
 
-import java.util.Map;
 import jetbrick.bean.Getter;
 
 /**

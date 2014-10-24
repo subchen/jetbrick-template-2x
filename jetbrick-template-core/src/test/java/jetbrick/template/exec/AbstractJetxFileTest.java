@@ -5,8 +5,8 @@ import java.util.Map;
 import jetbrick.io.resource.Resource;
 import jetbrick.template.JetConfig;
 import jetbrick.template.JetTemplate;
-import jetbrick.template.loader.resource.SourceResource;
 import jetbrick.template.loader.AbstractResourceLoader;
+import jetbrick.template.loader.resource.SourceResource;
 
 public abstract class AbstractJetxFileTest extends AbstractJetxSourceTest {
     protected static final Map<String, String> sourceMap = new HashMap<String, String>();
