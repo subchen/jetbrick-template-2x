@@ -24,10 +24,10 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import jetbrick.io.resource.Resource;
 import jetbrick.io.resource.ResourceNotFoundException;
+import jetbrick.template.loader.ResourceLoader;
+import jetbrick.template.loader.resource.SourceResource;
 import jetbrick.template.parser.Symbols;
 import jetbrick.template.resolver.GlobalResolver;
-import jetbrick.template.loader.resource.SourceResource;
-import jetbrick.template.loader.ResourceLoader;
 import jetbrick.template.runtime.JetForIterator;
 import jetbrick.template.runtime.buildin.*;
 import jetbrick.util.PathUtils;
@@ -55,7 +55,7 @@ final class JetEngineImpl extends JetEngine {
         // output log
         log.info("JetEngine.version = {}", JetEngine.VERSION);
         for (ResourceLoader loader : loaders) {
-            log.info("JetEngine.loader = {}, root = {}, reload = {}", loader.getClass().getName(), loader.getClass().getName(), loader.getRoot(), loader.isReloadable());
+            log.info("JetEngine.loader = {}, root = {}, reload = {}", loader.getClass().getName(), loader.getRoot(), loader.isReloadable());
         }
 
         // create globals
