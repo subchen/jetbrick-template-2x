@@ -40,8 +40,8 @@ public final class JetWebContext extends HashMap<String, Object> {
     public static final String SESSION_SCOPE = "sessionScope";
     public static final String REQUEST_SCOPE = "requestScope";
 
-    public static final String PARAMETER = "parameter";
-    public static final String PARAMETER_VALUES = "parameterValues";
+    public static final String PARAM = "param";
+    public static final String PARAM_VALUES = "paramValues";
 
     public static final String CONTEXT_PATH = "CONTEXT_PATH";
     public static final String WEBROOT_PATH = "WEBROOT_PATH";
@@ -51,7 +51,7 @@ public final class JetWebContext extends HashMap<String, Object> {
     private enum TYPE {
         REQUEST_SCOPE,
         SESSION, SESSION_SCOPE,
-        PARAMETER, PARAMETER_VALUES,
+        PARAM, PARAM_VALUES,
         CONTEXT_PATH, WEBROOT_PATH, BASE_PATH,
     }
     //@formatter:on
@@ -86,8 +86,8 @@ public final class JetWebContext extends HashMap<String, Object> {
             put(SESSION_SCOPE, TYPE.SESSION_SCOPE);
         }
 
-        put(PARAMETER, TYPE.PARAMETER);
-        put(PARAMETER_VALUES, TYPE.PARAMETER_VALUES);
+        put(PARAM, TYPE.PARAM);
+        put(PARAM_VALUES, TYPE.PARAM_VALUES);
 
         put(CONTEXT_PATH, TYPE.CONTEXT_PATH);
         put(WEBROOT_PATH, TYPE.WEBROOT_PATH);
@@ -140,9 +140,9 @@ public final class JetWebContext extends HashMap<String, Object> {
             return request.getSession();
         case SESSION_SCOPE:
             return new SessionAttributeMap(request);
-        case PARAMETER:
+        case PARAM:
             return new RequestParameterMap(request);
-        case PARAMETER_VALUES:
+        case PARAM_VALUES:
             return new RequestParameterValuesMap(request);
         case CONTEXT_PATH:
             return request.getContextPath();
