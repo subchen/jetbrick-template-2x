@@ -66,6 +66,10 @@ public final class JetTagContext {
         return InterpretContext.current();
     }
 
+    public JetEngine getEngine() {
+        return getInterpretContext().getEngine();
+    }
+
     public JetWriter getWriter() {
         return getInterpretContext().getWriter();
     }
