@@ -94,8 +94,8 @@ public final class JetWebEngine {
         ctx.define(java.util.Map.class, JetWebContext.APPLICATION_SCOPE);
         ctx.define(java.util.Map.class, JetWebContext.SESSION_SCOPE);
         ctx.define(java.util.Map.class, JetWebContext.REQUEST_SCOPE);
-        ctx.define(java.util.Map.class, JetWebContext.PARAMETER);
-        ctx.define(java.util.Map.class, JetWebContext.PARAMETER_VALUES);
+        ctx.define(java.util.Map.class, JetWebContext.PARAM);
+        ctx.define(java.util.Map.class, JetWebContext.PARAM_VALUES);
 
         ctx.set(JetWebContext.APPLICATION, sc);
         ctx.set(JetWebContext.APPLICATION_SCOPE, new ServletContextAttributeMap(sc));

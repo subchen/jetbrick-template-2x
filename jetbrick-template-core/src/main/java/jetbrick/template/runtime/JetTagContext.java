@@ -19,6 +19,7 @@
  */
 package jetbrick.template.runtime;
 
+import jetbrick.template.JetEngine;
 import jetbrick.io.stream.UnsafeCharArrayWriter;
 import jetbrick.template.parser.ast.AstStatementList;
 
