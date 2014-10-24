@@ -1,28 +1,31 @@
 概述 Overview
 ==================
 
-jetbrick-template 是一个新一代 Java 模板引擎，具有高性能和高扩展性。 适合于动态 HTML 页面输出或者代码生成，可替代 JSP 页面或者 Velocity 等模板。 指令和 Velocity 相似，表达式和 Java 保持一致，易学易用。
+`jetbrick-template` 是一个新一代 Java 模板引擎，具有高性能和高扩展性。 适合于动态 HTML 页面输出或者代码生成，可替代 `JSP` 页面或者 `Velocity` 等模板。 指令和 `Velocity` 相似，表达式和 `Java` 保持一致，易学易用。
 
 * 支持类似于 Velocity 的多种指令
-* 支持热加载
-* 支持类型推导
+* 支持模板热加载
+* 支持强类型/弱类型切换
+* 支持静态方法/字段
 * 支持可变参数方法调用
 * 支持方法重载
-* 支持方法扩展
-* 支持函数扩展
+* 支持扩展方法
+* 支持扩展函数
 * 支持自定义标签 #tag
 * 支持宏定义 #macro
-* 支持布局 Layout
+* 支持布局 layout
+* 支持安全管理器
 
 文档 Documents
 =================
 
 http://subchen.github.io/jetbrick-template/
 
+
 简单易用的指令
 =================
 
-jetbrick-template 指令集和老牌的模板引擎 Velocity 非常相似，易学易用。
+`jetbrick-template` 指令集和老牌的模板引擎 `Velocity` 非常相似，易学易用。
 
 ```html
 #define(List userlist)
@@ -45,32 +48,49 @@ jetbrick-template 指令集和老牌的模板引擎 Velocity 非常相似，易�
 基本开发 API 
 =================
 
-1. 创建自定义配置的 `JetEngine` 对象。推荐使用单例模式创建。
-2. 根据模板路径，获取一个模板对象 `JetTemplate`。
-3. 创建一个 `Map<String, Object>` 对象，并加入你的 data objects。
-5. 准备一个待输出的对象，`OutputStream` 或者 `Writer`。
-6. 根据你的 data objects 来渲染模板，并获得输出结果。
-
-具体的 Java 代码，看上去是这样的：
-
 ```java
-// 创建一个默认的 JetEngine
-JetEngine engine = JetEngine.create(); 
+public class JetxTest {
 
-// 获取一个模板对象
-JetTemplate template = engine.getTemplate("/sample.jetx");
+    @Test
+    public void test() {
+        // 0. 准备一些 Model 数据作为测试
+        List<User> users = Arrays.asList(
+            new User("张三", "zhangsan@qq.com"),
+            new User("李四", "lisi@qq.com"),
+            new User("王五", "wangwu@qq.com"),
+        );
 
-// 创建 context 对象
-Map<String, Object> context = new HashMap<String, Object>();
-context.put("user", user);
-context.put("books", books);
+        // 1. 创建一个默认的 JetEngine
+        JetEngine engine = JetEngine.create();
 
-// 渲染模板
-StringWriter writer = new StringWriter();
-template.render(context, writer);
+        // 2. 获取一个模板对象 (从默认的 classpath 下面)
+        JetTemplate template = engine.getTemplate("/users.jetx");
 
-// 打印结果
-System.out.println(writer.toString());
+        // 3. 创建 context 对象
+        Map<String, Object> context = new HashMap<String, Object>();
+        context.put("users", users);
+
+        // 4. 渲染模板到自定义的 Writer
+        StringWriter writer = new StringWriter();
+        template.render(context, writer);
+
+        // 5. 打印结果
+        System.out.println(writer.toString());
+    }
+}
+```
+
+Maven 依赖 pom.xml
+=============================
+
+Release 版本已发布到 Maven 中央库： http://central.maven.org/maven2/com/github/subchen/
+
+```xml
+<dependency>
+    <groupId>com.github.subchen</groupId>
+    <artifactId>jetbrick-template-core</artifactId>
+    <version>2.0</version>
+</dependency>
 ```
 
 开源许可 License
