@@ -17,30 +17,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package jetbrick.template.resource.loader;
+package jetbrick.template.loader;
 
+import jetbrick.io.resource.ClasspathResource;
+import jetbrick.io.resource.Resource;
 import jetbrick.util.PathUtils;
 
-public abstract class AbstractResourceLoader implements ResourceLoader {
-    protected String root;
-    protected boolean reloadable;
+public final class ClasspathResourceLoader extends AbstractResourceLoader {
 
-    @Override
-    public String getRoot() {
-        return root;
+    public ClasspathResourceLoader() {
+        root = "";
+        reloadable = false;
     }
 
     @Override
-    public boolean isReloadable() {
-        return reloadable;
-    }
+    public Resource load(String name) {
+        String path = PathUtils.concat(root, name);
+        if (path.startsWith("/")) {
+            path = path.substring(1);
+        }
 
-    public void setRoot(String root) {
-        this.root = PathUtils.normalize(root);
-    }
+        ClasspathResource resource = new ClasspathResource(path);
+        if (!resource.exist()) {
+            return null;
+        }
 
-    public void setReloadable(boolean reloadable) {
-        this.reloadable = reloadable;
+        resource.setPath(name); // use relative name
+        return resource;
     }
 
 }

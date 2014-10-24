@@ -17,12 +17,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package jetbrick.template.web;
+package jetbrick.template.loader;
 
 import javax.servlet.ServletContext;
 import jetbrick.io.resource.Resource;
 import jetbrick.io.resource.ServletResource;
-import jetbrick.template.resource.loader.AbstractResourceLoader;
+import jetbrick.template.web.JetWebEngine;
 import jetbrick.util.PathUtils;
 
 /**

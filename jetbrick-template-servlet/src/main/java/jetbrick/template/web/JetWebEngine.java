@@ -22,6 +22,7 @@ package jetbrick.template.web;
 import java.util.Properties;
 import javax.servlet.ServletContext;
 import jetbrick.template.*;
+import jetbrick.template.loader.ServletResourceLoader;
 import jetbrick.template.web.buildin.JetWebTags;
 import jetbrick.web.servlet.map.ServletContextAttributeMap;
 

@@ -17,32 +17,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package jetbrick.template.resource.loader;
+package jetbrick.template.loader;
 
-import java.io.File;
-import jetbrick.io.resource.FileSystemResource;
-import jetbrick.io.resource.Resource;
 import jetbrick.util.PathUtils;
 
-public final class FileSystemResourceLoader extends AbstractResourceLoader {
+public abstract class AbstractResourceLoader implements ResourceLoader {
+    protected String root;
+    protected boolean reloadable;
 
-    public FileSystemResourceLoader() {
-        root = ".";
-        reloadable = false;
+    @Override
+    public String getRoot() {
+        return root;
     }
 
     @Override
-    public Resource load(String name) {
-        String path = PathUtils.concat(root, name);
+    public boolean isReloadable() {
+        return reloadable;
+    }
 
-        File file = new File(path).getAbsoluteFile();
-        if (!file.exists()) {
-            return null;
-        }
+    public void setRoot(String root) {
+        this.root = PathUtils.normalize(root);
+    }
 
-        FileSystemResource resource = new FileSystemResource(file);
-        resource.setPath(name); // use relative name
-        return resource;
+    public void setReloadable(boolean reloadable) {
+        this.reloadable = reloadable;
     }
 
 }

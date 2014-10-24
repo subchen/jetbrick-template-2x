@@ -14,6 +14,6 @@ public class OptionImportTest extends AbstractJetxSourceTest {
 
     @Test
     public void testMultiPkgs() {
-        Assert.assertEquals("class jetbrick.template.resource.loader.ClasspathResourceLoader", eval("#options(import='jetbrick.template.**')${ClasspathResourceLoader::class}"));
+        Assert.assertEquals("class jetbrick.template.loader.ClasspathResourceLoader", eval("#options(import='jetbrick.template.**')${ClasspathResourceLoader::class}"));
     }
 }
