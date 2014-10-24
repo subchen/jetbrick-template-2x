@@ -77,7 +77,7 @@ public final class JetWebEngine {
         // 用户配置文件
         if (configLocation == null) {
             configLocation = sc.getInitParameter(CONFIG_LOCATION_PARAMETER);
-            if (configLocation != null && configLocation.length() > 0) {
+            if (configLocation == null || configLocation.length() == 0) {
                 configLocation = JetConfig.DEFAULT_CONFIG_FILE;
             }
         }
