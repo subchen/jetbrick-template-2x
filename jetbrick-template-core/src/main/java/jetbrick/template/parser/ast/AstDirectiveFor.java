@@ -43,8 +43,11 @@ public final class AstDirectiveFor extends AstDirective {
         JetForIterator it = new JetForIterator(result);
         if (it.getSize() > 0) {
             ValueStack valueStack = ctx.getValueStack();
-            // save out.for
-            Object old = valueStack.getValue(Symbols.FOR);
+
+            // save outside variable which will be reset in #for
+            Object outsideIdentifier = valueStack.getValue(identifier);
+            Object outsideFor = valueStack.getValue(Symbols.FOR);
+
             // set this.for
             valueStack.setLocal(Symbols.FOR, it);
 
@@ -72,8 +75,11 @@ public final class AstDirectiveFor extends AstDirective {
                     }
                 }
             }
-            // restore out.for
-            valueStack.setLocal(Symbols.FOR, old);
+
+            // reset outside variable
+            valueStack.setLocal(Symbols.FOR, outsideFor);
+            valueStack.setLocal(identifier, outsideIdentifier);
+
         } else if (elseStatements != null) {
             elseStatements.execute(ctx);
         }
