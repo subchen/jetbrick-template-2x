@@ -91,9 +91,9 @@ public final class AstText extends AstStatement {
                         trimedNewLine = true;
                         int n = i + 1;
                         if (n < len && text.charAt(n) == '\n') {
-                            lpos = n; // window: \r\n
+                            lpos = n + 1; // window: \r\n
                         } else {
-                            lpos = i; // mac: \r
+                            lpos = n; // mac: \r
                         }
                         break;
                     }
