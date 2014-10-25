@@ -32,48 +32,48 @@ import org.slf4j.LoggerFactory;
 public final class JetConfig {
     public static final String DEFAULT_CONFIG_FILE = "classpath:/jetbrick-template.properties";
 
-    public static final String AUTOSCAN_PACKAGES = "jetx.autoscan.packages";
-    public static final String AUTOSCAN_SKIPERRORS = "jetx.autoscan.skiperrors";
     public static final String IMPORT_CLASSES = "jetx.import.classes";
     public static final String IMPORT_METHODS = "jetx.import.methods";
     public static final String IMPORT_FUNCTIONS = "jetx.import.functions";
     public static final String IMPORT_TAGS = "jetx.import.tags";
     public static final String IMPORT_MACROS = "jetx.import.macros";
     public static final String IMPORT_DEFINES = "jetx.import.defines";
+    public static final String AUTOSCAN_PACKAGES = "jetx.autoscan.packages";
+    public static final String AUTOSCAN_SKIPERRORS = "jetx.autoscan.skiperrors";
+    public static final String TEMPLATE_LOADERS = "jetx.template.loaders";
+    public static final String TEMPLATE_SUFFIX = "jetx.template.suffix";
     public static final String INPUT_ENCODING = "jetx.input.encoding";
     public static final String OUTPUT_ENCODING = "jetx.output.encoding";
     public static final String SYNTAX_STRICT = "jetx.syntax.strict";
     public static final String SYNTAX_SAFECALL = "jetx.syntax.safecall";
-    public static final String TEMPLATE_LOADERS = "jetx.template.loaders";
-    public static final String TEMPLATE_SUFFIX = "jetx.template.suffix";
-    public static final String IO_SKIPERRORS = "jetx.io.skiperrors";
     public static final String TRIM_LEADING_WHITESPACES = "jetx.trim.leading.whitespaces";
     public static final String TRIM_DIRECTIVE_WHITESPACES = "jetx.trim.directive.whitespaces";
     public static final String TRIM_DIRECTIVE_COMMENTS = "jetx.trim.directive.comments";
     public static final String TRIM_DIRECTIVE_COMMENTS_PREFIX = "jetx.trim.directive.comments.prefix";
     public static final String TRIM_DIRECTIVE_COMMENTS_SUFFIX = "jetx.trim.directive.comments.suffix";
+    public static final String IO_SKIPERRORS = "jetx.io.skiperrors";
 
     private final Logger log = LoggerFactory.getLogger(JetConfig.class);
-    private List<String> autoscanPackages;
-    private boolean autoscanSkiperrors;
     private List<String> importClasses;
     private List<String> importMethods;
     private List<String> importFunctions;
     private List<String> importTags;
     private List<String> importMacros;
     private List<String> importDefines;
+    private List<String> autoscanPackages;
+    private boolean autoscanSkiperrors;
+    private List<ResourceLoader> templateLoaders;
+    private String templateSuffix;
     private Charset inputEncoding;
     private Charset outputEncoding;
     private boolean syntaxStrict;
     private boolean syntaxSafecall;
-    private List<ResourceLoader> templateLoaders;
-    private String templateSuffix;
-    private boolean ioSkiperrors;
     private boolean trimLeadingWhitespaces;
     private boolean trimDirectiveWhitespaces;
     private boolean trimDirectiveComments;
     private String trimDirectiveCommentsPrefix;
     private String trimDirectiveCommentsSuffix;
+    private boolean ioSkiperrors;
 
     protected JetConfig(Properties config, String configLocation) {
         ConfigLoader loader = new ConfigLoader();
@@ -99,34 +99,26 @@ public final class JetConfig {
     }
 
     private void initialize(Config config) {
-        autoscanPackages = config.asStringList(AUTOSCAN_PACKAGES);
-        autoscanSkiperrors = config.asBoolean(AUTOSCAN_SKIPERRORS, "false");
         importClasses = config.asStringList(IMPORT_CLASSES);
         importMethods = config.asStringList(IMPORT_METHODS);
         importFunctions = config.asStringList(IMPORT_FUNCTIONS);
         importTags = config.asStringList(IMPORT_TAGS);
         importMacros = config.asStringList(IMPORT_MACROS);
         importDefines = config.asStringList(IMPORT_DEFINES);
+        autoscanPackages = config.asStringList(AUTOSCAN_PACKAGES);
+        autoscanSkiperrors = config.asBoolean(AUTOSCAN_SKIPERRORS, "false");
+        templateLoaders = config.asObjectList(TEMPLATE_LOADERS, ResourceLoader.class, ClasspathResourceLoader.class.getName());
+        templateSuffix = config.asString(TEMPLATE_SUFFIX, ".jetx");
         inputEncoding = config.asCharset(INPUT_ENCODING, "utf-8");
         outputEncoding = config.asCharset(OUTPUT_ENCODING, "utf-8");
         syntaxStrict = config.asBoolean(SYNTAX_STRICT, "false");
         syntaxSafecall = config.asBoolean(SYNTAX_SAFECALL, "false");
-        templateLoaders = config.asObjectList(TEMPLATE_LOADERS, ResourceLoader.class, ClasspathResourceLoader.class.getName());
-        templateSuffix = config.asString(TEMPLATE_SUFFIX, ".jetx");
-        ioSkiperrors = config.asBoolean(IO_SKIPERRORS, "false");
         trimLeadingWhitespaces = config.asBoolean(TRIM_LEADING_WHITESPACES, "false");
         trimDirectiveWhitespaces = config.asBoolean(TRIM_DIRECTIVE_WHITESPACES, "true");
         trimDirectiveComments = config.asBoolean(TRIM_DIRECTIVE_COMMENTS, "false");
         trimDirectiveCommentsPrefix = config.asString(TRIM_DIRECTIVE_COMMENTS_PREFIX, "<!--");
         trimDirectiveCommentsSuffix = config.asString(TRIM_DIRECTIVE_COMMENTS_SUFFIX, "-->");
-    }
-
-    public List<String> getAutoscanPackages() {
-        return autoscanPackages;
-    }
-
-    public boolean isAutoscanSkiperrors() {
-        return autoscanSkiperrors;
+        ioSkiperrors = config.asBoolean(IO_SKIPERRORS, "false");
     }
 
     public List<String> getImportClasses() {
@@ -153,6 +145,22 @@ public final class JetConfig {
         return importDefines;
     }
 
+    public List<String> getAutoscanPackages() {
+        return autoscanPackages;
+    }
+
+    public boolean isAutoscanSkiperrors() {
+        return autoscanSkiperrors;
+    }
+
+    public List<ResourceLoader> getTemplateLoaders() {
+        return templateLoaders;
+    }
+
+    public String getTemplateSuffix() {
+        return templateSuffix;
+    }
+
     public Charset getInputEncoding() {
         return inputEncoding;
     }
@@ -167,18 +175,6 @@ public final class JetConfig {
 
     public boolean isSyntaxSafecall() {
         return syntaxSafecall;
-    }
-
-    public List<ResourceLoader> getTemplateLoaders() {
-        return templateLoaders;
-    }
-
-    public String getTemplateSuffix() {
-        return templateSuffix;
-    }
-
-    public boolean isIoSkiperrors() {
-        return ioSkiperrors;
     }
 
     public boolean isTrimLeadingWhitespaces() {
@@ -200,4 +196,9 @@ public final class JetConfig {
     public String getTrimDirectiveCommentsSuffix() {
         return trimDirectiveCommentsSuffix;
     }
+
+    public boolean isIoSkiperrors() {
+        return ioSkiperrors;
+    }
+
 }
