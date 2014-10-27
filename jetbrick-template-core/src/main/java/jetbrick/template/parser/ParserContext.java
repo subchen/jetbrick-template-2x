@@ -168,7 +168,11 @@ public final class ParserContext {
             if (allowSameRedefine && type == old) {
                 return;
             }
-            throw new IllegalStateException(Errors.format(Errors.VAR_TYPE_REDEFINE, name));
+            if (old == null) {
+                throw new IllegalStateException(Errors.format(Errors.VAR_TYPE_DEFAINE_AFTER_USE, name));
+            } else {
+                throw new IllegalStateException(Errors.format(Errors.VAR_TYPE_REDEFINE, name));
+            }
         }
 
         currentSymbols.put(name, type);

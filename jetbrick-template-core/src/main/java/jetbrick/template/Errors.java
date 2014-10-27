@@ -35,6 +35,7 @@ public final class Errors {
     public static final String OPTION_VALUE_INVALID = "#option value is invalid: %s";
     public static final String VAR_UNDEFINED = "undefined variable found in strict mode: %s";
     public static final String VAR_TYPE_REDEFINE = "cannot redefine variable: %s";
+    public static final String VAR_TYPE_DEFAINE_AFTER_USE = "cannot define variable after use it: %s";
     public static final String PARAM_TYPE_MISSING = "missing argument type in strict mode: %s";
     public static final String INCLUDE_PARAM_MORE = "#include cannot accept more than 3 arguments";
     public static final String RETURN_NAME_INVALID = "parameter `returnName` is invalid";
