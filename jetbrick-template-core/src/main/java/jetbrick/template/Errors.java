@@ -142,6 +142,11 @@ public final class Errors {
         int lineStart = Math.max(line - 3, 0);
         int lineEnd = Math.min(line + 2, sourceLines.length);
 
+        // 自动计算最大行数占用的宽度
+        int digits = Math.max(2, String.valueOf(lineEnd).length()) + 1;
+        String pattern = "%" + digits + "d: %s%n";
+        String indicator = StringUtils.repeat(' ', digits + 2);
+
         for (int i = lineStart; i < lineEnd; i++) {
             String sourceLine = sourceLines[i];
 
@@ -159,11 +164,11 @@ public final class Errors {
             }
 
             sourceLine = sourceLine.replace("\t", "    ");
-            sb.append(String.format("%4d: %s%n", Integer.valueOf(i + 1), sourceLine));
+            sb.append(String.format(pattern, Integer.valueOf(i + 1), sourceLine));
 
             // 插入错误提示符
             if (i == line - 1) {
-                sb.append("      ");
+                sb.append(indicator);
                 for (int j = 0; j < column; j++) {
                     sb.append(' ');
                 }
