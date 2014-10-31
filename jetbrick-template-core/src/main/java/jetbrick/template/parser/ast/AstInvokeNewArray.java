@@ -55,14 +55,14 @@ public final class AstInvokeNewArray extends AstExpression {
 
     private void validate(InterpretContext ctx, int index, Object o) {
         if (o == null) {
-            throw new InterpretException(Errors.ARRAY_LEN_NULL).set(expressions[index].getPosition());
+            throw new InterpretException(Errors.EXPRESSION_ARRAY_LENGTH_NULL).set(expressions[index].getPosition());
         }
         Class<?> cls = o.getClass();
         if (cls == Integer.class || cls == Short.class || cls == Byte.class) {
             return;
         }
 
-        throw new InterpretException(Errors.PARAM_NOT_INT, index).set(expressions[index].getPosition());
+        throw new InterpretException(Errors.VARIABLE_TYPE_MISMATCH, index, cls.getName(), "int").set(expressions[index].getPosition());
     }
 
 }

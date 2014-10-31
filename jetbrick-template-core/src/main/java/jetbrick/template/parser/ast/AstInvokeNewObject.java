@@ -55,13 +55,13 @@ public final class AstInvokeNewObject extends AstExpression {
         ConstructorInfo constructor = KlassInfo.create(type).searchDeclaredConstructor(parameterTypes);
         if (constructor == null) {
             String signature = SignatureUtils.getMethodSignature(type, "<init>", parameterTypes);
-            throw new InterpretException(Errors.CTOR_NOT_FOUND, signature).set(position);
+            throw new InterpretException(Errors.CONSTRUCTOR_NOT_FOUND, signature).set(position);
         }
 
         try {
             return constructor.newInstance(arguments);
         } catch (RuntimeException e) {
-            throw new InterpretException(Errors.NEW_OBJECT_ERROR, type.getName()).cause(e).set(position);
+            throw new InterpretException(Errors.CONSTRUCTOR_INVOKE_ERROR, type.getName()).cause(e).set(position);
         }
     }
 

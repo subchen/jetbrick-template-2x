@@ -28,59 +28,61 @@ public final class Errors {
 
     // general error
     public static final String UNREACHABLE_CODE = "unreachable code";
-    public static final String TEMPLATE_PATH_ERROR = "path is not under template root: %s";
+    public static final String TEMPLATE_PATH_ERROR = "path is outside of template root: %s";
 
     // syntax error
+    public static final String VARIABLE_UNDEFINED = "undefined variable found in strict mode: %s";
+    public static final String VARIABLE_REDEFINE = "cannot redefine variable: %s";
+    public static final String VARIABLE_DEFAINE_AFTER_USE = "cannot define variable after use it: %s";
+    public static final String VARIABLE_IS_KEYWORD = "syntax error on token `%s`, It is a reserved/keyword identifier";
+    public static final String VARIABLE_IS_RESERVED = "local variable `%s` cannot start with '$', it is a reserved identifier";
+    public static final String ARGUMENT_TYPE_MISSING = "argument type is missing in strict mode: %s";
+    public static final String ARGUMENTS_NOT_MATCH = "arguments not match";
+    public static final String ARGUMENTS_MISSING = "arguments is missing: %s";
+
     public static final String OPTION_NAME_INVALID = "#option name is unknown: %s";
     public static final String OPTION_VALUE_INVALID = "#option value is invalid: %s";
-    public static final String VAR_UNDEFINED = "undefined variable found in strict mode: %s";
-    public static final String VAR_TYPE_REDEFINE = "cannot redefine variable: %s";
-    public static final String VAR_TYPE_DEFAINE_AFTER_USE = "cannot define variable after use it: %s";
-    public static final String PARAM_TYPE_MISSING = "missing argument type in strict mode: %s";
-    public static final String INCLUDE_PARAM_MORE = "#include cannot accept more than 3 arguments";
-    public static final String RETURN_NAME_INVALID = "parameter `returnName` is invalid";
-    public static final String DIRECTIVE_PARAM_MISSING = "missing arguments for directive %s";
-    public static final String UNKNOWN_OP_UNARY = "unknown unary operator: %s";
-    public static final String UNKNOWN_OP_BINARY = "unknown binary operator: %s";
-    public static final String UNKNOWN_TOKEN = "unexpected token type: %s";
-    public static final String ID_IS_KEYWORD = "syntax error on token `%s`, It is a reserved/keyword identifier";
-    public static final String ID_IS_RESERVED = "local variable `%s` cannot start with '$', it is a reserved identifier";
-    public static final String DIRECTIVE_OUTSIDE_FOR = "`%s` cannot be used outside of `#for(...)`";
-    public static final String INVALID_UNICODE_STRING = "invalid unicode in String";
-    public static final String DUPLICATED_MACRO_NAME = "duplicated macro name: %s";
-    public static final String NOT_IN_MACRO_BLOCK = "not in macro defination";
+
+    public static final String DIRECTIVE_OUTSIDE_OF_FOR = "`%s` cannot be used outside of `#for(...)`";
+    public static final String DIRECTIVE_MACRO_NAME_DUPLICATED = "duplicated macro name: %s";
+    public static final String UNICODE_STRING_INVALID = "invalid unicode in string constant";
 
     // interpret error
     public static final String CLASS_NOT_FOUND = "cannot resolve class: %s";
-    public static final String CTOR_NOT_FOUND = "cannot resolve constructor: %s";
+    public static final String CONSTRUCTOR_NOT_FOUND = "cannot resolve constructor: %s";
     public static final String METHOD_NOT_FOUND = "cannot resolve method: %s";
-    public static final String METHOD_STATIC_NOT_FOUND = "cannot resolve static method: %s";
-    public static final String FIELD_STATIC_NOT_FOUND = "cannot resolve static field: %s";
     public static final String PROPERTY_NOT_FOUND = "cannot resolve property: %s";
+    public static final String STATIC_METHOD_NOT_FOUND = "cannot resolve static method: %s";
+    public static final String STATIC_FIELD_NOT_FOUND = "cannot resolve static field: %s";
     public static final String FUNCTION_NOT_FOUND = "cannot resolve function: %s";
     public static final String TAG_NOT_FOUND = "cannot resolve tag: %s";
     public static final String MACRO_NOT_FOUND = "cannot resolve macro: %s";
-    public static final String OBJECT_IS_NULL = "object is null: %s";
-    public static final String INDEX_IS_NULL = "index is null: %s";
-    public static final String TYPE_INCONSISTENT = "inconsistent class for variable: %s";
-    public static final String OP_UNARY_UNDEFINED = "the operator `%s` is undefined for the argument type: %s";
-    public static final String OP_BINARY_UNDEFINED = "the operator `%s` is undefined for the argument type(s): %s, %s";
-    public static final String OP_LHS_IS_NULL = "left operand is null";
-    public static final String OP_RHS_IS_NULL = "right operand is null";
-    public static final String ARRAY_LEN_NULL = "array length is null";
-    public static final String PARAM_NOT_INT = "type mismatch: the arguments[%s] is not an Integer";
-    public static final String PARAM_IS_NULL = "the %s argument is null";
-    public static final String TYPE_MISMATCH = "type mismatch: the %s argument cannot convert from %s to %s";
+
+    public static final String CONSTRUCTOR_INVOKE_ERROR = "constructor invoke error: %s";
     public static final String METHOD_INVOKE_ERROR = "method invoke error: %s";
-    public static final String STATIC_METHOD_INVOKE_ERROR = "method invoke error: %s#%s";
     public static final String FUNCTION_INVOKE_ERROR = "function invoke error: %s";
-    public static final String NEW_OBJECT_ERROR = "new object error: %s";
+    public static final String STATIC_METHOD_INVOKE_ERROR = "static method invoke error: %s";
     public static final String STATIC_FIELD_GET_ERROR = "static field get error: %s#%s";
     public static final String PROPERTY_GET_ERROR = "property get error: %s";
-    public static final String FOR_ITERATOR_ERROR = "iterator error when index = %s";
-    public static final String OBJECT_IS_VOID = "object is Void";
-    public static final String INDEX_IS_VOID = "index is Void";
-    public static final String ARGUMENT_IS_VOID = "argument is Void";
+    public static final String FOR_ITERATOR_ERROR = "iterate error when index = %s";
+
+    public static final String EXPRESSION_OBJECT_IS_NULL = "object is null";
+    public static final String EXPRESSION_INDEX_IS_NULL = "index is null";
+    public static final String EXPRESSION_LHS_IS_NULL = "left operand is null";
+    public static final String EXPRESSION_RHS_IS_NULL = "right operand is null";
+    public static final String EXPRESSION_ARRAY_LENGTH_NULL = "array length is null";
+    public static final String EXPRESSION_NTH_ARGUMENT_IS_NULL = "the %s argument is null";
+    public static final String EXPRESSION_OBJECT_IS_VOID = "object is void";
+    public static final String EXPRESSION_INDEX_IS_VOID = "index is void";
+    public static final String EXPRESSION_ARGUMENT_IS_VOID = "argument is void";
+
+    public static final String VARIABLE_TYPE_INCONSISTENT = "inconsistent class for variable: %s";
+    public static final String VARIABLE_TYPE_MISMATCH = "type mismatch: the %s argument cannot convert from %s to %s";
+
+    public static final String OPERATION_UNARY_UNDEFINED = "the operator `%s` is undefined for the argument type: %s";
+    public static final String OPERATION_BINARY_UNDEFINED = "the operator `%s` is undefined for the argument type(s): %s, %s";
+
+    // ---------------------------------------------------------------------------------
 
     // 判断是否是因为参数不匹配导致的错误
     public static boolean isReflectIllegalArgument(Throwable e) {

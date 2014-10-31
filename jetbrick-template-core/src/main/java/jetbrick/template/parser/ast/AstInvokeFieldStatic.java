@@ -47,7 +47,7 @@ public final class AstInvokeFieldStatic extends AstExpression {
             field = KlassInfo.create(cls).getDeclaredField(name);
             if (field == null) {
                 String signature = SignatureUtils.getFieldSignature(cls, name);
-                throw new InterpretException(Errors.FIELD_STATIC_NOT_FOUND, signature).set(position);
+                throw new InterpretException(Errors.STATIC_FIELD_NOT_FOUND, signature).set(position);
             }
         }
 

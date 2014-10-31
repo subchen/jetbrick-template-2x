@@ -43,9 +43,9 @@ public final class AstInvokeField extends AstExpression {
             if (ctx.getTemplate().getOption().isSafecall()) {
                 return null;
             }
-            throw new InterpretException(Errors.OBJECT_IS_NULL).set(position);
+            throw new InterpretException(Errors.EXPRESSION_OBJECT_IS_NULL).set(position);
         } else if (object == ALU.VOID) {
-            throw new InterpretException(Errors.OBJECT_IS_VOID).set(position);
+            throw new InterpretException(Errors.EXPRESSION_OBJECT_IS_VOID).set(position);
         }
 
         return doInvokeGetter(ctx, last, object);
@@ -73,7 +73,8 @@ public final class AstInvokeField extends AstExpression {
                 // 重新查找匹配的 Getter
                 return doInvokeGetter(ctx, null, object);
             }
-            throw new InterpretException(Errors.PROPERTY_GET_ERROR).cause(e).set(position);
+            String signature = object.getClass().getName() + "#" + name;
+            throw new InterpretException(Errors.PROPERTY_GET_ERROR, signature).cause(e).set(position);
         }
     }
 }

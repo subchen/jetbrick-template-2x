@@ -40,7 +40,7 @@ public final class AstExpressionList extends AstExpression {
         for (int i = 0; i < length; i++) {
             Object obj = expressions[i].execute(ctx);
             if (obj == ALU.VOID) {
-                throw new InterpretException(Errors.ARGUMENT_IS_VOID).set(expressions[i].getPosition());
+                throw new InterpretException(Errors.EXPRESSION_ARGUMENT_IS_VOID).set(expressions[i].getPosition());
             }
             objects[i] = obj;
         }

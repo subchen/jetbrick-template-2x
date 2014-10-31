@@ -161,7 +161,7 @@ public final class ValueStack {
             Class<?> type = doGetType(name, current);
             if (type != null) {
                 if (!ClassUtils.isInstance(type, value)) {
-                    throw new IllegalStateException(Errors.format(Errors.TYPE_INCONSISTENT, name));
+                    throw new IllegalStateException(Errors.format(Errors.VARIABLE_TYPE_INCONSISTENT, name));
                 }
             }
         }
@@ -189,7 +189,7 @@ public final class ValueStack {
             Class<?> type = doGetType(name, parent);
             if (type != null) {
                 if (!ClassUtils.isInstance(type, value)) {
-                    throw new IllegalStateException(Errors.format(Errors.TYPE_INCONSISTENT, name));
+                    throw new IllegalStateException(Errors.format(Errors.VARIABLE_TYPE_INCONSISTENT, name));
                 }
             }
         }

@@ -85,7 +85,7 @@ public final class ALU {
                 return Double.valueOf(n1.doubleValue() + n2.doubleValue());
             }
         }
-        throw new IllegalStateException(Errors.format(Errors.OP_BINARY_UNDEFINED, "+", Errors.typeName(o1), Errors.typeName(o2)));
+        throw new IllegalStateException(Errors.format(Errors.OPERATION_BINARY_UNDEFINED, "+", Errors.typeName(o1), Errors.typeName(o2)));
     }
 
     // a - b
@@ -108,7 +108,7 @@ public final class ALU {
                 return Double.valueOf(n1.doubleValue() - n2.doubleValue());
             }
         }
-        throw new IllegalStateException(Errors.format(Errors.OP_BINARY_UNDEFINED, "-", Errors.typeName(o1), Errors.typeName(o2)));
+        throw new IllegalStateException(Errors.format(Errors.OPERATION_BINARY_UNDEFINED, "-", Errors.typeName(o1), Errors.typeName(o2)));
     }
 
     // a * b
@@ -133,7 +133,7 @@ public final class ALU {
                 return Double.valueOf(n1.doubleValue() * n2.doubleValue());
             }
         }
-        throw new IllegalStateException(Errors.format(Errors.OP_BINARY_UNDEFINED, "*", Errors.typeName(o1), Errors.typeName(o2)));
+        throw new IllegalStateException(Errors.format(Errors.OPERATION_BINARY_UNDEFINED, "*", Errors.typeName(o1), Errors.typeName(o2)));
     }
 
     // a / b
@@ -156,7 +156,7 @@ public final class ALU {
                 return Double.valueOf(n1.doubleValue() / n2.doubleValue());
             }
         }
-        throw new IllegalStateException(Errors.format(Errors.OP_BINARY_UNDEFINED, "/", Errors.typeName(o1), Errors.typeName(o2)));
+        throw new IllegalStateException(Errors.format(Errors.OPERATION_BINARY_UNDEFINED, "/", Errors.typeName(o1), Errors.typeName(o2)));
     }
 
     // a % b
@@ -179,7 +179,7 @@ public final class ALU {
                 return Double.valueOf(n1.doubleValue() % n2.doubleValue());
             }
         }
-        throw new IllegalStateException(Errors.format(Errors.OP_BINARY_UNDEFINED, "%", Errors.typeName(o1), Errors.typeName(o2)));
+        throw new IllegalStateException(Errors.format(Errors.OPERATION_BINARY_UNDEFINED, "%", Errors.typeName(o1), Errors.typeName(o2)));
     }
 
     // +a
@@ -187,7 +187,7 @@ public final class ALU {
         if (o instanceof Number) {
             return o;
         }
-        throw new IllegalStateException(Errors.format(Errors.OP_UNARY_UNDEFINED, "+", Errors.typeName(o)));
+        throw new IllegalStateException(Errors.format(Errors.OPERATION_UNARY_UNDEFINED, "+", Errors.typeName(o)));
     }
 
     // -a
@@ -209,7 +209,7 @@ public final class ALU {
                 return Integer.valueOf(-n.byteValue());
             }
         }
-        throw new IllegalStateException(Errors.format(Errors.OP_UNARY_UNDEFINED, "-", Errors.typeName(o)));
+        throw new IllegalStateException(Errors.format(Errors.OPERATION_UNARY_UNDEFINED, "-", Errors.typeName(o)));
     }
 
     //-----------------------------------------------------------------------
@@ -229,7 +229,7 @@ public final class ALU {
                 return Long.valueOf(n1.longValue() & n2.longValue());
             }
         }
-        throw new IllegalStateException(Errors.format(Errors.OP_BINARY_UNDEFINED, "&", Errors.typeName(o1), Errors.typeName(o2)));
+        throw new IllegalStateException(Errors.format(Errors.OPERATION_BINARY_UNDEFINED, "&", Errors.typeName(o1), Errors.typeName(o2)));
     }
 
     // a | b
@@ -248,7 +248,7 @@ public final class ALU {
                 return Long.valueOf(n1.longValue() | n2.longValue());
             }
         }
-        throw new IllegalStateException(Errors.format(Errors.OP_BINARY_UNDEFINED, "|", Errors.typeName(o1), Errors.typeName(o2)));
+        throw new IllegalStateException(Errors.format(Errors.OPERATION_BINARY_UNDEFINED, "|", Errors.typeName(o1), Errors.typeName(o2)));
     }
 
     // a ^ b
@@ -267,7 +267,7 @@ public final class ALU {
                 return Long.valueOf(n1.longValue() ^ n2.longValue());
             }
         }
-        throw new IllegalStateException(Errors.format(Errors.OP_BINARY_UNDEFINED, "^", Errors.typeName(o1), Errors.typeName(o2)));
+        throw new IllegalStateException(Errors.format(Errors.OPERATION_BINARY_UNDEFINED, "^", Errors.typeName(o1), Errors.typeName(o2)));
     }
 
     // ~a
@@ -285,7 +285,7 @@ public final class ALU {
                 return Integer.valueOf(~n.byteValue());
             }
         }
-        throw new IllegalStateException(Errors.format(Errors.OP_UNARY_UNDEFINED, "~", Errors.typeName(o)));
+        throw new IllegalStateException(Errors.format(Errors.OPERATION_UNARY_UNDEFINED, "~", Errors.typeName(o)));
     }
 
     //-----------------------------------------------------------------------
@@ -312,7 +312,7 @@ public final class ALU {
                 }
             }
         }
-        throw new IllegalStateException(Errors.format(Errors.OP_BINARY_UNDEFINED, "<<", Errors.typeName(o1), Errors.typeName(o2)));
+        throw new IllegalStateException(Errors.format(Errors.OPERATION_BINARY_UNDEFINED, "<<", Errors.typeName(o1), Errors.typeName(o2)));
     }
 
     // a >> b
@@ -338,7 +338,7 @@ public final class ALU {
                 }
             }
         }
-        throw new IllegalStateException(Errors.format(Errors.OP_BINARY_UNDEFINED, ">>", Errors.typeName(o1), Errors.typeName(o2)));
+        throw new IllegalStateException(Errors.format(Errors.OPERATION_BINARY_UNDEFINED, ">>", Errors.typeName(o1), Errors.typeName(o2)));
     }
 
     // a >>> b
@@ -364,7 +364,7 @@ public final class ALU {
                 }
             }
         }
-        throw new IllegalStateException(Errors.format(Errors.OP_BINARY_UNDEFINED, ">>>", Errors.typeName(o1), Errors.typeName(o2)));
+        throw new IllegalStateException(Errors.format(Errors.OPERATION_BINARY_UNDEFINED, ">>>", Errors.typeName(o1), Errors.typeName(o2)));
     }
 
     //-----------------------------------------------------------------------
@@ -424,7 +424,7 @@ public final class ALU {
         if (c1 == c2 && Comparable.class.isAssignableFrom(c1)) {
             return ((Comparable<Object>) o1).compareTo(o2) > 0 ? Boolean.TRUE : Boolean.FALSE;
         }
-        throw new IllegalStateException(Errors.format(Errors.OP_BINARY_UNDEFINED, ">", Errors.typeName(o1), Errors.typeName(o2)));
+        throw new IllegalStateException(Errors.format(Errors.OPERATION_BINARY_UNDEFINED, ">", Errors.typeName(o1), Errors.typeName(o2)));
     }
 
     // a >= b
@@ -455,7 +455,7 @@ public final class ALU {
                 return ((Comparable<Object>) o1).compareTo(o2) >= 0 ? Boolean.TRUE : Boolean.FALSE;
             }
         }
-        throw new IllegalStateException(Errors.format(Errors.OP_BINARY_UNDEFINED, ">=", Errors.typeName(o1), Errors.typeName(o2)));
+        throw new IllegalStateException(Errors.format(Errors.OPERATION_BINARY_UNDEFINED, ">=", Errors.typeName(o1), Errors.typeName(o2)));
     }
 
     // a < b
@@ -484,7 +484,7 @@ public final class ALU {
         if (c1 == c2 && Comparable.class.isAssignableFrom(c1)) {
             return ((Comparable<Object>) o1).compareTo(o2) <= 0 ? Boolean.TRUE : Boolean.FALSE;
         }
-        throw new IllegalStateException(Errors.format(Errors.OP_BINARY_UNDEFINED, "<", Errors.typeName(o1), Errors.typeName(o2)));
+        throw new IllegalStateException(Errors.format(Errors.OPERATION_BINARY_UNDEFINED, "<", Errors.typeName(o1), Errors.typeName(o2)));
     }
 
     // a <= b
@@ -513,7 +513,7 @@ public final class ALU {
         if (c1 == c2 && Comparable.class.isAssignableFrom(c1)) {
             return ((Comparable<Object>) o1).compareTo(o2) <= 0 ? Boolean.TRUE : Boolean.FALSE;
         }
-        throw new IllegalStateException(Errors.format(Errors.OP_BINARY_UNDEFINED, "<=", Errors.typeName(o1), Errors.typeName(o2)));
+        throw new IllegalStateException(Errors.format(Errors.OPERATION_BINARY_UNDEFINED, "<=", Errors.typeName(o1), Errors.typeName(o2)));
     }
 
     public static boolean isTrue(Object o) {

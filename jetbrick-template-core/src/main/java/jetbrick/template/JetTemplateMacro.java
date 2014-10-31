@@ -64,4 +64,9 @@ public final class JetTemplateMacro implements FunctionInvoker {
         return null;
     }
 
+    @Override
+    public String getSignature() {
+        return "macro#" + getName();
+    }
+
 }

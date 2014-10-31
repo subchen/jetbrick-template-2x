@@ -62,13 +62,13 @@ public final class AstOperatorBinary extends AstExpression {
             if (o2 instanceof String) {
                 return o2;
             }
-            throw new InterpretException(Errors.OP_LHS_IS_NULL).set(lhs.getPosition());
+            throw new InterpretException(Errors.EXPRESSION_LHS_IS_NULL).set(lhs.getPosition());
         }
         if (o2 == null) {
             if (o1 instanceof String) {
                 return o1;
             }
-            throw new InterpretException(Errors.OP_RHS_IS_NULL).set(lhs.getPosition());
+            throw new InterpretException(Errors.EXPRESSION_RHS_IS_NULL).set(lhs.getPosition());
         }
 
         try {

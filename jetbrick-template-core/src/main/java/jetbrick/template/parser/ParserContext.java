@@ -160,7 +160,7 @@ public final class ParserContext {
 
     public void defineSymbol(String name, Class<?> type, boolean allowSameRedefine) throws IllegalStateException {
         if (type == null && strict) {
-            throw new IllegalStateException(Errors.format(Errors.PARAM_TYPE_MISSING, name));
+            throw new IllegalStateException(Errors.format(Errors.ARGUMENT_TYPE_MISSING, name));
         }
 
         if (currentSymbols.containsKey(name)) {
@@ -169,9 +169,9 @@ public final class ParserContext {
                 return;
             }
             if (old == null) {
-                throw new IllegalStateException(Errors.format(Errors.VAR_TYPE_DEFAINE_AFTER_USE, name));
+                throw new IllegalStateException(Errors.format(Errors.VARIABLE_DEFAINE_AFTER_USE, name));
             } else {
-                throw new IllegalStateException(Errors.format(Errors.VAR_TYPE_REDEFINE, name));
+                throw new IllegalStateException(Errors.format(Errors.VARIABLE_REDEFINE, name));
             }
         }
 
@@ -187,7 +187,7 @@ public final class ParserContext {
         currentSymbols.put(name, type); // we also put null value
 
         if (type == null && strict) {
-            throw new IllegalStateException(Errors.format(Errors.VAR_UNDEFINED, name));
+            throw new IllegalStateException(Errors.format(Errors.VARIABLE_UNDEFINED, name));
         }
     }
 
@@ -203,7 +203,7 @@ public final class ParserContext {
             }
             return new ArrayList<String>(currentSymbols.keySet());
         }
-        throw new UnsupportedOperationException(Errors.NOT_IN_MACRO_BLOCK);
+        throw new UnsupportedOperationException(Errors.UNREACHABLE_CODE);
     }
 
     // ---- macros (#loadmacro / #macro) --------------------------------------------
@@ -221,7 +221,7 @@ public final class ParserContext {
         } else {
             for (AstDirectiveMacro old : declaredMacros) {
                 if (macro.getName().equals(old.getName())) {
-                    throw new IllegalStateException(Errors.format(Errors.DUPLICATED_MACRO_NAME, macro.getName()));
+                    throw new IllegalStateException(Errors.format(Errors.DIRECTIVE_MACRO_NAME_DUPLICATED, macro.getName()));
                 }
             }
         }

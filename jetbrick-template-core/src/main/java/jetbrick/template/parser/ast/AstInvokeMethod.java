@@ -47,9 +47,9 @@ public final class AstInvokeMethod extends AstExpression {
             if (ctx.getTemplate().getOption().isSafecall()) {
                 return null;
             }
-            throw new InterpretException(Errors.OBJECT_IS_NULL).set(position);
+            throw new InterpretException(Errors.EXPRESSION_OBJECT_IS_NULL).set(position);
         } else if (object == ALU.VOID) {
-            throw new InterpretException(Errors.OBJECT_IS_VOID).set(position);
+            throw new InterpretException(Errors.EXPRESSION_OBJECT_IS_VOID).set(position);
         }
 
         Object[] arguments;
@@ -92,7 +92,8 @@ public final class AstInvokeMethod extends AstExpression {
                 // 重新查找匹配的 Invoker
                 return doInvoke(ctx, null, object, arguments);
             }
-            throw new InterpretException(Errors.METHOD_INVOKE_ERROR).cause(e).set(position);
+
+            throw new InterpretException(Errors.METHOD_INVOKE_ERROR, invoker.getSignature()).cause(e).set(position);
         }
     }
 }

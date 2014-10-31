@@ -41,4 +41,9 @@ final class ExtensionFunctionInvoker implements FunctionInvoker {
         arguments = ParameterUtils.getActualArguments(arguments, length, isVarArgs, 0);
         return method.invoke(null, arguments);
     }
+
+    @Override
+    public String getSignature() {
+        return method.getSignature();
+    }
 }

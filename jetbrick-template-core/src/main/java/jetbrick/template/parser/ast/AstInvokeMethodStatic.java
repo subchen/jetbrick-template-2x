@@ -61,7 +61,7 @@ public final class AstInvokeMethodStatic extends AstExpression {
 
             if (invoker == null) {
                 String signature = SignatureUtils.getMethodSignature(cls, name, argumentTypes);
-                throw new InterpretException(Errors.METHOD_STATIC_NOT_FOUND, signature).set(position);
+                throw new InterpretException(Errors.STATIC_METHOD_NOT_FOUND, signature).set(position);
             }
 
             this.last = invoker; // 找到一个新的 function
@@ -79,7 +79,7 @@ public final class AstInvokeMethodStatic extends AstExpression {
                 // 重新查找匹配的 Invoker
                 return doInvoke(ctx, null, arguments);
             }
-            throw new InterpretException(Errors.STATIC_METHOD_INVOKE_ERROR).cause(e).set(position);
+            throw new InterpretException(Errors.STATIC_METHOD_INVOKE_ERROR, invoker.getSignature()).cause(e).set(position);
         }
     }
 }

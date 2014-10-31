@@ -26,4 +26,6 @@ public interface FunctionInvoker {
 
     public Object invoke(Object[] arguments);
 
+    public String getSignature();
+
 }

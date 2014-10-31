@@ -41,10 +41,10 @@ public final class AstDirectiveInclude extends AstDirective {
     public void execute(InterpretContext ctx) throws InterpretException {
         Object file = fileExpression.execute(ctx);
         if (file == null) {
-            throw new InterpretException(Errors.PARAM_IS_NULL, "1st").set(fileExpression.getPosition());
+            throw new InterpretException(Errors.EXPRESSION_NTH_ARGUMENT_IS_NULL, "1st").set(fileExpression.getPosition());
         }
         if (!(file instanceof String)) {
-            throw new InterpretException(Errors.TYPE_MISMATCH, "1st", file.getClass(), "String").set(fileExpression.getPosition());
+            throw new InterpretException(Errors.VARIABLE_TYPE_MISMATCH, "1st", file.getClass(), "String").set(fileExpression.getPosition());
         }
 
         Object parameters;
@@ -55,7 +55,7 @@ public final class AstDirectiveInclude extends AstDirective {
             if (parameters == null) {
                 parameters = Collections.emptyMap();
             } else if (!(parameters instanceof Map)) {
-                throw new InterpretException(Errors.TYPE_MISMATCH, "2nd", parameters.getClass(), "Map<String, Object>").set(parametersExpression.getPosition());
+                throw new InterpretException(Errors.VARIABLE_TYPE_MISMATCH, "2nd", parameters.getClass(), "Map<String, Object>").set(parametersExpression.getPosition());
             }
         }
 

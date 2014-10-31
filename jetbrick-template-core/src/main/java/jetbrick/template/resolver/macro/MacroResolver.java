@@ -44,7 +44,7 @@ public final class MacroResolver {
         }
         JetTemplateMacro old = decleardMacros.put(macro.getName(), macro);
         if (old != null) {
-            throw new IllegalStateException(Errors.format(Errors.DUPLICATED_MACRO_NAME, macro.getName()));
+            throw new IllegalStateException(Errors.format(Errors.DIRECTIVE_MACRO_NAME_DUPLICATED, macro.getName()));
         }
     }
 

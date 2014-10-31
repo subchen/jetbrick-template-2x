@@ -48,4 +48,9 @@ final class ExtensionMethodInvoker implements MethodInvoker {
     public boolean isVoidResult() {
         return method.getReturnType() == Void.TYPE;
     }
+
+    @Override
+    public String getSignature() {
+        return method.getSignature();
+    }
 }

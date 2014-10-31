@@ -364,7 +364,7 @@ public final class AstCodeVisitor extends AbstractParseTreeVisitor<AstNode> impl
                 if (value instanceof String) {
                     returnName = (String) value;
                 } else {
-                    throw new SyntaxException(Errors.TYPE_MISMATCH, "2nd", value.getClass(), "String").set(pos(expr));
+                    throw new SyntaxException(Errors.VARIABLE_TYPE_MISMATCH, "2nd", value.getClass(), "String").set(pos(expr));
                 }
             } else {
                 parametersExpression = expr;
@@ -379,12 +379,12 @@ public final class AstCodeVisitor extends AbstractParseTreeVisitor<AstNode> impl
             if (value instanceof String) {
                 returnName = (String) value;
             } else {
-                throw new SyntaxException(Errors.TYPE_MISMATCH, "3rd", value.getClass(), "String").set(pos(expr));
+                throw new SyntaxException(Errors.VARIABLE_TYPE_MISMATCH, "3rd", value.getClass(), "String").set(pos(expr));
             }
             break;
         }
         default:
-            throw new SyntaxException(Errors.INCLUDE_PARAM_MORE).set(pos(expressions.get(3)));
+            throw new SyntaxException(Errors.ARGUMENTS_NOT_MATCH).set(pos(expressions.get(3)));
         }
 
         return new AstDirectiveInclude(fileExpression, parametersExpression, returnName);
@@ -480,7 +480,7 @@ public final class AstCodeVisitor extends AbstractParseTreeVisitor<AstNode> impl
 
     @Override
     public AstNode visitDirective_invalid(Directive_invalidContext ctx) {
-        throw new SyntaxException(Errors.DIRECTIVE_PARAM_MISSING, ctx.getText()).set(pos(ctx));
+        throw new SyntaxException(Errors.ARGUMENTS_MISSING, ctx.getText()).set(pos(ctx));
     }
 
     @Override
@@ -544,7 +544,7 @@ public final class AstCodeVisitor extends AbstractParseTreeVisitor<AstNode> impl
         case JetTemplateLexer.BIT_NOT:
             return new AstOperatorUnary(Tokens.BIT_NOT, expression, position);
         }
-        throw new SyntaxException(Errors.UNKNOWN_OP_UNARY, token.getText()).set(pos(token));
+        throw new SyntaxException(Errors.UNREACHABLE_CODE).set(pos(token));
     }
 
     @Override
@@ -598,7 +598,7 @@ public final class AstCodeVisitor extends AbstractParseTreeVisitor<AstNode> impl
         case JetTemplateLexer.OR:
             return new AstOperatorEquals(Tokens.OR, lhs, rhs, position);
         }
-        throw new SyntaxException(Errors.UNKNOWN_OP_BINARY, token.getText()).set(pos(token));
+        throw new SyntaxException(Errors.UNREACHABLE_CODE).set(pos(token));
     }
 
     @Override
@@ -769,7 +769,7 @@ public final class AstCodeVisitor extends AbstractParseTreeVisitor<AstNode> impl
             return new AstConstant(null, pos(ctx));
         }
 
-        throw new SyntaxException(Errors.UNKNOWN_TOKEN, type).set(pos(ctx));
+        throw new SyntaxException(Errors.UNREACHABLE_CODE).set(pos(ctx));
     }
 
     @Override
@@ -823,12 +823,12 @@ public final class AstCodeVisitor extends AbstractParseTreeVisitor<AstNode> impl
     private void validateIdentifier(String name, boolean defining, ParseTree node) {
         if (Symbols.FOR.equals(name)) {
             if (defining) {
-                throw new SyntaxException(Errors.ID_IS_KEYWORD, name).set(pos(node));
+                throw new SyntaxException(Errors.VARIABLE_IS_KEYWORD, name).set(pos(node));
             }
         } else if (Keywords.isKeyword(name)) {
-            throw new SyntaxException(Errors.ID_IS_KEYWORD, name).set(pos(node));
+            throw new SyntaxException(Errors.VARIABLE_IS_KEYWORD, name).set(pos(node));
         } else if (name.startsWith("$")) {
-            throw new SyntaxException(Errors.ID_IS_RESERVED, name).set(pos(node));
+            throw new SyntaxException(Errors.VARIABLE_IS_RESERVED, name).set(pos(node));
         }
 
         if (!defining) {
@@ -851,7 +851,7 @@ public final class AstCodeVisitor extends AbstractParseTreeVisitor<AstNode> impl
             }
             p = p.getParent();
         }
-        throw new SyntaxException(Errors.DIRECTIVE_OUTSIDE_FOR, name).set(pos(ctx));
+        throw new SyntaxException(Errors.DIRECTIVE_OUTSIDE_OF_FOR, name).set(pos(ctx));
     }
 
     private String getJavaString(String text, ParserRuleContext ctx) {
@@ -860,7 +860,7 @@ public final class AstCodeVisitor extends AbstractParseTreeVisitor<AstNode> impl
         try {
             value = StringEscapeUtils.unescapeJava(value);
         } catch (StringIndexOutOfBoundsException e) {
-            throw new SyntaxException(Errors.INVALID_UNICODE_STRING).set(pos(ctx));
+            throw new SyntaxException(Errors.UNICODE_STRING_INVALID).set(pos(ctx));
         }
         return value;
     }

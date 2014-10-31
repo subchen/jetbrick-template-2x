@@ -28,4 +28,5 @@ public interface MethodInvoker {
 
     public boolean isVoidResult();
 
+    public String getSignature();
 }

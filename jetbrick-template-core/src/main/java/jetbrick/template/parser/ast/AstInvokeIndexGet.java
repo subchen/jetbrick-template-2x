@@ -43,16 +43,16 @@ public final class AstInvokeIndexGet extends AstExpression {
             if (ctx.getTemplate().getOption().isSafecall()) {
                 return null;
             }
-            throw new InterpretException(Errors.OBJECT_IS_NULL).set(objectExpression.getPosition());
+            throw new InterpretException(Errors.EXPRESSION_OBJECT_IS_NULL).set(objectExpression.getPosition());
         } else if (object == ALU.VOID) {
-            throw new InterpretException(Errors.OBJECT_IS_VOID).set(objectExpression.getPosition());
+            throw new InterpretException(Errors.EXPRESSION_OBJECT_IS_VOID).set(objectExpression.getPosition());
         }
 
         Object index = indexExpression.execute(ctx);
         if (index == null) {
-            throw new InterpretException(Errors.INDEX_IS_NULL).set(indexExpression.getPosition());
+            throw new InterpretException(Errors.EXPRESSION_INDEX_IS_NULL).set(indexExpression.getPosition());
         } else if (index == ALU.VOID) {
-            throw new InterpretException(Errors.INDEX_IS_VOID).set(indexExpression.getPosition());
+            throw new InterpretException(Errors.EXPRESSION_INDEX_IS_VOID).set(indexExpression.getPosition());
         }
 
         Class<?> objectClass = object.getClass();
@@ -78,6 +78,6 @@ public final class AstInvokeIndexGet extends AstExpression {
             }
         }
 
-        throw new InterpretException(Errors.OP_BINARY_UNDEFINED, "[]", object.getClass(), index.getClass()).set(position);
+        throw new InterpretException(Errors.OPERATION_BINARY_UNDEFINED, "[]", object.getClass(), index.getClass()).set(position);
     }
 }

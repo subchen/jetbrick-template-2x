@@ -51,7 +51,7 @@ public final class AstOperatorUnary extends AstExpression {
     public Object execute(InterpretContext ctx) throws InterpretException {
         Object o = expression.execute(ctx);
         if (o == null) {
-            throw new InterpretException(Errors.OBJECT_IS_NULL).set(expression.getPosition());
+            throw new InterpretException(Errors.EXPRESSION_OBJECT_IS_NULL).set(expression.getPosition());
         }
 
         try {

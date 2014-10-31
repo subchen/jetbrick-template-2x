@@ -37,7 +37,7 @@ public final class JetGlobalContext {
     public void define(Class<?> type, String name) {
         Class<?> old = symbols.put(name, type);
         if (old != null) {
-            throw new IllegalStateException(Errors.format(Errors.VAR_TYPE_REDEFINE, name));
+            throw new IllegalStateException(Errors.format(Errors.VARIABLE_REDEFINE, name));
         }
     }
 
@@ -50,7 +50,7 @@ public final class JetGlobalContext {
         Class<?> type = symbols.get(name);
         if (type != null && value != null) {
             if (!type.isInstance(value)) {
-                throw new IllegalStateException(Errors.format(Errors.TYPE_INCONSISTENT, name));
+                throw new IllegalStateException(Errors.format(Errors.VARIABLE_TYPE_INCONSISTENT, name));
             }
         }
         context.put(name, value);
