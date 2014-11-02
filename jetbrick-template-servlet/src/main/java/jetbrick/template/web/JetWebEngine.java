@@ -21,15 +21,20 @@ package jetbrick.template.web;
 
 import java.util.Properties;
 import javax.servlet.ServletContext;
+import jetbrick.config.ConfigLoader;
 import jetbrick.template.*;
 import jetbrick.template.loader.ServletResourceLoader;
 import jetbrick.template.web.buildin.JetWebTags;
 import jetbrick.web.servlet.map.ServletContextAttributeMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 负责初始化 Web 环境下的 JetEngine
  */
 public final class JetWebEngine {
+    private static final Logger log = LoggerFactory.getLogger(JetWebEngine.class);
+
     private static final String JET_ENGINE_KEY_NAME = JetEngine.class.getName();
     private static final String CONFIG_LOCATION_PARAMETER = "jetbrick-template-config-location";
 
@@ -52,10 +57,6 @@ public final class JetWebEngine {
         return engine;
     }
 
-    public static boolean unavailable() {
-        return engine == null;
-    }
-
     public static ServletContext getServletContext() {
         return sc;
     }
@@ -65,13 +66,14 @@ public final class JetWebEngine {
     }
 
     private static JetEngine doCreateWebEngine(ServletContext sc, Properties config, String configLocation) {
+        ConfigLoader loader = new ConfigLoader();
+
         // Web 环境下的默认配置
-        Properties options = new Properties();
-        options.setProperty(JetConfig.IO_SKIPERRORS, "true");
-        options.setProperty(JetConfig.TEMPLATE_LOADERS, ServletResourceLoader.class.getName());
+        loader.load(JetConfig.IO_SKIPERRORS, "true");
+        loader.load(JetConfig.TEMPLATE_LOADERS, ServletResourceLoader.class.getName());
 
         if (config != null) {
-            options.putAll(config);
+            loader.load(config);
         }
 
         // 用户配置文件
@@ -81,9 +83,19 @@ public final class JetWebEngine {
                 configLocation = JetConfig.DEFAULT_CONFIG_FILE;
             }
         }
+        try {
+            log.info("Loading config file: {}", configLocation);
+            loader.load(configLocation, sc);
+        } catch (IllegalStateException e) {
+            // 默认配置文件允许不存在
+            if (!JetConfig.DEFAULT_CONFIG_FILE.equals(configLocation)) {
+                throw e;
+            }
+            log.warn("no default config file found: {}", JetConfig.DEFAULT_CONFIG_FILE);
+        }
 
         // create engine
-        JetEngine engine = JetEngine.create(options, configLocation);
+        JetEngine engine = JetEngine.create(loader.asProperties());
         JetGlobalContext ctx = engine.getGlobalContext();
 
         // 加入默认的全局变量
