@@ -52,7 +52,7 @@ public final class AstDirectiveCall extends AstDirective {
             Class<?>[] argumentTypes = ParameterUtils.getParameterTypes(arguments);
             macro = ctx.getTemplate().resolveMacro(name, argumentTypes);
             if (macro == null) {
-                throw new IllegalStateException(Errors.format(Errors.MACRO_NOT_FOUND, name));
+                throw new InterpretException(Errors.MACRO_NOT_FOUND, name).set(position);
             }
             this.last = macro;
         }
