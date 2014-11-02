@@ -154,7 +154,7 @@ public final class AstCodeVisitor extends AbstractParseTreeVisitor<AstNode> impl
     @Override
     public AstNode visitDirective_options(Directive_optionsContext ctx) {
         accept(ctx.directive_options_expression());
-        return null;
+        return AstDirectiveNoop.INSTANCE;
     }
 
     @Override
@@ -205,7 +205,7 @@ public final class AstCodeVisitor extends AbstractParseTreeVisitor<AstNode> impl
     @Override
     public AstNode visitDirective_define(Directive_defineContext ctx) {
         accept(ctx.directive_define_expression());
-        return null;
+        return AstDirectiveNoop.INSTANCE;
     }
 
     @Override
@@ -441,7 +441,7 @@ public final class AstCodeVisitor extends AbstractParseTreeVisitor<AstNode> impl
 
         parseCtx.exitMacros();
 
-        return null;
+        return AstDirectiveNoop.INSTANCE;
     }
 
     @Override

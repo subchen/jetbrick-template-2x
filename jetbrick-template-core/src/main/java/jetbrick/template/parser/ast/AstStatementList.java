@@ -34,22 +34,26 @@ public final class AstStatementList extends AstStatement {
             if (statements.size() > 0 && block != Tokens.AST_BLOCK_SET) {
                 // 注意： 这里直接修改的是 statements 本身
                 ListIterator<AstStatement> it = new ListIterator<AstStatement>(statements);
-                splitStatementListChilldren(it);
-                combinedContinuousTexts(it);
+                combinedContinuousTexts(it); // 合并由 escape 等产生的连续文本
                 trimDirectiveWhitespacesAndComments(it, block, ctx);
+                removeAndSplitDirective(it);
+                combinedContinuousTexts(it); // 合并由于 AstDirectiveNoop 等产生的连续文本
             }
             this.statements = statements.toArray(EMPTY_ARRAY);
         }
     }
 
-    // 优化 - 分解 AstStatementList 子节点 (主要是 #set 产生的)
-    private void splitStatementListChilldren(ListIterator<AstStatement> it) {
+    // 优化 - 分解 AstStatementList 子节点 (主要是 #set 产生的), 移除 AstDirectiveNoop
+    private void removeAndSplitDirective(ListIterator<AstStatement> it) {
         it.reset();
         while (it.has()) {
             AstStatement statment = it.peek();
             if (statment instanceof AstStatementList) {
                 it.remove();
                 it.addAll(((AstStatementList) statment).statements);
+            }
+            if (statment instanceof AstDirectiveNoop) {
+                it.remove();
             } else {
                 it.move();
             }
