@@ -21,14 +21,20 @@ package jetbrick.template.runtime.writer;
 
 import java.io.IOException;
 import java.io.Writer;
+import jetbrick.template.runtime.OriginalStream;
 
-public final class TrimLeadingWhitespacesWriter extends Writer {
+public final class TrimLeadingWhitespacesWriter extends Writer implements OriginalStream {
     private final Writer out;
     private boolean first;
 
     public TrimLeadingWhitespacesWriter(Writer out) {
         this.out = out;
         this.first = true;
+    }
+
+    @Override
+    public Object getOriginStream() {
+        return out;
     }
 
     @Override

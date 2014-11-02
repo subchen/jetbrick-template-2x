@@ -26,7 +26,7 @@ import jetbrick.template.runtime.writer.*;
 /**
  * 负责模板输出.
  */
-public abstract class JetWriter implements Closeable, Flushable {
+public abstract class JetWriter implements OriginalStream, Closeable, Flushable {
 
     public static JetWriter create(Writer os, Charset charset, boolean trimLeadingWhitespaces, boolean skipErrors) {
         if (skipErrors || os instanceof PrintWriter) {
@@ -56,12 +56,39 @@ public abstract class JetWriter implements Closeable, Flushable {
         }
     }
 
+    public static JetWriter create(JetWriter os, boolean trimLeadingWhitespaces) {
+        if (!trimLeadingWhitespaces) {
+            return os;
+        }
+
+        Object out = os.getOriginStream();
+        if (out instanceof OriginalStream) {
+            out = ((OriginalStream) out).getOriginStream();
+        }
+
+        if (out instanceof OutputStream) {
+            return create((OutputStream) out, os.getCharset(), trimLeadingWhitespaces, os.isSkipErrors());
+        } else {
+            return create((Writer) out, os.getCharset(), trimLeadingWhitespaces, os.isSkipErrors());
+        }
+    }
+
+    /**
+     * 获取原始的输入流 OutputStream/Writer.
+     *
+     * @return {OutputStream/Writer}
+     */
+    @Override
+    public abstract Object getOriginStream();
+
     /**
      * 是 OutputStream 还是 Writer
      */
     public abstract boolean isStreaming();
 
     public abstract Charset getCharset();
+
+    public abstract boolean isSkipErrors();
 
     public abstract void print(int x) throws IOException;
 

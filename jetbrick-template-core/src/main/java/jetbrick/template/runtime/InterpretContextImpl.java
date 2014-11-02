@@ -114,7 +114,12 @@ public final class InterpretContextImpl extends InterpretContext {
         templateStack.push(template);
         valueStack.push(template.getOption().getSymbols(), arguments, true);
 
+        JetWriter originWriter = writer;
+        setWriter(JetWriter.create(writer, template.getOption().isTrimLeadingWhitespaces()));
+
         template.getAstNode().execute(this);
+
+        setWriter(originWriter);
 
         valueStack.pop();
         templateStack.pop();

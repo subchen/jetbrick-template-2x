@@ -36,6 +36,11 @@ public final class JetOutputStreamPrinter extends JetWriter {
     }
 
     @Override
+    public Object getOriginStream() {
+        return os;
+    }
+
+    @Override
     public boolean isStreaming() {
         return true;
     }
@@ -43,6 +48,11 @@ public final class JetOutputStreamPrinter extends JetWriter {
     @Override
     public Charset getCharset() {
         return charset;
+    }
+
+    @Override
+    public boolean isSkipErrors() {
+        return true;
     }
 
     @Override
