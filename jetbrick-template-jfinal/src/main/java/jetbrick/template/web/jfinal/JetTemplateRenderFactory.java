@@ -30,7 +30,7 @@ public final class JetTemplateRenderFactory implements IMainRenderFactory {
 
     public JetTemplateRenderFactory() {
         engine = JetWebEngine.create(JFinal.me().getServletContext());
-        engine.getGlobalResolver().registerGetterResolver(new JFinalModelGetterResolver());
+        engine.getGlobalResolver().registerGetterResolver(new JFinalActiveRecordGetterResolver());
     }
 
     @Override

@@ -20,6 +20,7 @@
 package jetbrick.template.web.jfinal;
 
 import com.jfinal.plugin.activerecord.Model;
+import com.jfinal.plugin.activerecord.Record;
 import jetbrick.template.JetSecurityManager;
 import jetbrick.template.resolver.property.Getter;
 import jetbrick.template.resolver.property.GetterResolver;
@@ -27,12 +28,15 @@ import jetbrick.template.resolver.property.GetterResolver;
 /**
  * 访问 model.name
  */
-final class JFinalModelGetterResolver implements GetterResolver {
+final class JFinalActiveRecordGetterResolver implements GetterResolver {
 
     @Override
     public Getter resolve(Class<?> clazz, String name) {
         if (Model.class.isAssignableFrom(clazz)) {
-            return new JFinalModelGetter(name);
+            return new ModelGetter(name);
+        }
+        if (Record.class.isAssignableFrom(clazz)) {
+            return new RecordGetter(name);
         }
         return null;
     }
@@ -40,10 +44,10 @@ final class JFinalModelGetterResolver implements GetterResolver {
     /**
      * 访问 model.name
      */
-    static final class JFinalModelGetter implements Getter {
+    static final class ModelGetter implements Getter {
         private final String name;
 
-        public JFinalModelGetter(String name) {
+        public ModelGetter(String name) {
             this.name = name;
         }
 
@@ -57,4 +61,23 @@ final class JFinalModelGetterResolver implements GetterResolver {
         }
     }
 
+    /**
+     * 访问 record.name
+     */
+    static final class RecordGetter implements Getter {
+        private final String name;
+
+        public RecordGetter(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public void checkAccess(JetSecurityManager securityManager) {
+        }
+
+        @Override
+        public Object get(Object record) {
+            return ((Record) record).get(name);
+        }
+    }
 }
