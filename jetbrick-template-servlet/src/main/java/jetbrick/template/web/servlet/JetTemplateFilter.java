@@ -57,10 +57,10 @@ public final class JetTemplateFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) resp;
 
+        response.setCharacterEncoding(charsetEncoding);
         if (response.getContentType() == null) {
             response.setContentType("text/html; charset=" + charsetEncoding);
         }
-        response.setCharacterEncoding(charsetEncoding);
 
         String path = RequestUtils.getPathInfo(request);
         try {

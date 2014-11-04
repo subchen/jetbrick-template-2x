@@ -36,10 +36,16 @@ public final class JetTemplateRender extends Render {
     @Override
     public void render() {
         JetEngine engine = JetWebEngine.getEngine();
-        JetTemplate template = engine.getTemplate(view);
 
-        JetWebContext context = new JetWebContext(request, response);
+        String charsetEncoding = engine.getConfig().getOutputEncoding().name();
+        response.setCharacterEncoding(charsetEncoding);
+        if (response.getContentType() == null) {
+            response.setContentType("text/html; charset=" + charsetEncoding);
+        }
+
         try {
+            JetTemplate template = engine.getTemplate(view);
+            JetWebContext context = new JetWebContext(request, response);
             template.render(context, response.getOutputStream());
         } catch (IOException e) {
             throw new IllegalStateException(e);

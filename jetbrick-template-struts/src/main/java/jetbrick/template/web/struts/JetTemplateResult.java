@@ -46,6 +46,12 @@ public class JetTemplateResult extends StrutsResultSupport {
             engine = JetWebEngine.create(servletContext);
         }
 
+        String charsetEncoding = engine.getConfig().getOutputEncoding().name();
+        response.setCharacterEncoding(charsetEncoding);
+        if (response.getContentType() == null) {
+            response.setContentType("text/html; charset=" + charsetEncoding);
+        }
+
         JetWebContext context = new JetWebContext(request, response, null);
         context.put("action", ai.getAction());
         context.put("valueStack", model);

@@ -61,10 +61,10 @@ public final class JetTemplateServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setCharacterEncoding(charsetEncoding);
         if (response.getContentType() == null) {
             response.setContentType("text/html; charset=" + charsetEncoding);
         }
-        response.setCharacterEncoding(charsetEncoding);
 
         String path = RequestUtils.getPathInfo(request);
         try {

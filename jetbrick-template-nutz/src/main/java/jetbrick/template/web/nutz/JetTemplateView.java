@@ -40,9 +40,17 @@ public final class JetTemplateView extends AbstractPathView {
 
     @Override
     public void render(HttpServletRequest req, HttpServletResponse resp, Object obj) throws Throwable {
-        JetWebContext context = new JetWebContext(req, resp);
-        JetTemplate template = JetWebEngine.getEngine().getTemplate(evalPath(req, obj));
+        JetEngine engine = JetWebEngine.getEngine();
+
+        String charsetEncoding = engine.getConfig().getOutputEncoding().name();
+        resp.setCharacterEncoding(charsetEncoding);
+        if (resp.getContentType() == null) {
+            resp.setContentType("text/html; charset=" + charsetEncoding);
+        }
+
         try {
+            JetTemplate template = engine.getTemplate(evalPath(req, obj));
+            JetWebContext context = new JetWebContext(req, resp);
             template.render(context, resp.getOutputStream());
         } catch (IOException e) {
             throw Lang.wrapThrow(e);
