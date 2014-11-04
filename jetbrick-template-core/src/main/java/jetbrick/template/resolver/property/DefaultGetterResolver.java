@@ -77,6 +77,16 @@ public final class DefaultGetterResolver implements GetterResolver {
             return ArrayLengthGetter.INSTANCE;
         }
 
+        // get from custom resolver
+        if (resolvers != null) {
+            for (GetterResolver resolver : resolvers) {
+                Getter getter = resolver.resolve(clazz, name);
+                if (getter != null) {
+                    return getter;
+                }
+            }
+        }
+
         KlassInfo klass = KlassInfo.create(clazz);
 
         // getXXX() or isXXX()
@@ -89,16 +99,6 @@ public final class DefaultGetterResolver implements GetterResolver {
         FieldInfo field = klass.getField(name);
         if (field != null && field.isPublic()) {
             return new FieldGetter(field);
-        }
-
-        // get from custom resolver
-        if (resolvers != null) {
-            for (GetterResolver resolver : resolvers) {
-                Getter getter = resolver.resolve(clazz, name);
-                if (getter != null) {
-                    return getter;
-                }
-            }
         }
 
         return null;
