@@ -20,6 +20,7 @@
 package jetbrick.template.resolver.method;
 
 import jetbrick.bean.MethodInfo;
+import jetbrick.template.JetSecurityManager;
 import jetbrick.template.resolver.ParameterUtils;
 
 /**
@@ -34,6 +35,11 @@ final class ClassBuildinMethodInvoker implements MethodInvoker {
         this.method = method;
         this.length = method.getParameterCount();
         this.isVarArgs = method.isVarArgs();
+    }
+
+    @Override
+    public void checkAccess(JetSecurityManager securityManager) {
+        securityManager.checkAccess(method.getMethod());
     }
 
     @Override

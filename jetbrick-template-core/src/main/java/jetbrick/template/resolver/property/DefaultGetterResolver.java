@@ -24,6 +24,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import jetbrick.bean.*;
 import jetbrick.template.resolver.SignatureUtils;
+import jetbrick.template.resolver.property.Getter;
 
 /**
  * 全局用于查找 obj.name 访问
@@ -81,13 +82,13 @@ public final class DefaultGetterResolver implements GetterResolver {
         // getXXX() or isXXX()
         PropertyInfo property = klass.getProperty(name);
         if (property != null && property.readable()) {
-            return property;
+            return new PropertyGetter(property);
         }
 
         // object.field (only public)
         FieldInfo field = klass.getField(name);
         if (field != null && field.isPublic()) {
-            return field;
+            return new FieldGetter(field);
         }
 
         // get from custom resolver

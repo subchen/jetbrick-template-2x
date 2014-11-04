@@ -22,6 +22,7 @@ package jetbrick.template.parser.ast;
 import jetbrick.bean.ConstructorInfo;
 import jetbrick.bean.KlassInfo;
 import jetbrick.template.Errors;
+import jetbrick.template.JetSecurityManager;
 import jetbrick.template.resolver.SignatureUtils;
 import jetbrick.template.runtime.InterpretContext;
 import jetbrick.template.runtime.InterpretException;
@@ -30,11 +31,13 @@ import jetbrick.util.ArrayUtils;
 public final class AstInvokeNewObject extends AstExpression {
     private final Class<?> type;
     private final AstExpressionList argumentList;
+    private boolean unsafe;
 
     public AstInvokeNewObject(Class<?> type, AstExpressionList argumentList, Position position) {
         super(position);
         this.type = type;
         this.argumentList = argumentList;
+        this.unsafe = true;
     }
 
     @Override
@@ -56,6 +59,18 @@ public final class AstInvokeNewObject extends AstExpression {
         if (constructor == null) {
             String signature = SignatureUtils.getMethodSignature(type, "<init>", parameterTypes);
             throw new InterpretException(Errors.CONSTRUCTOR_NOT_FOUND, signature).set(position);
+        }
+
+        if (unsafe) {
+            JetSecurityManager securityManager = ctx.getSecurityManager();
+            if (securityManager != null) {
+                try {
+                    securityManager.checkAccess(constructor.getConstructor());
+                } catch (RuntimeException e) {
+                    throw new InterpretException(e).set(position);
+                }
+            }
+            unsafe = false;
         }
 
         try {

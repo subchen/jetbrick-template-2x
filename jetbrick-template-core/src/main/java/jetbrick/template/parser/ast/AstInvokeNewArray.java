@@ -22,21 +22,36 @@ package jetbrick.template.parser.ast;
 import java.lang.reflect.Array;
 import java.util.List;
 import jetbrick.template.Errors;
+import jetbrick.template.JetSecurityManager;
 import jetbrick.template.runtime.InterpretContext;
 import jetbrick.template.runtime.InterpretException;
 
 public final class AstInvokeNewArray extends AstExpression {
     private final Class<?> cls;
     private final AstExpression[] expressions;
+    private boolean unsafe;
 
     public AstInvokeNewArray(Class<?> cls, List<AstExpression> expressions, Position position) {
         super(position);
         this.cls = cls;
         this.expressions = expressions.toArray(new AstExpression[0]);
+        this.unsafe = true;
     }
 
     @Override
     public Object execute(InterpretContext ctx) throws InterpretException {
+        if (unsafe) {
+            JetSecurityManager securityManager = ctx.getSecurityManager();
+            if (securityManager != null) {
+                try {
+                    securityManager.checkAccess(cls);
+                } catch (RuntimeException e) {
+                    throw new InterpretException(e).set(position);
+                }
+            }
+            unsafe = false;
+        }
+        
         int length = expressions.length;
         if (length == 1) {
             Object size = expressions[0].execute(ctx);

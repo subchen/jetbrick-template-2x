@@ -20,10 +20,12 @@
 package jetbrick.template.loader;
 
 import jetbrick.util.PathUtils;
+import jetbrick.template.JetSecurityManager;
 
 public abstract class AbstractResourceLoader implements ResourceLoader {
     protected String root;
     protected boolean reloadable;
+    protected JetSecurityManager securityManager;
 
     @Override
     public String getRoot() {
@@ -35,12 +37,21 @@ public abstract class AbstractResourceLoader implements ResourceLoader {
         return reloadable;
     }
 
+    @Override
+    public JetSecurityManager getSecurityManager() {
+        return securityManager;
+    }
+
     public void setRoot(String root) {
         this.root = PathUtils.normalize(root);
     }
 
     public void setReloadable(boolean reloadable) {
         this.reloadable = reloadable;
+    }
+
+    public void setSecurityManager(JetSecurityManager securityManager) {
+        this.securityManager = securityManager;
     }
 
 }

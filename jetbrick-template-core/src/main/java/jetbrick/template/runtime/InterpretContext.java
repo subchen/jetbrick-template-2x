@@ -45,6 +45,8 @@ public abstract class InterpretContext {
 
     public abstract GlobalResolver getGlobalResolver();
 
+    public abstract JetSecurityManager getSecurityManager();
+
     public abstract TemplateStack getTemplateStack();
 
     public abstract ValueStack getValueStack();

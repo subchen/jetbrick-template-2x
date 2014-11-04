@@ -58,6 +58,10 @@ public final class JetTemplateMacro implements FunctionInvoker {
     }
 
     @Override
+    public void checkAccess(JetSecurityManager securityManager) {
+    }
+
+    @Override
     public Object invoke(Object[] arguments) {
         InterpretContext ctx = InterpretContext.current();
         ctx.doMacroCall(this, arguments);

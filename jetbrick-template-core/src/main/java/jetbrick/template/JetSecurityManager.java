@@ -17,13 +17,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package jetbrick.template.resolver.property;
+package jetbrick.template;
 
-/**
- * 自定义访问 object.name
+import java.lang.reflect.*;
+import java.security.AccessControlException;
+
+/*
+ * 用于实现安全管理器。
+ *
+ * @author Guoqiang Chen
  */
-public interface GetterResolver {
+public interface JetSecurityManager {
 
-    public Getter resolve(Class<?> clazz, String name);
+    public void checkAccess(Class<?> cls) throws AccessControlException;
+
+    public void checkAccess(Constructor<?> constructor) throws AccessControlException;
+
+    public void checkAccess(Method method) throws AccessControlException;
+
+    public void checkAccess(Field field) throws AccessControlException;
 
 }

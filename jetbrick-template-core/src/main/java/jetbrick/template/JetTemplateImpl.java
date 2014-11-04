@@ -42,6 +42,7 @@ final class JetTemplateImpl implements JetTemplate {
     private final JetEngine engine;
     private final Resource resource;
     private final JetConfig config;
+    private final JetSecurityManager securityManager;
 
     private final boolean reloadable;
     private volatile long lastModified;
@@ -52,9 +53,10 @@ final class JetTemplateImpl implements JetTemplate {
 
     private final MacroResolver macroResolver;
 
-    public JetTemplateImpl(JetEngine engine, Resource resource, boolean reloadable) {
+    public JetTemplateImpl(JetEngine engine, Resource resource, boolean reloadable, JetSecurityManager securityManager) {
         this.engine = engine;
         this.resource = resource;
+        this.securityManager = securityManager;
         this.config = engine.getConfig();
         this.reloadable = reloadable;
         this.lastModified = 0;
@@ -146,7 +148,7 @@ final class JetTemplateImpl implements JetTemplate {
     }
 
     private void doInterpret(Map<String, Object> context, JetWriter writer) {
-        InterpretContextImpl ctx = new InterpretContextImpl(engine, writer, context);
+        InterpretContextImpl ctx = new InterpretContextImpl(engine, writer, context, securityManager);
         try {
             ctx.getTemplateStack().push(this);
             ctx.getValueStack().push(option.getSymbols(), null, true);
@@ -195,6 +197,11 @@ final class JetTemplateImpl implements JetTemplate {
     @Override
     public JetEngine getEngine() {
         return engine;
+    }
+
+    @Override
+    public JetSecurityManager getSecurityManager() {
+        return securityManager;
     }
 
 }

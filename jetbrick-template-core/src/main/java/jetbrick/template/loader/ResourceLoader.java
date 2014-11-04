@@ -20,6 +20,7 @@
 package jetbrick.template.loader;
 
 import jetbrick.io.resource.Resource;
+import jetbrick.template.JetSecurityManager;
 
 public interface ResourceLoader {
 
@@ -44,5 +45,12 @@ public interface ResourceLoader {
      * @return 如果模板不存在，那么返回 {@code null}
      */
     public Resource load(String name);
+
+    /**
+     * 获取安全管理器.
+     *
+     * @return 如果不存在，那么返回 {@code null}
+     */
+    public JetSecurityManager getSecurityManager();
 
 }

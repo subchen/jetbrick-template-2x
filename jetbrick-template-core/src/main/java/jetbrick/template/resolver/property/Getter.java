@@ -19,11 +19,12 @@
  */
 package jetbrick.template.resolver.property;
 
-/**
- * 自定义访问 object.name
- */
-public interface GetterResolver {
+import jetbrick.template.JetSecurityManager;
 
-    public Getter resolve(Class<?> clazz, String name);
+public interface Getter {
+
+    public void checkAccess(JetSecurityManager securityManager);
+
+    public Object get(Object object);
 
 }

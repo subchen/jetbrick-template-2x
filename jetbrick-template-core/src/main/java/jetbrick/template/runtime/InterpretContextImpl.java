@@ -32,13 +32,15 @@ public final class InterpretContextImpl extends InterpretContext {
     private final GlobalResolver globalResolver;
     private final TemplateStack templateStack;
     private final ValueStack valueStack;
+    private JetSecurityManager securityManager;
     private JetWriter writer;
     private int signal;
     private String returnName;
 
-    public InterpretContextImpl(JetEngine engine, JetWriter writer, Map<String, Object> context) {
+    public InterpretContextImpl(JetEngine engine, JetWriter writer, Map<String, Object> context, JetSecurityManager securityManager) {
         this.engine = engine;
         this.globalResolver = engine.getGlobalResolver();
+        this.securityManager = securityManager;
         this.templateStack = new TemplateStack();
         this.valueStack = new ValueStack(engine.getGlobalContext(), context);
         this.writer = writer;
@@ -58,6 +60,11 @@ public final class InterpretContextImpl extends InterpretContext {
     @Override
     public GlobalResolver getGlobalResolver() {
         return globalResolver;
+    }
+
+    @Override
+    public JetSecurityManager getSecurityManager() {
+        return securityManager;
     }
 
     @Override
@@ -111,6 +118,7 @@ public final class InterpretContextImpl extends InterpretContext {
 
         this.returnName = returnName; // use new name
 
+        securityManager = template.getSecurityManager();
         templateStack.push(template);
         valueStack.push(template.getOption().getSymbols(), arguments, true);
 
@@ -119,10 +127,11 @@ public final class InterpretContextImpl extends InterpretContext {
 
         template.getAstNode().execute(this);
 
-        setWriter(originWriter);
+        setWriter(originWriter); // reset
 
         valueStack.pop();
         templateStack.pop();
+        securityManager = templateStack.current().getSecurityManager(); // reset
 
         this.returnName = null; // clear
     }
@@ -139,6 +148,7 @@ public final class InterpretContextImpl extends InterpretContext {
             // 检测 inlcude 文件是否被修改
             macro.getTemplate().reload();
             templateStack.push(macro.getTemplate());
+            securityManager = templateStack.current().getSecurityManager();
         }
 
         Map<String, Object> args;
@@ -158,6 +168,7 @@ public final class InterpretContextImpl extends InterpretContext {
 
         if (isCrossTemplate) {
             templateStack.pop();
+            securityManager = templateStack.current().getSecurityManager(); // reset
         }
     }
 

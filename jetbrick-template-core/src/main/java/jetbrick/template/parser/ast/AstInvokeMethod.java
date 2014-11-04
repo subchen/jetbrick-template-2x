@@ -20,6 +20,7 @@
 package jetbrick.template.parser.ast;
 
 import jetbrick.template.Errors;
+import jetbrick.template.JetSecurityManager;
 import jetbrick.template.resolver.ParameterUtils;
 import jetbrick.template.resolver.SignatureUtils;
 import jetbrick.template.resolver.method.MethodInvoker;
@@ -32,12 +33,15 @@ public final class AstInvokeMethod extends AstExpression {
     private final String name;
     private final AstExpressionList argumentList;
     private MethodInvoker last;
+    private boolean unsafe;
 
     public AstInvokeMethod(AstExpression objectExpression, String name, AstExpressionList argumentList, Position position) {
         super(position);
         this.objectExpression = objectExpression;
         this.name = name;
         this.argumentList = argumentList;
+        this.last = null;
+        this.unsafe = true;
     }
 
     @Override
@@ -76,6 +80,18 @@ public final class AstInvokeMethod extends AstExpression {
             }
 
             this.last = invoker; // 找到一个新的  invoker
+        }
+
+        if (unsafe) {
+            JetSecurityManager securityManager = ctx.getSecurityManager();
+            if (securityManager != null) {
+                try {
+                    invoker.checkAccess(securityManager);
+                } catch (RuntimeException e) {
+                    throw new InterpretException(e).set(position);
+                }
+            }
+            unsafe = false;
         }
 
         try {

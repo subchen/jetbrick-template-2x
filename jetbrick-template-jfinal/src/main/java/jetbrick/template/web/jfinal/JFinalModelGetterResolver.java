@@ -20,7 +20,8 @@
 package jetbrick.template.web.jfinal;
 
 import com.jfinal.plugin.activerecord.Model;
-import jetbrick.bean.Getter;
+import jetbrick.template.JetSecurityManager;
+import jetbrick.template.resolver.property.Getter;
 import jetbrick.template.resolver.property.GetterResolver;
 
 /**
@@ -44,6 +45,10 @@ final class JFinalModelGetterResolver implements GetterResolver {
 
         public JFinalModelGetter(String name) {
             this.name = name;
+        }
+
+        @Override
+        public void checkAccess(JetSecurityManager securityManager) {
         }
 
         @Override

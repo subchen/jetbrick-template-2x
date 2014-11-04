@@ -51,4 +51,6 @@ public interface JetTemplate {
 
     public JetEngine getEngine();
 
+    public JetSecurityManager getSecurityManager();
+
 }

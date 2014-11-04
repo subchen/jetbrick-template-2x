@@ -19,10 +19,14 @@
  */
 package jetbrick.template.resolver.function;
 
+import jetbrick.template.JetSecurityManager;
+
 /**
  * 访问 function(args, ...)
  */
 public interface FunctionInvoker {
+
+    public void checkAccess(JetSecurityManager securityManager);
 
     public Object invoke(Object[] arguments);
 

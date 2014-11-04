@@ -19,11 +19,26 @@
  */
 package jetbrick.template.resolver.property;
 
+import jetbrick.bean.FieldInfo;
+import jetbrick.template.JetSecurityManager;
+
 /**
- * 自定义访问 object.name
+ * 访问 object.field
  */
-public interface GetterResolver {
+final class FieldGetter implements Getter {
+    private final FieldInfo field;
 
-    public Getter resolve(Class<?> clazz, String name);
+    public FieldGetter(FieldInfo field) {
+        this.field = field;
+    }
 
+    @Override
+    public void checkAccess(JetSecurityManager securityManager) {
+        securityManager.checkAccess(field.getField());
+    }
+
+    @Override
+    public Object get(Object object) {
+        return field.get(object);
+    }
 }

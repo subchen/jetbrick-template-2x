@@ -20,7 +20,7 @@
 package jetbrick.template.resolver.property;
 
 import java.util.Map;
-import jetbrick.bean.Getter;
+import jetbrick.template.JetSecurityManager;
 
 /**
  * 访问 map.key
@@ -30,6 +30,10 @@ final class MapGetter implements Getter {
 
     public MapGetter(String name) {
         this.name = name;
+    }
+
+    @Override
+    public void checkAccess(JetSecurityManager securityManager) {
     }
 
     @Override

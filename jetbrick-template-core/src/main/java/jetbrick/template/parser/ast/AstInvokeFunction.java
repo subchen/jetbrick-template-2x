@@ -19,8 +19,7 @@
  */
 package jetbrick.template.parser.ast;
 
-import jetbrick.template.Errors;
-import jetbrick.template.JetTemplateMacro;
+import jetbrick.template.*;
 import jetbrick.template.resolver.ParameterUtils;
 import jetbrick.template.resolver.SignatureUtils;
 import jetbrick.template.resolver.function.FunctionInvoker;
@@ -32,11 +31,14 @@ public final class AstInvokeFunction extends AstExpression {
     private final String name;
     private final AstExpressionList argumentList;
     private FunctionInvoker last;
+    private boolean unsafe;
 
     public AstInvokeFunction(String name, AstExpressionList argumentList, Position position) {
         super(position);
         this.name = name;
         this.argumentList = argumentList;
+        this.last = null;
+        this.unsafe = true;
     }
 
     @Override
@@ -64,6 +66,18 @@ public final class AstInvokeFunction extends AstExpression {
             }
 
             this.last = fn; // 找到一个新的 invoker
+        }
+
+        if (unsafe) {
+            JetSecurityManager securityManager = ctx.getSecurityManager();
+            if (securityManager != null) {
+                try {
+                    fn.checkAccess(securityManager);
+                } catch (RuntimeException e) {
+                    throw new InterpretException(e).set(position);
+                }
+            }
+            unsafe = false;
         }
 
         try {

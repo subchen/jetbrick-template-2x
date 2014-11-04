@@ -101,7 +101,7 @@ final class JetEngineImpl extends JetEngine {
     @Override
     public JetTemplate createTemplate(String source) {
         Resource resource = new SourceResource(source);
-        JetTemplate template = new JetTemplateImpl(this, resource, false);
+        JetTemplate template = new JetTemplateImpl(this, resource, false, null);
         template.reload();
         return template;
     }
@@ -122,7 +122,7 @@ final class JetEngineImpl extends JetEngine {
             Resource resource = loader.load(name);
             if (resource != null) {
                 // create a new template
-                template = new JetTemplateImpl(this, resource, loader.isReloadable());
+                template = new JetTemplateImpl(this, resource, loader.isReloadable(), loader.getSecurityManager());
                 JetTemplate old = cache.putIfAbsent(name, template);
                 if (old != null) {
                     template = old;

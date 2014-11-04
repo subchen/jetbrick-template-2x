@@ -22,6 +22,7 @@ package jetbrick.template.parser.ast;
 import jetbrick.bean.FieldInfo;
 import jetbrick.bean.KlassInfo;
 import jetbrick.template.Errors;
+import jetbrick.template.JetSecurityManager;
 import jetbrick.template.resolver.SignatureUtils;
 import jetbrick.template.runtime.InterpretContext;
 import jetbrick.template.runtime.InterpretException;
@@ -30,11 +31,14 @@ public final class AstInvokeFieldStatic extends AstExpression {
     private final Class<?> cls;
     private final String name;
     private FieldInfo field;
+    private boolean unsafe;
 
     public AstInvokeFieldStatic(Class<?> cls, String name, Position position) {
         super(position);
         this.cls = cls;
         this.name = name;
+        this.field = null;
+        this.unsafe = true;
     }
 
     @Override
@@ -49,6 +53,18 @@ public final class AstInvokeFieldStatic extends AstExpression {
                 String signature = SignatureUtils.getFieldSignature(cls, name);
                 throw new InterpretException(Errors.STATIC_FIELD_NOT_FOUND, signature).set(position);
             }
+        }
+
+        if (unsafe) {
+            JetSecurityManager securityManager = ctx.getSecurityManager();
+            if (securityManager != null) {
+                try {
+                    securityManager.checkAccess(field.getField());
+                } catch (RuntimeException e) {
+                    throw new InterpretException(e).set(position);
+                }
+            }
+            unsafe = false;
         }
 
         try {

@@ -20,13 +20,17 @@
 package jetbrick.template.resolver.property;
 
 import java.lang.reflect.Array;
-import jetbrick.bean.Getter;
+import jetbrick.template.JetSecurityManager;
 
 /**
  * 访问 array.length
  */
 final class ArrayLengthGetter implements Getter {
     static final ArrayLengthGetter INSTANCE = new ArrayLengthGetter();
+
+    @Override
+    public void checkAccess(JetSecurityManager securityManager) {
+    }
 
     @Override
     public Object get(Object array) {

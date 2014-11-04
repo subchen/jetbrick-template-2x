@@ -19,8 +19,9 @@
  */
 package jetbrick.template.parser.ast;
 
-import jetbrick.bean.Getter;
 import jetbrick.template.Errors;
+import jetbrick.template.JetSecurityManager;
+import jetbrick.template.resolver.property.Getter;
 import jetbrick.template.resolver.SignatureUtils;
 import jetbrick.template.runtime.InterpretContext;
 import jetbrick.template.runtime.InterpretException;
@@ -29,11 +30,14 @@ public final class AstInvokeField extends AstExpression {
     private final AstExpression objectExpression;
     private final String name;
     private Getter last;
+    private boolean unsafe;
 
     public AstInvokeField(AstExpression objectExpression, String name, Position position) {
         super(position);
         this.objectExpression = objectExpression;
         this.name = name;
+        this.last = null;
+        this.unsafe = true;
     }
 
     @Override
@@ -64,6 +68,18 @@ public final class AstInvokeField extends AstExpression {
             }
 
             this.last = getter; // 找到一个新的 getter
+        }
+
+        if (unsafe) {
+            JetSecurityManager securityManager = ctx.getSecurityManager();
+            if (securityManager != null) {
+                try {
+                    getter.checkAccess(securityManager);
+                } catch (RuntimeException e) {
+                    throw new InterpretException(e).set(position);
+                }
+            }
+            unsafe = false;
         }
 
         try {

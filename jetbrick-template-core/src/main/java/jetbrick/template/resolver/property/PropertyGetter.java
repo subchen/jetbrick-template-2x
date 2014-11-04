@@ -19,11 +19,28 @@
  */
 package jetbrick.template.resolver.property;
 
+import jetbrick.bean.MethodInfo;
+import jetbrick.bean.PropertyInfo;
+import jetbrick.template.JetSecurityManager;
+import jetbrick.util.ArrayUtils;
+
 /**
- * 自定义访问 object.name
+ * 访问 object.name
  */
-public interface GetterResolver {
+final class PropertyGetter implements Getter {
+    private final MethodInfo getter;
 
-    public Getter resolve(Class<?> clazz, String name);
+    public PropertyGetter(PropertyInfo property) {
+        this.getter = property.getGetter();
+    }
 
+    @Override
+    public void checkAccess(JetSecurityManager securityManager) {
+        securityManager.checkAccess(getter.getMethod());
+    }
+
+    @Override
+    public Object get(Object object) {
+        return getter.invoke(object, ArrayUtils.EMPTY_OBJECT_ARRAY);
+    }
 }
