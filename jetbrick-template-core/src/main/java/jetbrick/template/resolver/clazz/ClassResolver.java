@@ -134,7 +134,7 @@ public final class ClassResolver {
                 return true;
             }
         };
-        finder.lookupClasspath(new String[] { packageName }, true);
+        finder.lookupClasspath(Arrays.asList(packageName), true);
 
         return results;
     }

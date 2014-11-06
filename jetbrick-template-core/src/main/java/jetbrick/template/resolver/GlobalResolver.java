@@ -20,8 +20,7 @@
 package jetbrick.template.resolver;
 
 import java.lang.annotation.Annotation;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import jetbrick.bean.MethodInfo;
 import jetbrick.io.finder.ClassFinder;
 import jetbrick.template.*;
@@ -34,7 +33,6 @@ import jetbrick.template.resolver.method.MethodInvokerResolver;
 import jetbrick.template.resolver.property.*;
 import jetbrick.template.resolver.tag.TagInvoker;
 import jetbrick.template.resolver.tag.TagInvokerResolver;
-import jetbrick.util.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -66,18 +64,17 @@ public final class GlobalResolver {
     public void scan(List<String> packageNames, boolean skipErrors) {
         //@formatter:off
         @SuppressWarnings("unchecked")
-        Class<? extends Annotation>[] annoClasses = (Class<? extends Annotation>[]) new Class<?>[] {
+        List<Class<? extends Annotation>> annotations = Arrays.asList(
             JetAnnotations.Methods.class,
             JetAnnotations.Functions.class,
-            JetAnnotations.Tags.class,
-        };
+            JetAnnotations.Tags.class
+        );
         //@formatter:on
 
         log.info("Scanning @JetMethods, @JetFunctions, @JetTags implements from " + packageNames + " ...");
 
         long ts = System.currentTimeMillis();
-        String[] pkgs = packageNames.toArray(ArrayUtils.EMPTY_STRING_ARRAY);
-        Set<Class<?>> classes = ClassFinder.getClasses(pkgs, true, annoClasses, skipErrors);
+        Set<Class<?>> classes = ClassFinder.getClasses(packageNames, true, annotations, skipErrors);
 
         log.info("Found {} annotated classes, time elapsed {} ms.", classes.size(), System.currentTimeMillis() - ts);
 
