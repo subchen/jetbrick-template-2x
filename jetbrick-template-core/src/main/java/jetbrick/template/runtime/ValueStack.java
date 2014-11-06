@@ -92,7 +92,7 @@ public final class ValueStack {
         // 查找私有作用域(include/macro 参数，集成过来的父模板参数)
         value = current.getPrivate(name);
         if (value != null) {
-            setLocal(name, value); // cache
+            current.setLocal(name, value); // cache
             return value;
         }
 
@@ -100,7 +100,7 @@ public final class ValueStack {
         if (userContext != null) {
             value = userContext.get(name);
             if (value != null) {
-                setLocal(name, value); // cache
+                current.setLocal(name, value); // cache
                 return value;
             }
         }
@@ -109,10 +109,10 @@ public final class ValueStack {
         if (globalContext != null) {
             value = globalContext.getValue(name);
             if (value != null) {
+                current.setLocal(name, value); // cache
                 if (value == NULL) {
                     value = null;
                 }
-                setLocal(name, value); // cache
                 return value;
             }
         }
