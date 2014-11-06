@@ -57,6 +57,7 @@ public final class Errors {
     public static final String FUNCTION_NOT_FOUND = "cannot resolve function: %s";
     public static final String TAG_NOT_FOUND = "cannot resolve tag: %s";
     public static final String MACRO_NOT_FOUND = "cannot resolve macro: %s";
+    public static final String INCLUDE_FILE_NOT_FOUND = "include file not found: %s";
 
     public static final String CONSTRUCTOR_INVOKE_ERROR = "constructor invoke error: %s";
     public static final String METHOD_INVOKE_ERROR = "method invoke error: %s";

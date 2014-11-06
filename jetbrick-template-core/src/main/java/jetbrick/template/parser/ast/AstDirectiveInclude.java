@@ -21,9 +21,11 @@ package jetbrick.template.parser.ast;
 
 import java.util.Collections;
 import java.util.Map;
+import jetbrick.io.resource.ResourceNotFoundException;
 import jetbrick.template.Errors;
 import jetbrick.template.runtime.InterpretContext;
 import jetbrick.template.runtime.InterpretException;
+import jetbrick.util.PathUtils;
 
 public final class AstDirectiveInclude extends AstDirective {
     private final AstExpression fileExpression;
@@ -59,7 +61,12 @@ public final class AstDirectiveInclude extends AstDirective {
             }
         }
 
-        ctx.doIncludeCall((String) file, (Map<String, Object>) parameters, returnName);
+        try {
+            String fileName = PathUtils.getRelativePath(ctx.getTemplate().getName(), (String) file);
+            ctx.doIncludeCall(fileName, (Map<String, Object>) parameters, returnName);
+        } catch (ResourceNotFoundException e) {
+            throw new InterpretException(Errors.INCLUDE_FILE_NOT_FOUND, file).set(fileExpression.getPosition());
+        }
     }
 
 }
