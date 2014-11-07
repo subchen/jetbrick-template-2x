@@ -23,12 +23,13 @@ import java.io.IOException;
 import java.io.OutputStream;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.ServletContext;
-import jetbrick.ioc.annotation.*;
+import jetbrick.ioc.annotation.Config;
+import jetbrick.ioc.annotation.IocInit;
 import jetbrick.template.JetEngine;
 import jetbrick.template.JetTemplate;
 import jetbrick.template.web.JetWebContext;
 import jetbrick.template.web.JetWebEngine;
-import jetbrick.web.mvc.RequestContext;
+import jetbrick.web.mvc.*;
 import jetbrick.web.mvc.result.view.AbstractTemplateViewHandler;
 
 @Managed
@@ -38,9 +39,6 @@ public final class JetTemplateViewHandler extends AbstractTemplateViewHandler {
 
     @Config(value = "web.view.jetx.suffix", defaultValue = ".jetx")
     private String suffix;
-
-    @Inject
-    private ServletContext servletContext;
 
     private JetEngine engine = null;
 
@@ -61,7 +59,7 @@ public final class JetTemplateViewHandler extends AbstractTemplateViewHandler {
 
     @IocInit
     private void initialize() {
-        engine = JetWebEngine.create(servletContext);
+        engine = JetWebEngine.create(WebConfig.getServletContext());
         suffix = engine.getConfig().getTemplateSuffix();
     }
 
