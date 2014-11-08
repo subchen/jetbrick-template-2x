@@ -19,8 +19,8 @@
  */
 package jetbrick.template.loader;
 
-import jetbrick.util.PathUtils;
 import jetbrick.template.JetSecurityManager;
+import jetbrick.util.PathUtils;
 
 public abstract class AbstractResourceLoader implements ResourceLoader {
     protected String root;

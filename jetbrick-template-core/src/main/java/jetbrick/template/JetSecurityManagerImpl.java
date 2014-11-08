@@ -23,8 +23,6 @@ import java.io.File;
 import java.lang.reflect.*;
 import java.security.AccessControlException;
 import java.util.*;
-import jetbrick.template.JetEngine;
-import jetbrick.template.JetSecurityManager;
 import jetbrick.io.IoUtils;
 import jetbrick.util.StringUtils;
 

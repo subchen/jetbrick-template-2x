@@ -51,7 +51,7 @@ public final class AstInvokeNewArray extends AstExpression {
             }
             unsafe = false;
         }
-        
+
         int length = expressions.length;
         if (length == 1) {
             Object size = expressions[0].execute(ctx);

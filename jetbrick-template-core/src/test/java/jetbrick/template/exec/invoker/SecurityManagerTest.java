@@ -1,13 +1,15 @@
 package jetbrick.template.exec.invoker;
 
-import java.util.*;
-import jetbrick.template.*;
+import java.util.ArrayList;
+import java.util.List;
+import jetbrick.template.JetSecurityManagerImpl;
 import jetbrick.template.exec.AbstractJetxFileTest;
-import jetbrick.template.runtime.InterpretException;
 import jetbrick.template.loader.AbstractResourceLoader;
-import org.junit.*;
-import org.junit.rules.ExpectedException;
+import jetbrick.template.runtime.InterpretException;
 import org.hamcrest.CoreMatchers;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 public class SecurityManagerTest extends AbstractJetxFileTest {
     @Rule

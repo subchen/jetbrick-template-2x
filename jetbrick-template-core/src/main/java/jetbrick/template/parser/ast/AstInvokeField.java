@@ -21,8 +21,8 @@ package jetbrick.template.parser.ast;
 
 import jetbrick.template.Errors;
 import jetbrick.template.JetSecurityManager;
-import jetbrick.template.resolver.property.Getter;
 import jetbrick.template.resolver.SignatureUtils;
+import jetbrick.template.resolver.property.Getter;
 import jetbrick.template.runtime.InterpretContext;
 import jetbrick.template.runtime.InterpretException;
 

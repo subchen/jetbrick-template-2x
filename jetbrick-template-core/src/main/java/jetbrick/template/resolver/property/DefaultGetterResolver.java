@@ -24,7 +24,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import jetbrick.bean.*;
 import jetbrick.template.resolver.SignatureUtils;
-import jetbrick.template.resolver.property.Getter;
 
 /**
  * 全局用于查找 obj.name 访问
