@@ -31,17 +31,7 @@ import jetbrick.template.web.JetWebEngine;
 import jetbrick.web.servlet.RequestUtils;
 
 /**
- * 直接作为 Filter 使用。需要在 web.xml 中作如下配置。
- * <pre><xmp>
- * <filter>
- *   <filter-name>jetbrick-template</filter-name>
- *   <filter-class>jetbrick.template.web.servlet.JetTemplateFilter</filter-class>
- * </filter>
- * <filter-mapping>
- *   <filter-name>jetbrick-template</filter-name>
- *   <url-pattern>*.jetx</url-pattern>
- * </filter-mapping>
- * </xmp></pre>
+ * 直接作为 Filter 使用.
  */
 public final class JetTemplateFilter implements Filter {
     private JetEngine engine;

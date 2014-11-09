@@ -30,18 +30,7 @@ import jetbrick.template.web.JetWebEngine;
 import jetbrick.web.servlet.RequestUtils;
 
 /**
- * 直接作为 Servlet 使用。需要在 web.xml 中作如下配置。
- * <pre><xmp>
- * <servlet>
- *   <servlet-name>jetbrick-template</servlet-name>
- *   <servlet-class>jetbrick.template.web.servlet.JetTemplateServlet</servlet-class>
- *   <load-on-startup>1</load-on-startup>
- * </servlet>
- * <servlet-mapping>
- *   <servlet-name>jetbrick-template</servlet-name>
- *   <url-pattern>*.jetx</url-pattern>
- * </servlet-mapping>
- * </xmp></pre>
+ * 直接作为 Servlet 使用.
  */
 public final class JetTemplateServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;

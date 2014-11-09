@@ -24,17 +24,6 @@ import javax.servlet.ServletContextListener;
 
 /**
  * 自动初始化加载 JetEngine.
- *
- * <pre><xmp>
- * <context-param>
- *   <param-name>jetbrick-template-config-location</param-name>
- *   <param-value>/WEB-INF/jetbrick-template.properties</param-value>
- * </context-param>
- *
- * <listener>
- *   <listener-class>jetbrick.template.web.JetEngineListener</listener-class>
- * </listener>
- * </xmp></pre>
  */
 public final class JetEngineListener implements ServletContextListener {
 

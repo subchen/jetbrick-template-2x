@@ -26,21 +26,19 @@ import jetbrick.template.runtime.InterpretException;
 /**
  *  <h2>Binary Operator</h2>
  *  <p>
- *  {@link http://docs.oracle.com/javase/specs/jls/se7/html/jls-5.html#jls-5.6.2}<br/>
+ *  See the <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-5.html#jls-5.6.2">Java 7 Specs</a><br>
  *  <ul>
  *    <li>The multiplicative operators *, / and % </li>
  *    <li>The addition and subtraction operators for numeric types + and - </li>
  *    <li>The numerical comparison operators &lt;, &lt;=, &gt;, and &gt;= </li>
  *    <li>The numerical equality operators == and != </li>
- *    <li>The integer bitwise operators &, ^, and | </li>
+ *    <li>The integer bitwise operators &amp;, ^, and | </li>
  *    <li>In certain cases, the conditional operator ? : </li>
  *  </ul>
- *  </p>
  *
  *  <h2>String "+" Operator</h2>
  *  <p>
- *  {@link http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.18.1}<br/>
- *  </p>
+ *  See the <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-15.html#jls-15.18.1">Java 7 Specs</a><br>
  */
 public final class AstOperatorBinary extends AstExpression {
     private final int operator;

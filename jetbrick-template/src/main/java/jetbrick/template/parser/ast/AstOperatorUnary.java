@@ -24,9 +24,9 @@ import jetbrick.template.runtime.InterpretContext;
 import jetbrick.template.runtime.InterpretException;
 
 /**
- *  <h2>Unary Operator<h2>
+ *  <h2>Unary Operator</h2>
  *  <p>
- *  {@link http://docs.oracle.com/javase/specs/jls/se7/html/jls-5.html#jls-5.6.1}<br/>
+ *  See the <a href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-5.html#jls-5.6.1">Java 7 Specs</a><br>
  *  <ul>
  *    <li>Each dimension expression in an array creation expression</li>
  *    <li>The index expression in an array access expression </li>
@@ -35,7 +35,6 @@ import jetbrick.template.runtime.InterpretException;
  *    <li>The operand of a bitwise complement operator ~ </li>
  *    <li>Each operand, separately, of a shift operator &gt;&gt;, &gt;&gt;&gt;, or &lt;&lt; </li>
  *  </ul>
- *  </p>
  */
 public final class AstOperatorUnary extends AstExpression {
     private final int operator;
