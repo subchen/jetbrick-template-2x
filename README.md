@@ -87,7 +87,7 @@ public class JetxTest {
 }
 ```
 
-Maven 依赖 pom.xml
+Maven Dependency
 =============================
 
 Release 版本已发布到 Maven 中央库： http://central.maven.org/maven2/com/github/subchen/
