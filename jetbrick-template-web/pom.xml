@@ -10,13 +10,13 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>jetbrick-template-servlet</artifactId>
+    <artifactId>jetbrick-template-web</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>jetbrick-template-core</artifactId>
+            <artifactId>jetbrick-template</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

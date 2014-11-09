@@ -88,7 +88,7 @@ Release 版本已发布到 Maven 中央库： http://central.maven.org/maven2/co
 ```xml
 <dependency>
     <groupId>com.github.subchen</groupId>
-    <artifactId>jetbrick-template-core</artifactId>
+    <artifactId>jetbrick-template</artifactId>
     <version>2.0</version>
 </dependency>
 ```

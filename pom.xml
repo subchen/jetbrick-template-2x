@@ -19,8 +19,8 @@
     <url>http://subchen.github.io/jetbrick-template-2x</url>
 
     <modules>
-        <module>jetbrick-template-core</module>
-        <module>jetbrick-template-servlet</module>
+        <module>jetbrick-template</module>
+        <module>jetbrick-template-web</module>
         <module>jetbrick-template-jetbrickmvc</module>
         <module>jetbrick-template-springmvc</module>
         <module>jetbrick-template-jfinal</module>

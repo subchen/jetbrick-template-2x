@@ -16,7 +16,7 @@
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>jetbrick-template-servlet</artifactId>
+            <artifactId>jetbrick-template-web</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
