@@ -74,7 +74,7 @@ directive_define
             :   DIRECTIVE_OPEN_DEFINE directive_define_expression (',' directive_define_expression)* ')'
             ;
 directive_define_expression
-            :   type? IDENTIFIER
+            :   type IDENTIFIER
             ;
 
 directive_set
