@@ -30,7 +30,7 @@ public class DirectiveMacroTest extends AbstractJetxSourceTest {
         sb.append("#macro size(String s)");
         sb.append("size=${s.length()}");
         sb.append("#end");
-        sb.append("${size('abc')}");
+        sb.append("#call size('abc')");
         Assert.assertEquals("size=3", eval(sb.toString()));
     }
 
