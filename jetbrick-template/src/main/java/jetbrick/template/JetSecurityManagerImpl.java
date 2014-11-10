@@ -144,7 +144,7 @@ public final class JetSecurityManagerImpl implements JetSecurityManager {
     @Override
     public void checkAccess(Field field) throws AccessControlException {
         String fullName = field.getDeclaringClass().getName() + '.' + field.getName();
-        if (disallowStaticMethod && Modifier.isStatic(field.getModifiers())) {
+        if (disallowStaticField && Modifier.isStatic(field.getModifiers())) {
             throw new AccessControlException("access denied for static field: " + fullName);
         }
         checkAccess(fullName);
