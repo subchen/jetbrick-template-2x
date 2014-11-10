@@ -19,7 +19,8 @@
  */
 package jetbrick.template.parser.ast;
 
-import jetbrick.template.*;
+import jetbrick.template.Errors;
+import jetbrick.template.JetSecurityManager;
 import jetbrick.template.resolver.ParameterUtils;
 import jetbrick.template.resolver.SignatureUtils;
 import jetbrick.template.resolver.function.FunctionInvoker;
@@ -58,7 +59,7 @@ public final class AstInvokeFunction extends AstExpression {
 
         if (fn == null) {
             Class<?>[] argumentTypes = ParameterUtils.getParameterTypes(arguments);
-            fn = resolveFunction(ctx, argumentTypes);
+            fn = ctx.getGlobalResolver().resolveFunction(name, argumentTypes);
 
             if (fn == null) {
                 String signature = SignatureUtils.getFunctionSignature(name, argumentTypes);
@@ -93,12 +94,4 @@ public final class AstInvokeFunction extends AstExpression {
         }
     }
 
-    private FunctionInvoker resolveFunction(InterpretContext ctx, Class<?>[] argumentTypes) {
-        // 优先查找宏定义
-        JetTemplateMacro macro = ctx.getTemplate().resolveMacro(name, argumentTypes);
-        if (macro != null) {
-            return macro;
-        }
-        return ctx.getGlobalResolver().resolveFunction(name, argumentTypes);
-    }
 }

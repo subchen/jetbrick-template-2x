@@ -9,8 +9,8 @@ public class OptionLoadmacroTest extends AbstractJetxFileTest {
     static {
         StringBuilder s = new StringBuilder();
         s.append("#options(loadmacro='/s2.jetx')");
-        s.append("${size('abc')}");
-        s.append("${isOdd(123)}");
+        s.append("#call size('abc')");
+        s.append("#call isOdd(123)");
         sourceMap.put("/s1.jetx", s.toString());
 
         s = new StringBuilder();
