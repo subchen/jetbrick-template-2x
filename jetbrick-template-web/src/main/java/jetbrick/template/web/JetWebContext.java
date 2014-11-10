@@ -46,6 +46,7 @@ public final class JetWebContext extends HashMap<String, Object> {
     public static final String CONTEXT_PATH = "CONTEXT_PATH";
     public static final String WEBROOT_PATH = "WEBROOT_PATH";
     public static final String BASE_PATH = "BASE_PATH";
+    public static final String WEBROOT = "WEBROOT"; // short name for WEBROOT_PATH
 
     //@formatter:off
     private enum TYPE {
@@ -92,6 +93,7 @@ public final class JetWebContext extends HashMap<String, Object> {
         put(CONTEXT_PATH, TYPE.CONTEXT_PATH);
         put(WEBROOT_PATH, TYPE.WEBROOT_PATH);
         put(BASE_PATH, TYPE.BASE_PATH);
+        put(WEBROOT, TYPE.WEBROOT_PATH);
     }
 
     @Override
