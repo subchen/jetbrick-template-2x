@@ -61,6 +61,9 @@ final class JetEngineImpl extends JetEngine {
         // create globals
         this.globalResolver = doCreateGlobalResolver();
         this.globalContext = doCreateGlobalContext();
+
+        // load global macros
+        doLoadGlobalMacroFiles();
     }
 
     @Override
@@ -176,12 +179,6 @@ final class JetEngineImpl extends JetEngine {
             resolver.registerTags(className);
         }
 
-        List<String> macroFiles = config.getImportMacros();
-        for (String file : macroFiles) {
-            JetTemplate template = getTemplate(file);
-            resolver.registerMacros(template);
-        }
-
         List<String> packageNames = config.getAutoscanPackages();
         if (!packageNames.isEmpty()) {
             resolver.scan(packageNames, config.isAutoscanSkiperrors());
@@ -206,6 +203,14 @@ final class JetEngineImpl extends JetEngine {
         }
 
         return ctx;
+    }
+
+    private void doLoadGlobalMacroFiles() {
+        List<String> macroFiles = config.getImportMacros();
+        for (String file : macroFiles) {
+            JetTemplate template = getTemplate(file);
+            globalResolver.registerMacros(template);
+        }
     }
 
 }

@@ -60,7 +60,7 @@ final class JetTemplateImpl implements JetTemplate {
         this.config = engine.getConfig();
         this.reloadable = reloadable;
         this.lastModified = 0;
-        this.macroResolver = new MacroResolver();
+        this.macroResolver = new MacroResolver(engine.getGlobalResolver());
     }
 
     // 检测模板是否已更新/删除
