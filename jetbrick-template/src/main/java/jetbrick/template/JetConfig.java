@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Properties;
 import jetbrick.config.Config;
 import jetbrick.config.ConfigLoader;
+import jetbrick.template.JetSecurityManager;
 import jetbrick.template.loader.ClasspathResourceLoader;
 import jetbrick.template.loader.ResourceLoader;
 import org.slf4j.Logger;
@@ -42,6 +43,7 @@ public final class JetConfig {
     public static final String AUTOSCAN_SKIPERRORS = "jetx.autoscan.skiperrors";
     public static final String TEMPLATE_LOADERS = "jetx.template.loaders";
     public static final String TEMPLATE_SUFFIX = "jetx.template.suffix";
+    public static final String TEMPLATE_SOURCE_SECURITYMANAGER = "jetx.template.source.securityManager";
     public static final String INPUT_ENCODING = "jetx.input.encoding";
     public static final String OUTPUT_ENCODING = "jetx.output.encoding";
     public static final String SYNTAX_STRICT = "jetx.syntax.strict";
@@ -64,6 +66,7 @@ public final class JetConfig {
     private boolean autoscanSkiperrors;
     private List<ResourceLoader> templateLoaders;
     private String templateSuffix;
+    private JetSecurityManager templateSecurityManager;
     private Charset inputEncoding;
     private Charset outputEncoding;
     private boolean syntaxStrict;
@@ -109,6 +112,7 @@ public final class JetConfig {
         autoscanSkiperrors = config.asBoolean(AUTOSCAN_SKIPERRORS, "false");
         templateLoaders = config.asObjectList(TEMPLATE_LOADERS, ResourceLoader.class, ClasspathResourceLoader.class.getName());
         templateSuffix = config.asString(TEMPLATE_SUFFIX, ".jetx");
+        templateSecurityManager = config.asObject(TEMPLATE_SOURCE_SECURITYMANAGER, JetSecurityManager.class);
         inputEncoding = config.asCharset(INPUT_ENCODING, "utf-8");
         outputEncoding = config.asCharset(OUTPUT_ENCODING, "utf-8");
         syntaxStrict = config.asBoolean(SYNTAX_STRICT, "false");
@@ -159,6 +163,10 @@ public final class JetConfig {
 
     public String getTemplateSuffix() {
         return templateSuffix;
+    }
+
+    public JetSecurityManager getTemplateSecurityManager() {
+        return templateSecurityManager;
     }
 
     public Charset getInputEncoding() {
