@@ -60,7 +60,7 @@ final class JetTemplateImpl implements JetTemplate {
         this.config = engine.getConfig();
         this.reloadable = reloadable;
         this.lastModified = 0;
-        this.macroResolver = new MacroResolver(engine.getGlobalResolver());
+        this.macroResolver = new MacroResolver();
     }
 
     // 检测模板是否已更新/删除
@@ -165,8 +165,12 @@ final class JetTemplateImpl implements JetTemplate {
     }
 
     @Override
-    public JetTemplateMacro resolveMacro(String name, Class<?>[] argumentTypes) {
-        return macroResolver.resolve(name, argumentTypes);
+    public JetTemplateMacro resolveMacro(String name, Class<?>[] argumentTypes, boolean root) {
+        JetTemplateMacro macro = macroResolver.resolve(name, argumentTypes);
+        if (macro == null && root) {
+            macro = engine.getGlobalResolver().resolveMacro(name, argumentTypes);
+        }
+        return macro;
     }
 
     @Override

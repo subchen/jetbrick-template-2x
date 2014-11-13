@@ -21,20 +21,10 @@ package jetbrick.template.resolver.macro;
 
 import java.util.*;
 import jetbrick.template.*;
-import jetbrick.template.resolver.GlobalResolver;
 
 public final class MacroResolver {
-    private final GlobalResolver globalResolver;
     private List<JetTemplate> loadedTemplates;
     private Map<String, JetTemplateMacro> decleardMacros;
-
-    public MacroResolver() {
-        this.globalResolver = null;
-    }
-
-    public MacroResolver(GlobalResolver globalResolver) {
-        this.globalResolver = globalResolver;
-    }
 
     public void clear() {
         loadedTemplates = null;
@@ -70,15 +60,11 @@ public final class MacroResolver {
 
         if (loadedTemplates != null) {
             for (JetTemplate template : loadedTemplates) {
-                macro = template.resolveMacro(name, argumentTypes);
+                macro = template.resolveMacro(name, argumentTypes, false);
                 if (macro != null) {
                     return macro;
                 }
             }
-        }
-
-        if (globalResolver != null) {
-            return globalResolver.resolveMacro(name, argumentTypes);
         }
 
         return null;

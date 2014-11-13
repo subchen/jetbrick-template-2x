@@ -37,7 +37,7 @@ public interface JetTemplate {
 
     public void render(Map<String, Object> context, OutputStream out);
 
-    public JetTemplateMacro resolveMacro(String name, Class<?>[] argumentTypes);
+    public JetTemplateMacro resolveMacro(String name, Class<?>[] argumentTypes, boolean root);
 
     public String getName();
 

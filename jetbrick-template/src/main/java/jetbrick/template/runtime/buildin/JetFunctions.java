@@ -108,7 +108,7 @@ public final class JetFunctions {
         InterpretContext ctx = InterpretContext.current();
 
         Class<?>[] argumentTypes = ParameterUtils.getParameterTypes(arguments);
-        JetTemplateMacro macro = ctx.getTemplate().resolveMacro(name, argumentTypes);
+        JetTemplateMacro macro = ctx.getTemplate().resolveMacro(name, argumentTypes, true);
         if (macro == null) {
             throw new IllegalStateException(Errors.format(Errors.MACRO_NOT_FOUND, name));
         }
