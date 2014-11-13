@@ -90,7 +90,8 @@ public final class AstInvokeFunction extends AstExpression {
                 // 重新查找匹配的 Invoker
                 return doInvoke(ctx, null, arguments);
             }
-            throw new InterpretException(Errors.FUNCTION_INVOKE_ERROR).cause(e).set(position);
+
+            throw new InterpretException(Errors.FUNCTION_INVOKE_ERROR, fn.getSignature()).cause(e).set(position);
         }
     }
 
