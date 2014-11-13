@@ -1,10 +1,10 @@
 package jetbrick.template.exec.option;
 
-import jetbrick.template.exec.AbstractJetxSourceTest;
+import jetbrick.template.exec.AbstractJetxTest;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class OptionTrimLeadingWhitespacesTest extends AbstractJetxSourceTest {
+public class OptionTrimLeadingWhitespacesTest extends AbstractJetxTest {
 
     @Test()
     public void test() {

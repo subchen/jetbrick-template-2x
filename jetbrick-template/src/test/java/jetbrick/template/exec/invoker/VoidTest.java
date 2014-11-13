@@ -1,14 +1,12 @@
 package jetbrick.template.exec.invoker;
 
 import jetbrick.template.Errors;
-import jetbrick.template.exec.AbstractJetxSourceTest;
+import jetbrick.template.exec.AbstractJetxTest;
 import jetbrick.template.runtime.InterpretException;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
 
-public class VoidTest extends AbstractJetxSourceTest {
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
+public class VoidTest extends AbstractJetxTest {
 
     @Test
     public void testValue() {
@@ -21,6 +19,7 @@ public class VoidTest extends AbstractJetxSourceTest {
     public void testArgumentIsVoid() {
         thrown.expect(InterpretException.class);
         thrown.expectMessage(Errors.EXPRESSION_ARGUMENT_IS_VOID);
+
         eval("${System::identityHashCode(Thread::yield())}");
     }
 
@@ -28,6 +27,7 @@ public class VoidTest extends AbstractJetxSourceTest {
     public void testMethodInvoke() {
         thrown.expect(InterpretException.class);
         thrown.expectMessage(Errors.EXPRESSION_OBJECT_IS_VOID);
+
         eval("${Thread::yield().toString()}");
     }
 
@@ -35,6 +35,7 @@ public class VoidTest extends AbstractJetxSourceTest {
     public void testListGet1() {
         thrown.expect(InterpretException.class);
         thrown.expectMessage(Errors.EXPRESSION_OBJECT_IS_VOID);
+
         eval("${Thread::yield()[0]}");
     }
 
@@ -42,6 +43,7 @@ public class VoidTest extends AbstractJetxSourceTest {
     public void testListGet2() {
         thrown.expect(InterpretException.class);
         thrown.expectMessage(Errors.EXPRESSION_OBJECT_IS_VOID);
+
         eval("${new StringBuilder().trimToSize()[0]}");
     }
 
@@ -49,6 +51,7 @@ public class VoidTest extends AbstractJetxSourceTest {
     public void testListGet3() {
         thrown.expect(InterpretException.class);
         thrown.expectMessage(Errors.EXPRESSION_INDEX_IS_VOID);
+
         eval("${[1,2,3][Thread::yield()]}");
     }
 }

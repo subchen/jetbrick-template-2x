@@ -1,10 +1,12 @@
 package jetbrick.template.exec.option;
 
-import jetbrick.template.exec.AbstractJetxSourceTest;
+import jetbrick.template.Errors;
+import jetbrick.template.exec.AbstractJetxTest;
 import jetbrick.template.parser.SyntaxException;
+import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 
-public class OptionSyntaxTest extends AbstractJetxSourceTest {
+public class OptionSyntaxTest extends AbstractJetxTest {
 
     @Test
     public void testSyntax() {
@@ -12,14 +14,20 @@ public class OptionSyntaxTest extends AbstractJetxSourceTest {
         eval("#options(strict=true, safecall=false, import='java.io.*', import='java.net.*')");
     }
 
-    @Test(expected = SyntaxException.class)
+    @Test
     public void testInvalidName() {
+        thrown.expect(SyntaxException.class);
+        thrown.expectMessage(CoreMatchers.containsString(err(Errors.OPTION_NAME_INVALID)));
+
         eval("#options(unknown=true)");
     }
 
-    @Test(expected = SyntaxException.class)
+    @Test
     public void testInvalidValue() {
-        eval("#options(strict=x)");
+        thrown.expect(SyntaxException.class);
+        thrown.expectMessage(CoreMatchers.containsString(err(Errors.OPTION_VALUE_INVALID)));
+
+        eval("#options(strict=123)");
     }
 
 }

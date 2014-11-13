@@ -1,11 +1,11 @@
 package jetbrick.template.exec.config;
 
 import jetbrick.template.JetConfig;
-import jetbrick.template.exec.AbstractJetxSourceTest;
+import jetbrick.template.exec.AbstractJetxTest;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class TrimDirectiveCommentsCustomTest extends AbstractJetxSourceTest {
+public class TrimDirectiveCommentsCustomTest extends AbstractJetxTest {
 
     @Override
     protected void initializeConfig() {
@@ -16,9 +16,7 @@ public class TrimDirectiveCommentsCustomTest extends AbstractJetxSourceTest {
 
     @Test
     public void test() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("<%-- #stop --%>");
-        Assert.assertEquals("", eval(sb.toString()));
+        Assert.assertEquals("", eval("<%-- #stop --%>"));
     }
 
 }

@@ -1,10 +1,10 @@
 package jetbrick.template.exec.value;
 
-import jetbrick.template.exec.AbstractJetxSourceTest;
+import jetbrick.template.exec.AbstractJetxTest;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class TextTest extends AbstractJetxSourceTest {
+public class TextTest extends AbstractJetxTest {
 
     @Test
     public void testText() {

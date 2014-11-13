@@ -1,11 +1,13 @@
 package jetbrick.template.exec.directive;
 
-import jetbrick.template.exec.AbstractJetxSourceTest;
+import jetbrick.template.Errors;
+import jetbrick.template.exec.AbstractJetxTest;
 import jetbrick.template.parser.SyntaxException;
+import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class DirectiveMacroTest extends AbstractJetxSourceTest {
+public class DirectiveMacroTest extends AbstractJetxTest {
 
     @Test
     public void testDefination() {
@@ -16,8 +18,11 @@ public class DirectiveMacroTest extends AbstractJetxSourceTest {
         eval(sb.toString());
     }
 
-    @Test(expected = SyntaxException.class)
+    @Test
     public void testRedefination() {
+        thrown.expect(SyntaxException.class);
+        thrown.expectMessage(CoreMatchers.containsString(err(Errors.DIRECTIVE_MACRO_NAME_DUPLICATED)));
+
         StringBuilder sb = new StringBuilder();
         sb.append("#macro size()#end");
         sb.append("#macro size(int a)#end");

@@ -1,33 +1,50 @@
 package jetbrick.template.exec.directive;
 
-import jetbrick.template.exec.AbstractJetxSourceTest;
+import jetbrick.template.Errors;
+import jetbrick.template.exec.AbstractJetxTest;
 import jetbrick.template.parser.SyntaxException;
+import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 
-public class DirectiveInvalidTest extends AbstractJetxSourceTest {
+public class DirectiveInvalidTest extends AbstractJetxTest {
 
-    @Test(expected = SyntaxException.class)
+    @Test
     public void testInvalid_define() {
+        thrown.expect(SyntaxException.class);
+        thrown.expectMessage(CoreMatchers.containsString(err(Errors.ARGUMENTS_MISSING)));
+
         eval("#define");
     }
 
-    @Test(expected = SyntaxException.class)
+    @Test
     public void testInvalid_if() {
+        thrown.expect(SyntaxException.class);
+        thrown.expectMessage(CoreMatchers.containsString(err(Errors.ARGUMENTS_MISSING)));
+
         eval("#if");
     }
 
-    @Test(expected = SyntaxException.class)
+    @Test
     public void testInvalid_missing_end() {
+        thrown.expect(SyntaxException.class);
+        thrown.expectMessage(CoreMatchers.containsString("no viable alternative at input"));
+
         eval("#if(true)123");
     }
 
-    @Test(expected = SyntaxException.class)
+    @Test
     public void testInvalid_break() {
+        thrown.expect(SyntaxException.class);
+        thrown.expectMessage(CoreMatchers.containsString("cannot be used outside of"));
+
         eval("#break");
     }
 
-    @Test(expected = SyntaxException.class)
+    @Test
     public void testInvalid_continue() {
+        thrown.expect(SyntaxException.class);
+        thrown.expectMessage(CoreMatchers.containsString("cannot be used outside of"));
+
         eval("#continue");
     }
 

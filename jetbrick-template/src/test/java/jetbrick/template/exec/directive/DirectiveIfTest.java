@@ -1,10 +1,10 @@
 package jetbrick.template.exec.directive;
 
-import jetbrick.template.exec.AbstractJetxSourceTest;
+import jetbrick.template.exec.AbstractJetxTest;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class DirectiveIfTest extends AbstractJetxSourceTest {
+public class DirectiveIfTest extends AbstractJetxTest {
 
     @Test
     public void testIf() {

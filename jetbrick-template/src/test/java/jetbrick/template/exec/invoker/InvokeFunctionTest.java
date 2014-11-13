@@ -1,11 +1,11 @@
 package jetbrick.template.exec.invoker;
 
-import jetbrick.template.exec.AbstractJetxSourceTest;
+import jetbrick.template.exec.AbstractJetxTest;
 import jetbrick.util.StringUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class InvokeFunctionTest extends AbstractJetxSourceTest {
+public class InvokeFunctionTest extends AbstractJetxTest {
 
     @Override
     public void initializeEngine() {

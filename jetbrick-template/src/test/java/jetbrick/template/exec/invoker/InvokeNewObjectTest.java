@@ -1,12 +1,14 @@
 package jetbrick.template.exec.invoker;
 
-import jetbrick.template.exec.AbstractJetxSourceTest;
+import jetbrick.template.Errors;
+import jetbrick.template.exec.AbstractJetxTest;
 import jetbrick.template.parser.SyntaxException;
 import jetbrick.template.runtime.InterpretException;
+import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class InvokeNewObjectTest extends AbstractJetxSourceTest {
+public class InvokeNewObjectTest extends AbstractJetxTest {
 
     @Override
     public void initializeEngine() {
@@ -34,13 +36,19 @@ public class InvokeNewObjectTest extends AbstractJetxSourceTest {
         Assert.assertEquals("model", eval("${new InvokeNewObjectTest.Model()}"));
     }
 
-    @Test(expected = SyntaxException.class)
+    @Test
     public void testClassNotFound() {
+        thrown.expect(SyntaxException.class);
+        thrown.expectMessage(CoreMatchers.containsString(err(Errors.CLASS_NOT_FOUND)));
+
         eval("${new Model12345()}");
     }
 
-    @Test(expected = InterpretException.class)
+    @Test
     public void testCtorNotFound() {
+        thrown.expect(InterpretException.class);
+        thrown.expectMessage(CoreMatchers.containsString(err(Errors.CONSTRUCTOR_NOT_FOUND)));
+
         eval("${new Model(false)}");
     }
 

@@ -1,11 +1,13 @@
 package jetbrick.template.exec.directive;
 
-import jetbrick.template.exec.AbstractJetxSourceTest;
+import jetbrick.template.Errors;
+import jetbrick.template.exec.AbstractJetxTest;
 import jetbrick.template.runtime.InterpretException;
+import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class DirectiveSetTest extends AbstractJetxSourceTest {
+public class DirectiveSetTest extends AbstractJetxTest {
 
     @Test
     public void test() {
@@ -21,8 +23,11 @@ public class DirectiveSetTest extends AbstractJetxSourceTest {
         eval("#set(int i=1)#set(int i=1)");
     }
 
-    @Test(expected = InterpretException.class)
+    @Test
     public void testFailed() {
+        thrown.expect(InterpretException.class);
+        thrown.expectMessage(CoreMatchers.containsString(err(Errors.VARIABLE_TYPE_INCONSISTENT)));
+
         eval("#set(int i=1)#set(i=1L)");
     }
 }

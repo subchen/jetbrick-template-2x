@@ -1,10 +1,10 @@
 package jetbrick.template.exec.config;
 
-import jetbrick.template.exec.AbstractJetxSourceTest;
+import jetbrick.template.exec.AbstractJetxTest;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class TrimDirectiveWhitespacesTest extends AbstractJetxSourceTest {
+public class TrimDirectiveWhitespacesTest extends AbstractJetxTest {
 
     @Test
     public void testBasic1() {

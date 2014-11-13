@@ -1,11 +1,11 @@
 package jetbrick.template.exec.config;
 
 import jetbrick.template.JetConfig;
-import jetbrick.template.exec.AbstractJetxSourceTest;
+import jetbrick.template.exec.AbstractJetxTest;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class TrimDirectiveCommentsTest extends AbstractJetxSourceTest {
+public class TrimDirectiveCommentsTest extends AbstractJetxTest {
 
     @Override
     protected void initializeConfig() {

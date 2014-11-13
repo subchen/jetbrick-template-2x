@@ -1,10 +1,10 @@
 package jetbrick.template.exec.buildin;
 
-import jetbrick.template.exec.AbstractJetxSourceTest;
+import jetbrick.template.exec.AbstractJetxTest;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class BuildinFunctionTest extends AbstractJetxSourceTest {
+public class BuildinFunctionTest extends AbstractJetxTest {
 
     @Test
     public void testRange() {

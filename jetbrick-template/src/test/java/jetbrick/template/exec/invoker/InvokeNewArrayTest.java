@@ -1,11 +1,11 @@
 package jetbrick.template.exec.invoker;
 
-import jetbrick.template.exec.AbstractJetxSourceTest;
+import jetbrick.template.exec.AbstractJetxTest;
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class InvokeNewArrayTest extends AbstractJetxSourceTest {
+public class InvokeNewArrayTest extends AbstractJetxTest {
 
     @Test
     public void test() {

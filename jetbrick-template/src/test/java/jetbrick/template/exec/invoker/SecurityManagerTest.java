@@ -3,7 +3,7 @@ package jetbrick.template.exec.invoker;
 import java.util.ArrayList;
 import java.util.List;
 import jetbrick.template.JetSecurityManagerImpl;
-import jetbrick.template.exec.AbstractJetxFileTest;
+import jetbrick.template.exec.AbstractJetxTest;
 import jetbrick.template.loader.AbstractResourceLoader;
 import jetbrick.template.runtime.InterpretException;
 import org.hamcrest.CoreMatchers;
@@ -11,9 +11,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-public class SecurityManagerTest extends AbstractJetxFileTest {
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
+public class SecurityManagerTest extends AbstractJetxTest {
 
     @Override
     protected void initializeEngine() {
@@ -28,8 +26,7 @@ public class SecurityManagerTest extends AbstractJetxFileTest {
         JetSecurityManagerImpl securityManager = new JetSecurityManagerImpl();
         securityManager.setNameList(nameList);
 
-        AbstractResourceLoader loader = (AbstractResourceLoader) engine.getConfig().getTemplateLoaders().get(0);
-        loader.setSecurityManager(securityManager);
+        engine.setSecurityManager(securityManager);
     }
 
     @Test
@@ -37,8 +34,7 @@ public class SecurityManagerTest extends AbstractJetxFileTest {
         thrown.expect(InterpretException.class);
         thrown.expectMessage(CoreMatchers.startsWith("java.security.AccessControlException"));
 
-        sourceMap.put("/1.jetx", "${java.io.File::separator}");
-        eval("/1.jetx");
+        eval("${java.io.File::separator}");
     }
 
     @Test
@@ -46,8 +42,7 @@ public class SecurityManagerTest extends AbstractJetxFileTest {
         thrown.expect(InterpretException.class);
         thrown.expectMessage(CoreMatchers.startsWith("java.security.AccessControlException"));
 
-        sourceMap.put("/1.jetx", "${System::gc()}");
-        eval("/1.jetx");
+        eval("${System::gc()}");
     }
 
     @Test
@@ -55,8 +50,7 @@ public class SecurityManagerTest extends AbstractJetxFileTest {
         thrown.expect(InterpretException.class);
         thrown.expectMessage(CoreMatchers.startsWith("java.security.AccessControlException"));
 
-        sourceMap.put("/1.jetx", "${new Date()}");
-        eval("/1.jetx");
+        eval("${new Date()}");
     }
 
     @Test
@@ -64,8 +58,7 @@ public class SecurityManagerTest extends AbstractJetxFileTest {
         thrown.expect(InterpretException.class);
         thrown.expectMessage(CoreMatchers.startsWith("java.security.AccessControlException"));
 
-        sourceMap.put("/1.jetx", "${'a'.length()}");
-        eval("/1.jetx");
+        eval("${'a'.length()}");
     }
 
     @Test
@@ -73,7 +66,6 @@ public class SecurityManagerTest extends AbstractJetxFileTest {
         thrown.expect(InterpretException.class);
         thrown.expectMessage(CoreMatchers.startsWith("java.security.AccessControlException"));
 
-        sourceMap.put("/1.jetx", "${Integer::MAX_VALUE}");
-        eval("/1.jetx");
+        eval("${Integer::MAX_VALUE}");
     }
 }

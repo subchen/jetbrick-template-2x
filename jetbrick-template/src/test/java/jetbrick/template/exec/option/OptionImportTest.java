@@ -1,10 +1,10 @@
 package jetbrick.template.exec.option;
 
-import jetbrick.template.exec.AbstractJetxSourceTest;
+import jetbrick.template.exec.AbstractJetxTest;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class OptionImportTest extends AbstractJetxSourceTest {
+public class OptionImportTest extends AbstractJetxTest {
 
     @Test
     public void testBasic() {

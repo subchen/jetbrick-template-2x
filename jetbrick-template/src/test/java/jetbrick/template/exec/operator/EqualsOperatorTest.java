@@ -1,10 +1,10 @@
 package jetbrick.template.exec.operator;
 
-import jetbrick.template.exec.AbstractJetxSourceTest;
+import jetbrick.template.exec.AbstractJetxTest;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class EqualsOperatorTest extends AbstractJetxSourceTest {
+public class EqualsOperatorTest extends AbstractJetxTest {
 
     @Test
     public void testTrue() {

@@ -2,12 +2,14 @@ package jetbrick.template.exec.invoker;
 
 import java.util.HashMap;
 import java.util.Map;
-import jetbrick.template.exec.AbstractJetxSourceTest;
+import jetbrick.template.Errors;
+import jetbrick.template.exec.AbstractJetxTest;
 import jetbrick.template.runtime.InterpretException;
+import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class InvokeFieldTest extends AbstractJetxSourceTest {
+public class InvokeFieldTest extends AbstractJetxTest {
 
     @Test
     public void test() {
@@ -18,8 +20,11 @@ public class InvokeFieldTest extends AbstractJetxSourceTest {
         Assert.assertEquals("model", eval("${model.name}", context));
     }
 
-    @Test(expected = InterpretException.class)
+    @Test
     public void testNotFound() {
+        thrown.expect(InterpretException.class);
+        thrown.expectMessage(CoreMatchers.containsString(err(Errors.PROPERTY_NOT_FOUND)));
+
         eval("${''.xxx}");
     }
 
@@ -50,8 +55,11 @@ public class InvokeFieldTest extends AbstractJetxSourceTest {
         Assert.assertEquals("2147483647", eval("${Integer::MAX_VALUE}"));
     }
 
-    @Test(expected = InterpretException.class)
+    @Test
     public void testStaticNotFound() {
+        thrown.expect(InterpretException.class);
+        thrown.expectMessage(CoreMatchers.containsString(err(Errors.STATIC_FIELD_NOT_FOUND)));
+
         eval("${Integer::XXX}");
     }
 

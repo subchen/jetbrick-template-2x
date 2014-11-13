@@ -2,12 +2,12 @@ package jetbrick.template.exec.buildin;
 
 import java.util.HashMap;
 import java.util.Map;
-import jetbrick.template.exec.AbstractJetxSourceTest;
+import jetbrick.template.exec.AbstractJetxTest;
 import jetbrick.util.DateUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class BuildinMethodTest extends AbstractJetxSourceTest {
+public class BuildinMethodTest extends AbstractJetxTest {
 
     @Test
     public void testJson() {

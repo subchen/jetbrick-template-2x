@@ -1,13 +1,14 @@
 package jetbrick.template.exec.invoker;
 
 import java.util.*;
-import jetbrick.template.exec.AbstractJetxSourceTest;
+import jetbrick.template.exec.AbstractJetxTest;
 import jetbrick.template.runtime.InterpretException;
+import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Test;
 
 @SuppressWarnings("serial")
-public class InvokeIndexGetTest extends AbstractJetxSourceTest {
+public class InvokeIndexGetTest extends AbstractJetxTest {
     private static Map<String, Object> ctx;
 
     static {
@@ -31,8 +32,11 @@ public class InvokeIndexGetTest extends AbstractJetxSourceTest {
         Assert.assertEquals("12", eval("${array[index]}", ctx));
     }
 
-    @Test(expected = InterpretException.class)
+    @Test
     public void testArray_args_error() {
+        thrown.expect(InterpretException.class);
+        thrown.expectMessage(CoreMatchers.containsString("undefined for the argument type(s)"));
+
         eval("${array['a']}", ctx);
     }
 
@@ -42,8 +46,11 @@ public class InvokeIndexGetTest extends AbstractJetxSourceTest {
         Assert.assertEquals("bb", eval("${list[index]}", ctx));
     }
 
-    @Test(expected = InterpretException.class)
+    @Test
     public void testList_args_error() {
+        thrown.expect(InterpretException.class);
+        thrown.expectMessage(CoreMatchers.containsString("undefined for the argument type(s)"));
+
         eval("${list['a']}", ctx);
     }
 
@@ -53,8 +60,11 @@ public class InvokeIndexGetTest extends AbstractJetxSourceTest {
         Assert.assertEquals("12", eval("${map[key]}", ctx));
     }
 
-    @Test(expected = InterpretException.class)
+    @Test
     public void testMap_args_error() {
+        thrown.expect(InterpretException.class);
+        thrown.expectMessage(CoreMatchers.containsString("undefined for the argument type(s)"));
+
         eval("${map[1]}", ctx);
     }
 }

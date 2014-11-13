@@ -2,11 +2,11 @@ package jetbrick.template.exec.invoker;
 
 import java.util.HashMap;
 import java.util.Map;
-import jetbrick.template.exec.AbstractJetxSourceTest;
+import jetbrick.template.exec.AbstractJetxTest;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class InvokeMethodTest extends AbstractJetxSourceTest {
+public class InvokeMethodTest extends AbstractJetxTest {
 
     @Test
     public void test() {

@@ -1,13 +1,15 @@
 package jetbrick.template.exec.directive;
 
 import java.io.IOException;
-import jetbrick.template.exec.AbstractJetxSourceTest;
+import jetbrick.template.Errors;
+import jetbrick.template.exec.AbstractJetxTest;
 import jetbrick.template.runtime.InterpretException;
 import jetbrick.template.runtime.JetTagContext;
+import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class DirectiveTagTest extends AbstractJetxSourceTest {
+public class DirectiveTagTest extends AbstractJetxTest {
 
     @Override
     public void initializeEngine() {
@@ -28,8 +30,11 @@ public class DirectiveTagTest extends AbstractJetxSourceTest {
         Assert.assertEquals("hello:19", eval("#set(i=1)#tag helloWithBody()${i}#set(x=9)#end${x}"));
     }
 
-    @Test(expected = InterpretException.class)
+    @Test
     public void testNotFound() {
+        thrown.expect(InterpretException.class);
+        thrown.expectMessage(CoreMatchers.containsString(err(Errors.TAG_NOT_FOUND)));
+
         Assert.assertEquals("hello", eval("#tag hello(1)#end"));
     }
 

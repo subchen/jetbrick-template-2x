@@ -1,12 +1,13 @@
 package jetbrick.template.exec.buildin;
 
-import jetbrick.template.exec.AbstractJetxFileTest;
+import jetbrick.template.exec.AbstractJetxTest;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class BuildinTagTest extends AbstractJetxFileTest {
+public class BuildinTagTest extends AbstractJetxTest {
 
-    static {
+    @Test
+    public void test() {
         StringBuilder s = new StringBuilder();
         s.append("#tag layout_block('a')");
         s.append("aaa");
@@ -14,8 +15,8 @@ public class BuildinTagTest extends AbstractJetxFileTest {
         s.append("#tag layout_block('b')");
         s.append("bbb");
         s.append("#end");
-        s.append("#include('/s2.jetx')");
-        sourceMap.put("/s1.jetx", s.toString());
+        s.append("#include('/layout.jetx')");
+        engine.set(DEFAULT_MAIN_FILE, s.toString());
 
         s = new StringBuilder();
         s.append("===");
@@ -24,15 +25,19 @@ public class BuildinTagTest extends AbstractJetxFileTest {
         s.append("${b}");
         s.append("~~~");
         s.append("${c}");
-        sourceMap.put("/s2.jetx", s.toString());
+        engine.set("/layout.jetx", s.toString());
 
-        // --------------------------------------------
-        s = new StringBuilder();
+        Assert.assertEquals("===aaa---bbb~~~", eval());
+    }
+
+    @Test
+    public void test_default_block() {
+        StringBuilder s = new StringBuilder();
         s.append("#tag layout_block('a')");
         s.append("aaa");
         s.append("#end");
-        s.append("#include('/s4.jetx', {c:'ccc'})");
-        sourceMap.put("/s3.jetx", s.toString());
+        s.append("#include('/layout.jetx', {c:'ccc'})");
+        engine.set(DEFAULT_MAIN_FILE, s.toString());
 
         s = new StringBuilder();
         s.append("#tag layout_block_default('a')");
@@ -42,17 +47,8 @@ public class BuildinTagTest extends AbstractJetxFileTest {
         s.append("222");
         s.append("#end");
         s.append("${c}");
-        sourceMap.put("/s4.jetx", s.toString());
+        engine.set("/layout.jetx", s.toString());
 
-    }
-
-    @Test
-    public void test() {
-        Assert.assertEquals("===aaa---bbb~~~", eval("/s1.jetx"));
-    }
-
-    @Test
-    public void test_default_block() {
-        Assert.assertEquals("aaa222ccc", eval("/s3.jetx"));
+        Assert.assertEquals("aaa222ccc", eval());
     }
 }

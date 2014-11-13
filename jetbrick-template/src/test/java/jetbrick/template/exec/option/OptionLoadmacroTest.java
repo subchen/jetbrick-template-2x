@@ -1,17 +1,18 @@
 package jetbrick.template.exec.option;
 
-import jetbrick.template.exec.AbstractJetxFileTest;
+import jetbrick.template.exec.AbstractJetxTest;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class OptionLoadmacroTest extends AbstractJetxFileTest {
+public class OptionLoadmacroTest extends AbstractJetxTest {
 
-    static {
+    @Test
+    public void testInclude() {
         StringBuilder s = new StringBuilder();
-        s.append("#options(loadmacro='/s2.jetx')");
+        s.append("#options(loadmacro='/macros.jetx')");
         s.append("#call size('abc')");
         s.append("#call isOdd(123)");
-        sourceMap.put("/s1.jetx", s.toString());
+        engine.set(DEFAULT_MAIN_FILE, s.toString());
 
         s = new StringBuilder();
         s.append("#macro size(String s)");
@@ -20,12 +21,9 @@ public class OptionLoadmacroTest extends AbstractJetxFileTest {
         s.append("#macro isOdd(int n)");
         s.append("${n % 2 == 1}");
         s.append("#end");
-        sourceMap.put("/s2.jetx", s.toString());
-    }
+        engine.set("/macros.jetx", s.toString());
 
-    @Test
-    public void testInclude() {
-        Assert.assertEquals("3true", eval("/s1.jetx"));
+        Assert.assertEquals("3true", eval());
     }
 
 }
