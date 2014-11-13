@@ -103,7 +103,12 @@ final class JetEngineImpl extends JetEngine {
 
     @Override
     public JetTemplate createTemplate(String source) {
-        Resource resource = new SourceResource(source);
+        return createTemplate(SourceResource.DEFAULT_NAME, source);
+    }
+
+    @Override
+    public JetTemplate createTemplate(String name, String source) {
+        Resource resource = new SourceResource(name, source);
         JetTemplate template = new JetTemplateImpl(this, resource, false, config.getTemplateSecurityManager());
         template.reload(); // 开始加载
         return template;

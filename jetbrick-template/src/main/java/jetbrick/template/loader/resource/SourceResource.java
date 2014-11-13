@@ -31,11 +31,17 @@ import jetbrick.io.resource.ResourceNotFoundException;
  * @author Guoqiang Chen
  */
 public final class SourceResource extends AbstractResource {
+    public static final String DEFAULT_NAME = "(source)";
     private final String source;
 
     public SourceResource(String source) {
+        setPath(DEFAULT_NAME);
         this.source = source;
-        setPath("(unknown)");
+    }
+
+    public SourceResource(String name, String source) {
+        setPath(name);
+        this.source = source;
     }
 
     @Override

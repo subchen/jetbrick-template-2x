@@ -123,6 +123,15 @@ public abstract class JetEngine {
     public abstract JetTemplate createTemplate(String source);
 
     /**
+     * 以模板源代码方式，创建一个模板(无缓存).
+     *
+     * @param name   模板名称，用于标识
+     * @param source 模板源代码
+     * @return       模板对象
+     */
+    public abstract JetTemplate createTemplate(String name, String source);
+
+    /**
      * 获取资源.
      *
      * @param name  资源名称
