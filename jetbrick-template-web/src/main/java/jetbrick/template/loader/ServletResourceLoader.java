@@ -45,7 +45,7 @@ public final class ServletResourceLoader extends AbstractResourceLoader {
             return null;
         }
 
-        resource.setPath(name); // use relative name
+        resource.setRelativePathName(name); // set relative path name
         return resource;
     }
 }
