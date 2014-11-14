@@ -21,7 +21,7 @@ public class ConstantTest extends AbstractJetxTest {
         Assert.assertEquals("-99.99", eval("${-99.99F}"));
         Assert.assertEquals("-9.999E-9", eval("${-99.99E-10d}"));
 
-        Assert.assertEquals("0.001", eval("${0.001}"));
+        Assert.assertEquals("0.01", eval("${0.01}"));
         Assert.assertEquals("1.1", eval("${1.10D}"));
     }
 

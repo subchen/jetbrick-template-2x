@@ -231,7 +231,7 @@ public final class AstText extends AstStatement {
                 if (JdkUtils.IS_AT_LEAST_JAVA_7) {
                     encoder = new Jdk7CharArrayEncoder(text);
                 } else {
-                    encoder = new Jdk7CharArrayEncoder(text);
+                    encoder = new Jdk6CharArrayEncoder(text);
                 }
             }
             text = null; // free
