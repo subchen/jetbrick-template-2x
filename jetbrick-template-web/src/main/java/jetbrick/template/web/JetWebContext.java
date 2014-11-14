@@ -59,10 +59,10 @@ public final class JetWebContext extends HashMap<String, Object> {
 
     //-------------------------------------------------------------
     // 在 分布式环境中，一般不用内置的 session 对象，禁掉后可以提升速度
-    private static boolean sessionEnabled = true;
+    protected static boolean SESSION_ENABLED = !"false".equals(System.getProperty("JetWebContext.session.enabled"));
 
     public static void disableSession() {
-        sessionEnabled = false;
+        SESSION_ENABLED = false;
     }
 
     //-------------------------------------------------------------
@@ -82,7 +82,7 @@ public final class JetWebContext extends HashMap<String, Object> {
 
         put(RESPONSE, response);
 
-        if (sessionEnabled) {
+        if (SESSION_ENABLED) {
             put(SESSION, TYPE.SESSION);
             put(SESSION_SCOPE, TYPE.SESSION_SCOPE);
         }
@@ -124,7 +124,7 @@ public final class JetWebContext extends HashMap<String, Object> {
             return value;
         }
 
-        if (sessionEnabled) {
+        if (SESSION_ENABLED) {
             value = request.getSession().getAttribute(name);
             if (value != null) {
                 return value;

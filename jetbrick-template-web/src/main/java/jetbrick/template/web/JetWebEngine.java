@@ -20,7 +20,9 @@
 package jetbrick.template.web;
 
 import java.util.Properties;
+import java.util.Map;
 import javax.servlet.ServletContext;
+import javax.servlet.http.*;
 import jetbrick.config.ConfigLoader;
 import jetbrick.template.*;
 import jetbrick.template.loader.ServletResourceLoader;
@@ -99,15 +101,18 @@ public final class JetWebEngine {
         JetGlobalContext ctx = engine.getGlobalContext();
 
         // 加入默认的全局变量
-        ctx.define(javax.servlet.ServletContext.class, JetWebContext.APPLICATION);
-        ctx.define(javax.servlet.http.HttpSession.class, JetWebContext.SESSION);
-        ctx.define(javax.servlet.http.HttpServletRequest.class, JetWebContext.REQUEST);
-        ctx.define(javax.servlet.http.HttpServletResponse.class, JetWebContext.RESPONSE);
-        ctx.define(java.util.Map.class, JetWebContext.APPLICATION_SCOPE);
-        ctx.define(java.util.Map.class, JetWebContext.SESSION_SCOPE);
-        ctx.define(java.util.Map.class, JetWebContext.REQUEST_SCOPE);
-        ctx.define(java.util.Map.class, JetWebContext.PARAM);
-        ctx.define(java.util.Map.class, JetWebContext.PARAM_VALUES);
+        ctx.define(ServletContext.class, JetWebContext.APPLICATION);
+        ctx.define(HttpServletRequest.class, JetWebContext.REQUEST);
+        ctx.define(HttpServletResponse.class, JetWebContext.RESPONSE);
+        ctx.define(Map.class, JetWebContext.APPLICATION_SCOPE);
+        ctx.define(Map.class, JetWebContext.REQUEST_SCOPE);
+        ctx.define(Map.class, JetWebContext.PARAM);
+        ctx.define(Map.class, JetWebContext.PARAM_VALUES);
+
+        if (JetWebContext.SESSION_ENABLED) {
+            ctx.define(HttpSession.class, JetWebContext.SESSION);
+            ctx.define(Map.class, JetWebContext.SESSION_SCOPE);
+        }
 
         ctx.set(JetWebContext.APPLICATION, sc);
         ctx.set(JetWebContext.APPLICATION_SCOPE, new ServletContextAttributeMap(sc));
