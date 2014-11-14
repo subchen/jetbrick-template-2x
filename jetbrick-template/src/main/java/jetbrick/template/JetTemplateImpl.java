@@ -72,7 +72,7 @@ final class JetTemplateImpl implements JetTemplate {
 
         long ts = resource.lastModified();
         if (ts <= 0) {
-            throw new ResourceNotFoundException(resource.getPath());
+            throw new ResourceNotFoundException(resource.getRelativePathName());
         }
 
         if (lastModified != ts) {
@@ -93,7 +93,7 @@ final class JetTemplateImpl implements JetTemplate {
     // 重建 AST & Config
     private void rebuildAstNodeAndConfig() {
         // create source
-        String filename = resource.getPath();
+        String filename = resource.getRelativePathName();
         char[] contents = resource.toCharArray(config.getInputEncoding());
         source = new Source(filename, contents);
 
@@ -175,7 +175,7 @@ final class JetTemplateImpl implements JetTemplate {
 
     @Override
     public String getName() {
-        return resource.getPath();
+        return resource.getRelativePathName();
     }
 
     @Override

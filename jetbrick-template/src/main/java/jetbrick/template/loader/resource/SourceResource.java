@@ -35,12 +35,12 @@ public final class SourceResource extends AbstractResource {
     private final String source;
 
     public SourceResource(String source) {
-        setPath(DEFAULT_NAME);
+        this.relativePathName = DEFAULT_NAME;
         this.source = source;
     }
 
     public SourceResource(String name, String source) {
-        setPath(name);
+        this.relativePathName = name;
         this.source = source;
     }
 

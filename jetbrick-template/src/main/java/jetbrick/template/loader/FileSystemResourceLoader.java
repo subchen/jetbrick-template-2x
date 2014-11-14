@@ -41,7 +41,7 @@ public final class FileSystemResourceLoader extends AbstractResourceLoader {
         }
 
         FileSystemResource resource = new FileSystemResource(file);
-        resource.setPath(name); // use relative name
+        resource.setRelativePathName(name); // use relative name
         return resource;
     }
 

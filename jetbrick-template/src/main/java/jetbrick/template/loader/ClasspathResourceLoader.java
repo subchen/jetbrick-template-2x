@@ -42,7 +42,7 @@ public final class ClasspathResourceLoader extends AbstractResourceLoader {
             return null;
         }
 
-        resource.setPath(name); // use relative name
+        resource.setRelativePathName(name); // use relative name
         return resource;
     }
 
