@@ -4,12 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import jetbrick.template.JetSecurityManagerImpl;
 import jetbrick.template.exec.AbstractJetxTest;
-import jetbrick.template.loader.AbstractResourceLoader;
 import jetbrick.template.runtime.InterpretException;
 import org.hamcrest.CoreMatchers;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 public class SecurityManagerTest extends AbstractJetxTest {
 

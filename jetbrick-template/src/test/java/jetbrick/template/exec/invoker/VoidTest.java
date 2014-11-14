@@ -3,8 +3,8 @@ package jetbrick.template.exec.invoker;
 import jetbrick.template.Errors;
 import jetbrick.template.exec.AbstractJetxTest;
 import jetbrick.template.runtime.InterpretException;
-import org.junit.*;
-import org.junit.rules.ExpectedException;
+import org.junit.Assert;
+import org.junit.Test;
 
 public class VoidTest extends AbstractJetxTest {
 
