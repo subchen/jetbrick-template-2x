@@ -55,9 +55,13 @@ public final class AstText extends AstStatement {
                     if (n < len && text.charAt(n) == '\n') {
                         i++; // skip next \n
                     }
-                    line++;
+                    if (i + 1 < len) { // 后面还有字符才能算 line++
+                        line++;
+                    }
                 } else if (c == '\n') {
-                    line++;
+                    if (i + 1 < len) { // 后面还有字符才能算 line++
+                        line++;
+                    }
                 }
             }
         }

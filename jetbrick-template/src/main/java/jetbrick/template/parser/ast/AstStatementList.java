@@ -34,17 +34,18 @@ public final class AstStatementList extends AstStatement {
             if (statements.size() > 0 && block != Tokens.AST_BLOCK_SET) {
                 // 注意： 这里直接修改的是 statements 本身
                 ListIterator<AstStatement> it = new ListIterator<AstStatement>(statements);
+                splitStatementList(it);
                 combinedContinuousTexts(it); // 合并由 escape 等产生的连续文本
                 trimDirectiveWhitespacesAndComments(it, block, ctx);
-                removeAndSplitDirective(it);
+                removeNoopDirective(it);
                 combinedContinuousTexts(it); // 合并由于 AstDirectiveNoop 等产生的连续文本
             }
             this.statements = statements.toArray(EMPTY_ARRAY);
         }
     }
 
-    // 优化 - 分解 AstStatementList 子节点 (主要是 #set 产生的), 移除 AstDirectiveNoop
-    private void removeAndSplitDirective(ListIterator<AstStatement> it) {
+    // 优化 - 分解 AstStatementList 子节点 (主要是 #set 产生的)
+    private void splitStatementList(ListIterator<AstStatement> it) {
         it.reset();
         while (it.has()) {
             AstStatement statment = it.peek();
@@ -52,7 +53,15 @@ public final class AstStatementList extends AstStatement {
                 it.remove();
                 it.addAll(((AstStatementList) statment).statements);
             }
-            if (statment instanceof AstDirectiveNoop) {
+            it.move();
+        }
+    }
+
+    // 优化 - 移除 AstDirectiveNoop 子节点 (主要是 #define, #options, #macro 产生的),
+    private void removeNoopDirective(ListIterator<AstStatement> it) {
+        it.reset();
+        while (it.has()) {
+            if (it.peek() instanceof AstDirectiveNoop) {
                 it.remove();
             } else {
                 it.move();
@@ -133,16 +142,21 @@ public final class AstStatementList extends AstStatement {
             if (it.hasPrevious()) {
                 trimLeft = (it.peek(-1) instanceof AstDirective);
                 if (trimLeft) {
-                    // inline directive, 对于一个内联的 #if, #for, 等指令，后面有要求保留一个 NewLine
-                    // @see https://github.com/subchen/jetbrick-template/issues/25
-                    int offset = -1;
-                    while (it.has(offset)) {
-                        AstStatement prev = it.peek(offset);
-                        if (prev instanceof AstText) {
-                            keepLeftNewLine = ((AstText) prev).getLineStop() == text.getLineStart();
-                            break;
+                    // 如果是整个模板的最后一个文本节点，保留一个 NewLine
+                    if (!it.hasNext() && block == Tokens.AST_BLOCK_TEMPLATE) {
+                        keepLeftNewLine = true;
+                    } else {
+                        // inline directive, 对于一个内联的 #if, #for, 等指令，后面有要求保留一个 NewLine
+                        // @see https://github.com/subchen/jetbrick-template/issues/25
+                        int offset = -1;
+                        while (it.has(offset)) {
+                            AstStatement prev = it.peek(offset);
+                            if (prev instanceof AstText) {
+                                keepLeftNewLine = ((AstText) prev).getLineStop() == text.getLineStart();
+                                break;
+                            }
+                            offset--;
                         }
-                        offset--;
                     }
                 }
             } else {
