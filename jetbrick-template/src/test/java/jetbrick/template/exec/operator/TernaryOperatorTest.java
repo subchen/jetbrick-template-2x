@@ -17,7 +17,7 @@ public class TernaryOperatorTest extends AbstractJetxTest {
     @Test
     public void testSimplify() {
         Assert.assertEquals("1", eval("${null?:1}"));
-        Assert.assertEquals("false", eval("${false?:2}"));
+        Assert.assertEquals("A", eval("${'A'?:2}"));
         Assert.assertEquals("9", eval("${a?:b?:9}"));
     }
 }

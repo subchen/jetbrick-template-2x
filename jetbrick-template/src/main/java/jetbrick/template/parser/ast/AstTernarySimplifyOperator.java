@@ -23,21 +23,21 @@ import jetbrick.template.runtime.InterpretContext;
 
 public final class AstTernarySimplifyOperator extends AstExpression {
     private final AstExpression objectExpression;
-    private final AstExpression defaultExpression;
+    private final AstExpression otherExpression;
 
-    public AstTernarySimplifyOperator(AstExpression objectExpression, AstExpression defaultExpression, Position position) {
+    public AstTernarySimplifyOperator(AstExpression objectExpression, AstExpression otherExpression, Position position) {
         super(position);
         this.objectExpression = objectExpression;
-        this.defaultExpression = defaultExpression;
+        this.otherExpression = otherExpression;
     }
 
     @Override
     public Object execute(InterpretContext ctx) {
-        Object value = objectExpression.execute(ctx);
-        if (value != null) {
-            return value;
+        Object object = objectExpression.execute(ctx);
+        if (ALU.isTrue(object)) {
+            return object;
         } else {
-            return defaultExpression.execute(ctx);
+            return otherExpression.execute(ctx);
         }
     }
 
