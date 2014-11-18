@@ -555,6 +555,8 @@ public final class AstCodeVisitor extends AbstractParseTreeVisitor<AstNode> impl
         AstExpression lhs = accept(ctx.getChild(0)); // first
         AstExpression rhs = accept(ctx.getChild(ctx.getChildCount() - 1)); // last
         switch (token.getType()) {
+        case JetTemplateLexer.NULL_AS_DEFAULT:
+            return new AstOperatorNullAsDefault(lhs, rhs, position);
         case JetTemplateLexer.PLUS:
             return new AstOperatorBinary(Tokens.PLUS, lhs, rhs, position);
         case JetTemplateLexer.MINUS:

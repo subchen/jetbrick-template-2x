@@ -68,4 +68,11 @@ public class BinaryOperatorTest extends AbstractJetxTest {
         Assert.assertEquals("true", eval("${1 instanceof Number}"));
         Assert.assertEquals("false", eval("${'a' instanceof Number}"));
     }
+
+    @Test
+    public void testNullAsDefault() {
+        Assert.assertEquals("0", eval("${a ?! 0}"));
+        Assert.assertEquals("0", eval("${a.b.c ?! 0}"));
+        Assert.assertEquals("0", eval("${a[0] ?! 0}"));
+    }
 }

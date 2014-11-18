@@ -112,6 +112,7 @@ COLON                   : ':'                              ;
 COLON2                  : '::'                             ;
 DOT                     : '.'                              ;
 ASSIGN                  : '='                              ;
+NULL_AS_DEFAULT         : '?!'                             ;
 
 // Equals and Compares
 IDENTICALLY_EQUAL       : '==='                            ;
