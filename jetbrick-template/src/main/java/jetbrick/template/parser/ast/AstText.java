@@ -29,42 +29,18 @@ import jetbrick.util.JdkUtils;
 public final class AstText extends AstStatement {
     private String text;
     private volatile TextEncoder encoder;
-    private int lineStart;
+    private int line;
 
-    public AstText(String text, int lineStart) {
+    public AstText(String text, int line) {
         this.text = text;
-        this.lineStart = lineStart;
+        this.line = line;
     }
 
     public String getText() {
         return text;
     }
 
-    public int getLineStart() {
-        return lineStart;
-    }
-
-    public int getLineStop() {
-        int line = lineStart;
-        if (text != null) {
-            int len = text.length();
-            for (int i = 0; i < len; i++) {
-                char c = text.charAt(i);
-                if (c == '\r') {
-                    int n = i + 1;
-                    if (n < len && text.charAt(n) == '\n') {
-                        i++; // skip next \n
-                    }
-                    if (i + 1 < len) { // 后面还有字符才能算 line++
-                        line++;
-                    }
-                } else if (c == '\n') {
-                    if (i + 1 < len) { // 后面还有字符才能算 line++
-                        line++;
-                    }
-                }
-            }
-        }
+    public int getLine() {
         return line;
     }
 
@@ -137,7 +113,7 @@ public final class AstText extends AstStatement {
         }
 
         if (trimedNewLine) {
-            lineStart++;
+            line++;
         }
     }
 
