@@ -40,7 +40,7 @@ public final class AstOperatorNullAsDefault extends AstExpression {
             value = objectExpression.execute(ctx);
         } catch (InterpretException e) {
             // 如果是 NullPointerException 导致的错误，则同样返回 defaultExpression
-            if (!Errors.EXPRESSION_OBJECT_IS_NULL.equals(e.getMessage())) {
+            if (Errors.EXPRESSION_OBJECT_IS_NULL.equals(e.getMessage())) {
                 value = null;
             } else {
                 throw e;
