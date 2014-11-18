@@ -28,14 +28,13 @@ public final class AstDirectiveMacro extends AstDirective {
     private final List<String> argumentNames;
     private final Map<String, Class<?>> symbols;
     private final AstStatementList statements;
-    private final Position position;
 
     public AstDirectiveMacro(String name, List<String> argumentNames, Map<String, Class<?>> symbols, AstStatementList statements, Position position) {
+        super(position);
         this.name = name;
         this.argumentNames = argumentNames;
         this.symbols = symbols;
         this.statements = statements;
-        this.position = position;
     }
 
     @Override
@@ -59,6 +58,7 @@ public final class AstDirectiveMacro extends AstDirective {
         return statements;
     }
 
+    @Override
     public Position getPosition() {
         return position;
     }

@@ -29,7 +29,8 @@ public final class AstDirectiveFor extends AstDirective {
     private final AstStatementList statements;
     private final AstStatementList elseStatements;
 
-    public AstDirectiveFor(String identifier, AstExpression expression, AstStatementList statements, AstStatementList elseStatements) {
+    public AstDirectiveFor(String identifier, AstExpression expression, AstStatementList statements, AstStatementList elseStatements, Position position) {
+        super(position);
         this.identifier = identifier;
         this.expression = expression;
         this.statements = statements;

@@ -20,5 +20,13 @@
 package jetbrick.template.parser.ast;
 
 public abstract class AstDirective extends AstStatement {
+    protected final Position position;
 
+    public AstDirective(Position position) {
+        this.position = position;
+    }
+
+    public Position getPosition() {
+        return position;
+    }
 }

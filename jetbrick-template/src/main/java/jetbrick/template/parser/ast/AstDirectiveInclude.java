@@ -32,7 +32,8 @@ public final class AstDirectiveInclude extends AstDirective {
     private final AstExpression parametersExpression;
     private final String returnName;
 
-    public AstDirectiveInclude(AstExpression fileExpression, AstExpression parametersExpression, String returnName) {
+    public AstDirectiveInclude(AstExpression fileExpression, AstExpression parametersExpression, String returnName, Position position) {
+        super(position);
         this.fileExpression = fileExpression;
         this.parametersExpression = parametersExpression;
         this.returnName = returnName;

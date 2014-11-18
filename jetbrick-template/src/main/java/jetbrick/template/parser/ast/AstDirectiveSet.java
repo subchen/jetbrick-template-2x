@@ -26,7 +26,8 @@ public final class AstDirectiveSet extends AstDirective {
     private final String identifier;
     private final AstExpression expression;
 
-    public AstDirectiveSet(String identifier, AstExpression expression) {
+    public AstDirectiveSet(String identifier, AstExpression expression, Position position) {
+        super(position);
         this.identifier = identifier;
         this.expression = expression;
     }

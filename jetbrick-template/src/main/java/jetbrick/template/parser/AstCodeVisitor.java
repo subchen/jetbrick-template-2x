@@ -261,7 +261,7 @@ public final class AstCodeVisitor extends AbstractParseTreeVisitor<AstNode> impl
             }
         }
 
-        return new AstDirectiveSet(identifier, expression);
+        return new AstDirectiveSet(identifier, expression, pos(ctx));
     }
 
     @Override
@@ -273,7 +273,7 @@ public final class AstCodeVisitor extends AbstractParseTreeVisitor<AstNode> impl
         if (elseStatement == null) {
             elseStatement = accept(ctx.directive_elseif());
         }
-        return new AstDirectiveIf(conditionExpression, thenStatement, elseStatement);
+        return new AstDirectiveIf(conditionExpression, thenStatement, elseStatement, pos(ctx));
     }
 
     @Override
@@ -285,7 +285,7 @@ public final class AstCodeVisitor extends AbstractParseTreeVisitor<AstNode> impl
         if (elseStatement == null) {
             elseStatement = accept(ctx.directive_elseif());
         }
-        return new AstDirectiveIf(conditionExpression, thenStatement, elseStatement);
+        return new AstDirectiveIf(conditionExpression, thenStatement, elseStatement, pos(ctx));
     }
 
     @Override
@@ -315,33 +315,33 @@ public final class AstCodeVisitor extends AbstractParseTreeVisitor<AstNode> impl
         AstStatementList statement = accept(ctx.block());
         AstStatementList elseStatement = accept(ctx.directive_else());
 
-        return new AstDirectiveFor(identifier, expression, statement, elseStatement);
+        return new AstDirectiveFor(identifier, expression, statement, elseStatement, pos(ctx));
     }
 
     @Override
     public AstDirectiveBreak visitDirective_break(Directive_breakContext ctx) {
         validateInsideOfDirectiveFor(ctx, "#break");
         AstExpression expression = accept(ctx.expression());
-        return new AstDirectiveBreak(expression);
+        return new AstDirectiveBreak(expression, pos(ctx));
     }
 
     @Override
     public AstDirectiveContinue visitDirective_continue(Directive_continueContext ctx) {
         validateInsideOfDirectiveFor(ctx, "#continue");
         AstExpression expression = accept(ctx.expression());
-        return new AstDirectiveContinue(expression);
+        return new AstDirectiveContinue(expression, pos(ctx));
     }
 
     @Override
     public AstNode visitDirective_stop(Directive_stopContext ctx) {
         AstExpression expression = accept(ctx.expression());
-        return new AstDirectiveStop(expression);
+        return new AstDirectiveStop(expression, pos(ctx));
     }
 
     @Override
     public AstNode visitDirective_return(Directive_returnContext ctx) {
         AstExpression expression = accept(ctx.getChild(1));
-        return new AstDirectiveReturn(expression);
+        return new AstDirectiveReturn(expression, pos(ctx));
     }
 
     @Override
@@ -387,7 +387,7 @@ public final class AstCodeVisitor extends AbstractParseTreeVisitor<AstNode> impl
             throw new SyntaxException(Errors.ARGUMENTS_NOT_MATCH).set(pos(expressions.get(3)));
         }
 
-        return new AstDirectiveInclude(fileExpression, parametersExpression, returnName);
+        return new AstDirectiveInclude(fileExpression, parametersExpression, returnName, pos(ctx));
     }
 
     @Override

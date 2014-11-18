@@ -24,7 +24,8 @@ import jetbrick.template.runtime.InterpretContext;
 public final class AstDirectiveBreak extends AstDirective {
     private final AstExpression conditionExpression;
 
-    public AstDirectiveBreak(AstExpression conditionExpression) {
+    public AstDirectiveBreak(AstExpression conditionExpression, Position position) {
+        super(position);
         this.conditionExpression = conditionExpression;
     }
 

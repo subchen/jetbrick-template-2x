@@ -24,7 +24,8 @@ import jetbrick.template.runtime.InterpretContext;
 public final class AstDirectiveContinue extends AstDirective {
     private final AstExpression conditionExpression;
 
-    public AstDirectiveContinue(AstExpression conditionExpression) {
+    public AstDirectiveContinue(AstExpression conditionExpression, Position position) {
+        super(position);
         this.conditionExpression = conditionExpression;
     }
 

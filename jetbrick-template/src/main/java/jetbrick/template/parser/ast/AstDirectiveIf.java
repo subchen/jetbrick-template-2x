@@ -26,7 +26,8 @@ public final class AstDirectiveIf extends AstDirective {
     private final AstStatementList thenStatement;
     private final AstStatement elseStatement;
 
-    public AstDirectiveIf(AstExpression conditionExpression, AstStatementList thenStatement, AstStatement elseStatement) {
+    public AstDirectiveIf(AstExpression conditionExpression, AstStatementList thenStatement, AstStatement elseStatement, Position position) {
+        super(position);
         this.conditionExpression = conditionExpression;
         this.thenStatement = thenStatement;
         this.elseStatement = elseStatement;

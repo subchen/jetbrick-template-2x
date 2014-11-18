@@ -25,7 +25,8 @@ import jetbrick.template.runtime.InterpretException;
 public final class AstDirectiveStop extends AstDirective {
     private final AstExpression conditionExpression;
 
-    public AstDirectiveStop(AstExpression conditionExpression) {
+    public AstDirectiveStop(AstExpression conditionExpression, Position position) {
+        super(position);
         this.conditionExpression = conditionExpression;
     }
 

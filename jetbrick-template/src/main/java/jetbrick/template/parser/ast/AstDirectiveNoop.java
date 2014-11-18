@@ -28,6 +28,7 @@ public final class AstDirectiveNoop extends AstDirective {
     public static final AstDirectiveNoop INSTANCE = new AstDirectiveNoop();
 
     private AstDirectiveNoop() {
+        super(new Position(0, 0));
     }
 
     @Override

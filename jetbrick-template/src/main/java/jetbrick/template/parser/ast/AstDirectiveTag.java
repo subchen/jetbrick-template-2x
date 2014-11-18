@@ -29,14 +29,13 @@ import jetbrick.util.ArrayUtils;
 public final class AstDirectiveTag extends AstDirective {
     private final String name;
     private final AstExpressionList argumentList;
-    private final Position position;
     private final JetTagContext tagContext;
     private TagInvoker last;
 
     public AstDirectiveTag(String name, AstExpressionList argumentList, AstStatementList statements, Position position) {
+        super(position);
         this.name = name;
         this.argumentList = argumentList;
-        this.position = position;
         this.tagContext = new JetTagContext(statements);
     }
 

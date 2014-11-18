@@ -26,7 +26,8 @@ import jetbrick.template.runtime.InterpretException;
 public final class AstDirectiveReturn extends AstDirective {
     private final AstExpression expression;
 
-    public AstDirectiveReturn(AstExpression expression) {
+    public AstDirectiveReturn(AstExpression expression, Position position) {
+        super(position);
         this.expression = expression;
     }
 

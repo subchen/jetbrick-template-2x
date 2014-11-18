@@ -29,13 +29,12 @@ import jetbrick.util.ArrayUtils;
 public final class AstDirectiveCall extends AstDirective {
     private final String name;
     private final AstExpressionList argumentList;
-    private final Position position;
     private JetTemplateMacro last;
 
     public AstDirectiveCall(String name, AstExpressionList argumentList, Position position) {
+        super(position);
         this.name = name;
         this.argumentList = argumentList;
-        this.position = position;
     }
 
     @Override
