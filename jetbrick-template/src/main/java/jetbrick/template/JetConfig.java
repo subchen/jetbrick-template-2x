@@ -24,7 +24,6 @@ import java.util.List;
 import java.util.Properties;
 import jetbrick.config.Config;
 import jetbrick.config.ConfigLoader;
-import jetbrick.template.JetSecurityManager;
 import jetbrick.template.loader.ClasspathResourceLoader;
 import jetbrick.template.loader.ResourceLoader;
 import org.slf4j.Logger;
