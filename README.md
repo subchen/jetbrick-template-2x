@@ -137,6 +137,13 @@ Release 版本已发布到 Maven 中央库： http://central.maven.org/maven2/co
 </dependency>
 ```
 
+
+下载 Downloads
+=========================
+
+http://subchen.github.io/jetbrick-template/2x/download.html
+
+
 开源许可 License
 ===================
 
