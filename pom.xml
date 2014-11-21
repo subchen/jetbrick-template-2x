@@ -16,7 +16,7 @@
 
     <name>${project.artifactId}</name>
     <description>jetbrick-template-2.x</description>
-    <url>http://subchen.github.io/jetbrick-template-2x</url>
+    <url>http://subchen.github.io/jetbrick-template/</url>
 
     <modules>
         <module>jetbrick-template</module>
