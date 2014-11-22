@@ -142,23 +142,16 @@ public final class AstStatementList extends AstStatement {
             if (it.hasPrevious()) {
                 trimLeft = isAstDirective(it.peek(-1));
                 if (trimLeft) {
-                    // 如果是整个模板的最后一个文本节点，保留一个 NewLine
-                    if (!it.hasNext() && block == Tokens.AST_BLOCK_TEMPLATE) {
-                        keepLeftNewLine = true;
-                    } else if (text.getLine() == 1) {
-                        keepLeftNewLine = true;
-                    } else {
-                        // inline directive, 对于一个内联的 #if, #for 等指令，后面有要求保留一个 NewLine
-                        // @see https://github.com/subchen/jetbrick-template-1x/issues/25
-                        AstStatement prev = it.peek(-1);
-                        if (prev != null) {
-                            if (prev instanceof AstDirective) {
-                                if (prev instanceof AstDirectiveTag) {
-                                    // #tag 调用后面要求保留一个 NewLine
-                                    keepLeftNewLine = true;
-                                } else {
-                                    keepLeftNewLine = ((AstDirective) prev).getPosition().getLine() == text.getLine();
-                                }
+                    // inline directive, 对于一个内联的 #if, #for 等指令，后面有要求保留一个 NewLine
+                    // @see https://github.com/subchen/jetbrick-template-1x/issues/25
+                    AstStatement prev = it.peek(-1);
+                    if (prev != null) {
+                        if (prev instanceof AstDirective) {
+                            if (prev instanceof AstDirectiveTag) {
+                                // #tag 调用后面要求保留一个 NewLine
+                                keepLeftNewLine = true;
+                            } else {
+                                keepLeftNewLine = ((AstDirective) prev).getPosition().getLine() == text.getLine();
                             }
                         }
                     }

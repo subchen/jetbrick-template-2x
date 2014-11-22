@@ -60,10 +60,9 @@ public class TrimDirectiveWhitespacesTest extends AbstractJetxTest {
     @Test
     public void testInline4() {
         StringBuilder sb = new StringBuilder();
-        sb.append("\n");
         sb.append("#for(int i: range(0,3))${i}#end\n");
         sb.append("#for(int i: range(0,3))${i}#end\n");
-        Assert.assertEquals("\n0123\n0123\n", eval(sb.toString()));
+        Assert.assertEquals("0123\n0123\n", eval(sb.toString()));
     }
 
     @Test
