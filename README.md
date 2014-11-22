@@ -36,14 +36,14 @@ http://subchen.github.io/jetbrick-template/
 `jetbrick-template` 指令集和老牌的模板引擎 `Velocity` 非常相似，易学易用。
 
 ```html
-#define(List userlist)
+#define(List users)
 <table>
   <tr>
     <td>序号</td>
     <td>姓名</td>
     <td>邮箱</td>
   </tr>
-  #for (UserInfo user : userlist)
+  #for (User user : users)
   <tr>
     <td>${for.index}</td>
     <td>${user.name}</td>
@@ -65,7 +65,7 @@ public class JetxTest {
         List<User> users = Arrays.asList(
             new User("张三", "zhangsan@qq.com"),
             new User("李四", "lisi@qq.com"),
-            new User("王五", "wangwu@qq.com"),
+            new User("王五", "wangwu@qq.com")
         );
 
         // 1. 创建一个默认的 JetEngine
