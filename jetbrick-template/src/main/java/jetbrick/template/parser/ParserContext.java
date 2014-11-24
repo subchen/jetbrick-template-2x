@@ -34,11 +34,15 @@ public final class ParserContext {
     private boolean strict;
     private boolean safecall;
     private boolean trimLeadingWhitespaces;
+
     // config
     private boolean trimDirectiveWhitespaces;
     private boolean trimDirectiveComments;
     private String trimDirectiveCommentsPrefix;
     private String trimDirectiveCommentsSuffix;
+
+    // nullSafe
+    private boolean nullSafe;
 
     // class resolver (#import)
     private final GlobalResolver globalResolver;
@@ -59,6 +63,7 @@ public final class ParserContext {
         this.globalContext = globalContext;
         this.localSymbols = new HashMap<String, Class<?>>();
         this.currentSymbols = this.localSymbols;
+        this.nullSafe = false;
     }
 
     // ---- options (#options) --------------------------------------------
@@ -119,6 +124,16 @@ public final class ParserContext {
 
     public void setTrimDirectiveCommentsSuffix(String trimDirectiveCommentsSuffix) {
         this.trimDirectiveCommentsSuffix = trimDirectiveCommentsSuffix;
+    }
+
+    // ---- nullSafe --------------------------------------------
+
+    public boolean isNullSafe() {
+        return nullSafe;
+    }
+
+    public void setNullSafe(boolean nullSafe) {
+        this.nullSafe = nullSafe;
     }
 
     // ---- class resolver (#import) --------------------------------------------

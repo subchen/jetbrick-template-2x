@@ -164,7 +164,7 @@ expression  :   '(' expression ')'                                           #ex
             |   '!'          expression                                      #expression_unary_operator_prefix
             |   'new' type '(' expression_list? ')'                          #expression_new_object
             |   'new' type ('[' expression ']')+                             #expression_new_array
-            |   expression '?!' expression                                   #expression_binary_operator
+            |   expression '?!' expression                                   #expression_nullsafe_operator
             |   expression ('*'|'/'|'%')  expression                         #expression_binary_operator
             |   expression ('+'|'-')      expression                         #expression_binary_operator
             |   expression ('<<'|'>>'|'>>>')   expression                    #expression_binary_operator

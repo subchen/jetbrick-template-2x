@@ -59,6 +59,7 @@ import jetbrick.template.runtime.parser.grammer.JetTemplateParser.Expression_ins
 import jetbrick.template.runtime.parser.grammer.JetTemplateParser.Expression_listContext;
 import jetbrick.template.runtime.parser.grammer.JetTemplateParser.Expression_methodContext;
 import jetbrick.template.runtime.parser.grammer.JetTemplateParser.Expression_method_staticContext;
+import jetbrick.template.runtime.parser.grammer.JetTemplateParser.Expression_nullsafe_operatorContext;
 import jetbrick.template.runtime.parser.grammer.JetTemplateParser.Expression_new_arrayContext;
 import jetbrick.template.runtime.parser.grammer.JetTemplateParser.Expression_new_objectContext;
 import jetbrick.template.runtime.parser.grammer.JetTemplateParser.Expression_primaryContext;
@@ -555,8 +556,6 @@ public final class AstCodeVisitor extends AbstractParseTreeVisitor<AstNode> impl
         AstExpression lhs = accept(ctx.getChild(0)); // first
         AstExpression rhs = accept(ctx.getChild(ctx.getChildCount() - 1)); // last
         switch (token.getType()) {
-        case JetTemplateLexer.NULL_AS_DEFAULT:
-            return new AstOperatorNullAsDefault(lhs, rhs, position);
         case JetTemplateLexer.PLUS:
             return new AstOperatorBinary(Tokens.PLUS, lhs, rhs, position);
         case JetTemplateLexer.MINUS:
@@ -601,6 +600,16 @@ public final class AstCodeVisitor extends AbstractParseTreeVisitor<AstNode> impl
             return new AstOperatorEquals(Tokens.OR, lhs, rhs, position);
         }
         throw new SyntaxException(Errors.UNREACHABLE_CODE).set(pos(token));
+    }
+
+    @Override
+    public AstNode visitExpression_nullsafe_operator(Expression_nullsafe_operatorContext ctx) {
+        parseCtx.setNullSafe(true);
+        AstExpression objectExpression = accept(ctx.getChild(0));
+        parseCtx.setNullSafe(false);
+
+        AstExpression defaultExpression = accept(ctx.getChild(2));
+        return new AstOperatorNullAsDefault(objectExpression, defaultExpression, pos(ctx, 1));
     }
 
     @Override
@@ -650,7 +659,7 @@ public final class AstCodeVisitor extends AbstractParseTreeVisitor<AstNode> impl
     public AstNode visitExpression_field(Expression_fieldContext ctx) {
         AstExpression objectExpression = accept(ctx.getChild(0));
         String name = ctx.getChild(2).getText();
-        return new AstInvokeField(objectExpression, name, pos(ctx, 1));
+        return new AstInvokeField(objectExpression, name, parseCtx.isNullSafe(), pos(ctx, 1));
     }
 
     @Override
@@ -667,7 +676,7 @@ public final class AstCodeVisitor extends AbstractParseTreeVisitor<AstNode> impl
         AstExpression objectExpression = accept(ctx.getChild(0));
         String name = ctx.getChild(2).getText();
         AstExpressionList argumentList = accept(ctx.expression_list());
-        return new AstInvokeMethod(objectExpression, name, argumentList, pos(ctx, 1));
+        return new AstInvokeMethod(objectExpression, name, argumentList, parseCtx.isNullSafe(), pos(ctx, 1));
     }
 
     @Override
@@ -684,7 +693,7 @@ public final class AstCodeVisitor extends AbstractParseTreeVisitor<AstNode> impl
     public AstNode visitExpression_index_get(Expression_index_getContext ctx) {
         AstExpression objectExpression = accept(ctx.getChild(0));
         AstExpression indexExpression = accept(ctx.getChild(2));
-        return new AstInvokeIndexGet(objectExpression, indexExpression, pos(ctx, 1));
+        return new AstInvokeIndexGet(objectExpression, indexExpression, parseCtx.isNullSafe(), pos(ctx, 1));
     }
 
     @Override

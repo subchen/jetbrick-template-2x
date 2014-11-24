@@ -29,13 +29,15 @@ import jetbrick.template.runtime.InterpretException;
 public final class AstInvokeField extends AstExpression {
     private final AstExpression objectExpression;
     private final String name;
+    private final boolean nullSafe;
     private Getter last;
     private boolean unsafe;
 
-    public AstInvokeField(AstExpression objectExpression, String name, Position position) {
+    public AstInvokeField(AstExpression objectExpression, String name, boolean nullSafe, Position position) {
         super(position);
         this.objectExpression = objectExpression;
         this.name = name;
+        this.nullSafe = nullSafe;
         this.last = null;
         this.unsafe = true;
     }
@@ -44,7 +46,7 @@ public final class AstInvokeField extends AstExpression {
     public Object execute(InterpretContext ctx) throws InterpretException {
         Object object = objectExpression.execute(ctx);
         if (object == null) {
-            if (ctx.getTemplate().getOption().isSafecall()) {
+            if (nullSafe || ctx.getTemplate().getOption().isSafecall()) {
                 return null;
             }
             throw new InterpretException(Errors.EXPRESSION_OBJECT_IS_NULL).set(position);

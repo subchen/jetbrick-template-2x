@@ -32,14 +32,16 @@ public final class AstInvokeMethod extends AstExpression {
     private final AstExpression objectExpression;
     private final String name;
     private final AstExpressionList argumentList;
+    private final boolean nullSafe;
     private MethodInvoker last;
     private boolean unsafe;
 
-    public AstInvokeMethod(AstExpression objectExpression, String name, AstExpressionList argumentList, Position position) {
+    public AstInvokeMethod(AstExpression objectExpression, String name, AstExpressionList argumentList, boolean nullSafe, Position position) {
         super(position);
         this.objectExpression = objectExpression;
         this.name = name;
         this.argumentList = argumentList;
+        this.nullSafe = nullSafe;
         this.last = null;
         this.unsafe = true;
     }
@@ -48,7 +50,7 @@ public final class AstInvokeMethod extends AstExpression {
     public Object execute(InterpretContext ctx) throws InterpretException {
         Object object = objectExpression.execute(ctx);
         if (object == null) {
-            if (ctx.getTemplate().getOption().isSafecall()) {
+            if (nullSafe || ctx.getTemplate().getOption().isSafecall()) {
                 return null;
             }
             throw new InterpretException(Errors.EXPRESSION_OBJECT_IS_NULL).set(position);

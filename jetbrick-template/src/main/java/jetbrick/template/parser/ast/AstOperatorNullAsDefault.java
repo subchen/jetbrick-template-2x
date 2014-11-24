@@ -21,7 +21,6 @@ package jetbrick.template.parser.ast;
 
 import jetbrick.template.Errors;
 import jetbrick.template.runtime.InterpretContext;
-import jetbrick.template.runtime.InterpretException;
 
 public final class AstOperatorNullAsDefault extends AstExpression {
     private final AstExpression objectExpression;
@@ -35,18 +34,7 @@ public final class AstOperatorNullAsDefault extends AstExpression {
 
     @Override
     public Object execute(InterpretContext ctx) {
-        Object value;
-        try {
-            value = objectExpression.execute(ctx);
-        } catch (InterpretException e) {
-            // 如果是 NullPointerException 导致的错误，则同样返回 defaultExpression
-            if (Errors.EXPRESSION_OBJECT_IS_NULL.equals(e.getMessage())) {
-                value = null;
-            } else {
-                throw e;
-            }
-        }
-
+        Object value  = objectExpression.execute(ctx);
         if (value != null) {
             return value;
         } else {

@@ -29,18 +29,20 @@ import jetbrick.template.runtime.InterpretException;
 public final class AstInvokeIndexGet extends AstExpression {
     private final AstExpression objectExpression;
     private final AstExpression indexExpression;
+    private final boolean nullSafe;
 
-    public AstInvokeIndexGet(AstExpression objectExpression, AstExpression indexExpression, Position position) {
+    public AstInvokeIndexGet(AstExpression objectExpression, AstExpression indexExpression, boolean nullSafe, Position position) {
         super(position);
         this.objectExpression = objectExpression;
         this.indexExpression = indexExpression;
+        this.nullSafe = nullSafe;
     }
 
     @Override
     public Object execute(InterpretContext ctx) throws InterpretException {
         Object object = objectExpression.execute(ctx);
         if (object == null) {
-            if (ctx.getTemplate().getOption().isSafecall()) {
+            if (nullSafe || ctx.getTemplate().getOption().isSafecall()) {
                 return null;
             }
             throw new InterpretException(Errors.EXPRESSION_OBJECT_IS_NULL).set(objectExpression.getPosition());
