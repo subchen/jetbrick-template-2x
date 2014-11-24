@@ -159,9 +159,9 @@ expression  :   '(' expression ')'                                           #ex
             |   type       '::' IDENTIFIER '(' expression_list? ')'          #expression_method_static
             |   expression '[' expression ']'                                #expression_index_get
             |   IDENTIFIER '(' expression_list? ')'                          #expression_function
-            |   ('+' |'-' )  expression                                      #expression_unary_operator_prefix
-            |   '~'          expression                                      #expression_unary_operator_prefix
-            |   '!'          expression                                      #expression_unary_operator_prefix
+            |   ('+' |'-' )  expression                                      #expression_unary_operator
+            |   '~'          expression                                      #expression_unary_operator
+            |   '!'          expression                                      #expression_unary_operator
             |   'new' type '(' expression_list? ')'                          #expression_new_object
             |   'new' type ('[' expression ']')+                             #expression_new_array
             |   expression '?!' expression                                   #expression_nullsafe_operator

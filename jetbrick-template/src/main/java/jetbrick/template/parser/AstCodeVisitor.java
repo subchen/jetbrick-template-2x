@@ -64,7 +64,7 @@ import jetbrick.template.runtime.parser.grammer.JetTemplateParser.Expression_new
 import jetbrick.template.runtime.parser.grammer.JetTemplateParser.Expression_new_objectContext;
 import jetbrick.template.runtime.parser.grammer.JetTemplateParser.Expression_primaryContext;
 import jetbrick.template.runtime.parser.grammer.JetTemplateParser.Expression_ternary_operatorContext;
-import jetbrick.template.runtime.parser.grammer.JetTemplateParser.Expression_unary_operator_prefixContext;
+import jetbrick.template.runtime.parser.grammer.JetTemplateParser.Expression_unary_operatorContext;
 import jetbrick.template.runtime.parser.grammer.JetTemplateParser.Hash_map_entryContext;
 import jetbrick.template.runtime.parser.grammer.JetTemplateParser.IdentifierContext;
 import jetbrick.template.runtime.parser.grammer.JetTemplateParser.TemplateContext;
@@ -530,7 +530,7 @@ public final class AstCodeVisitor extends AbstractParseTreeVisitor<AstNode> impl
     }
 
     @Override
-    public AstNode visitExpression_unary_operator_prefix(Expression_unary_operator_prefixContext ctx) {
+    public AstNode visitExpression_unary_operator(Expression_unary_operatorContext ctx) {
         Position position = pos(ctx);
 
         Token token = ((TerminalNode) ctx.getChild(0)).getSymbol();
@@ -545,7 +545,7 @@ public final class AstCodeVisitor extends AbstractParseTreeVisitor<AstNode> impl
         case JetTemplateLexer.BIT_NOT:
             return new AstOperatorUnary(Tokens.BIT_NOT, expression, position);
         }
-        throw new SyntaxException(Errors.UNREACHABLE_CODE).set(pos(token));
+        throw new SyntaxException(Errors.UNREACHABLE_CODE).set(position);
     }
 
     @Override
@@ -599,7 +599,7 @@ public final class AstCodeVisitor extends AbstractParseTreeVisitor<AstNode> impl
         case JetTemplateLexer.OR:
             return new AstOperatorEquals(Tokens.OR, lhs, rhs, position);
         }
-        throw new SyntaxException(Errors.UNREACHABLE_CODE).set(pos(token));
+        throw new SyntaxException(Errors.UNREACHABLE_CODE).set(position);
     }
 
     @Override
