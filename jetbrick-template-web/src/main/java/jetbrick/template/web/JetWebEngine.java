@@ -26,6 +26,7 @@ import javax.servlet.http.*;
 import jetbrick.config.ConfigLoader;
 import jetbrick.template.*;
 import jetbrick.template.loader.ServletResourceLoader;
+import jetbrick.template.web.buildin.JetWebFunctions;
 import jetbrick.template.web.buildin.JetWebTags;
 import jetbrick.web.servlet.map.ServletContextAttributeMap;
 import org.slf4j.Logger;
@@ -49,7 +50,10 @@ public final class JetWebEngine {
 
     public static JetEngine create(ServletContext sc, Properties config, String configLocation) {
         if (engine != null) {
-            throw new IllegalStateException("JetEngine has been created");
+            if (JetWebEngine.sc == sc) {
+                return engine;
+            }
+            log.warn("webapp reloading: recreating the JetEngine ...");
         }
 
         JetWebEngine.sc = sc;
