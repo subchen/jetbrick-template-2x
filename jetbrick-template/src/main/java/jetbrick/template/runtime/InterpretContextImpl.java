@@ -45,10 +45,14 @@ public final class InterpretContextImpl extends InterpretContext {
         this.valueStack = new ValueStack(engine.getGlobalContext(), context);
         this.writer = writer;
         this.signal = InterpretContext.SIGNAL_NONE;
+        setThreadLocal();
+    }
+
+    public void setThreadLocal() {
         threadLocal.set(this);
     }
 
-    public void remove() {
+    public void freeThreadLocal() {
         threadLocal.remove();
     }
 

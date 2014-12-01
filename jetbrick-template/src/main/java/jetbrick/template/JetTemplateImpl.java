@@ -148,19 +148,29 @@ final class JetTemplateImpl implements JetTemplate {
     }
 
     private void doInterpret(Map<String, Object> context, JetWriter writer) {
-        InterpretContextImpl ctx = new InterpretContextImpl(engine, writer, context, securityManager);
+        // 如果在扩展函数，方法，tag 等里面，再次调用 getTemplate().render()，需要保持当前环境，在运行完之后，进行现场恢复
+        // see: https://github.com/subchen/jetbrick-template-2x/issues/6
+        InterpretContextImpl last = (InterpretContextImpl) InterpretContext.current();
         try {
-            ctx.getTemplateStack().push(this);
-            ctx.getValueStack().push(option.getSymbols(), null, true);
+            InterpretContextImpl ctx = new InterpretContextImpl(engine, writer, context, securityManager);
+            try {
+                ctx.getTemplateStack().push(this);
+                ctx.getValueStack().push(option.getSymbols(), null, true);
 
-            astNode.execute(ctx);
+                astNode.execute(ctx);
 
-            ctx.getValueStack().pop();
-            ctx.getTemplateStack().pop();
-        } catch (InterpretException e) {
-            throw e.set(ctx.getSource());
+                ctx.getValueStack().pop();
+                ctx.getTemplateStack().pop();
+            } catch (InterpretException e) {
+                throw e.set(ctx.getSource());
+            } finally {
+                ctx.freeThreadLocal();
+            }
         } finally {
-            ctx.remove();
+            // 进行现场恢复
+            if (last != null) {
+                last.setThreadLocal();
+            }
         }
     }
 
