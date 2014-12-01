@@ -121,7 +121,8 @@ public final class JetWebEngine {
         ctx.set(JetWebContext.APPLICATION, sc);
         ctx.set(JetWebContext.APPLICATION_SCOPE, new ServletContextAttributeMap(sc));
 
-        // 内置 tag
+        // 内置 methods, functions, tags
+        engine.getGlobalResolver().registerFunctions(JetWebFunctions.class);
         engine.getGlobalResolver().registerTags(JetWebTags.class);
 
         // 返回
