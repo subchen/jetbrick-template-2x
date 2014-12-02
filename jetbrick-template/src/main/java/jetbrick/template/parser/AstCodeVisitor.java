@@ -71,8 +71,7 @@ import jetbrick.template.runtime.parser.grammer.JetTemplateParser.TemplateContex
 import jetbrick.template.runtime.parser.grammer.JetTemplateParser.TextContext;
 import jetbrick.template.runtime.parser.grammer.JetTemplateParser.TypeContext;
 import jetbrick.template.runtime.parser.grammer.JetTemplateParser.ValueContext;
-import jetbrick.util.StringEscapeUtils;
-import jetbrick.util.StringUtils;
+import jetbrick.util.*;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.*;
@@ -836,7 +835,7 @@ public final class AstCodeVisitor extends AbstractParseTreeVisitor<AstNode> impl
             if (defining) {
                 throw new SyntaxException(Errors.VARIABLE_IS_KEYWORD, name).set(pos(node));
             }
-        } else if (Keywords.isKeyword(name)) {
+        } else if (JavaKeywordsUtils.isKeyword(name)) {
             throw new SyntaxException(Errors.VARIABLE_IS_KEYWORD, name).set(pos(node));
         } else if (name.startsWith("$")) {
             throw new SyntaxException(Errors.VARIABLE_IS_RESERVED, name).set(pos(node));
