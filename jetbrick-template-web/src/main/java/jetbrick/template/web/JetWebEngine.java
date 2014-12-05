@@ -41,7 +41,7 @@ public final class JetWebEngine {
     private static final String JET_ENGINE_KEY_NAME = JetEngine.class.getName();
     private static final String CONFIG_LOCATION_PARAMETER = "jetbrick-template-config-location";
 
-    private static ServletContext sc;
+    private static ServletContext servletContext;
     private static JetEngine engine;
 
     public static JetEngine create(ServletContext sc) {
@@ -50,21 +50,21 @@ public final class JetWebEngine {
 
     public static JetEngine create(ServletContext sc, Properties config, String configLocation) {
         if (engine != null) {
-            if (JetWebEngine.sc == sc) {
+            if (sc.getAttribute(JET_ENGINE_KEY_NAME) == engine) {
                 return engine;
             }
             log.warn("webapp reloading: recreating the JetEngine ...");
         }
 
-        JetWebEngine.sc = sc;
-        JetWebEngine.engine = doCreateWebEngine(sc, config, configLocation);
+        servletContext = sc;
+        engine = doCreateWebEngine(sc, config, configLocation);
 
-        sc.setAttribute(JET_ENGINE_KEY_NAME, engine);
+        servletContext.setAttribute(JET_ENGINE_KEY_NAME, engine);
         return engine;
     }
 
     public static ServletContext getServletContext() {
-        return sc;
+        return servletContext;
     }
 
     public static JetEngine getEngine() {
