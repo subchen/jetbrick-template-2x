@@ -67,23 +67,9 @@ public final class DefaultGetterResolver implements GetterResolver {
      * 查找属性访问
      */
     private Getter doGetGetter(Class<?> clazz, String name) {
-        // map.key
-        if (Map.class.isAssignableFrom(clazz)) {
-            return new MapGetter(name);
-        }
         // array.length
         if ("length".equals(name) && clazz.isArray()) {
             return ArrayLengthGetter.INSTANCE;
-        }
-
-        // get from custom resolver
-        if (resolvers != null) {
-            for (GetterResolver resolver : resolvers) {
-                Getter getter = resolver.resolve(clazz, name);
-                if (getter != null) {
-                    return getter;
-                }
-            }
         }
 
         KlassInfo klass = KlassInfo.create(clazz);
@@ -98,6 +84,21 @@ public final class DefaultGetterResolver implements GetterResolver {
         FieldInfo field = klass.getField(name);
         if (field != null && field.isPublic()) {
             return new FieldGetter(field);
+        }
+
+        // map.key
+        if (Map.class.isAssignableFrom(clazz)) {
+            return new MapGetter(name);
+        }
+
+        // get from custom resolver
+        if (resolvers != null) {
+            for (GetterResolver resolver : resolvers) {
+                Getter getter = resolver.resolve(clazz, name);
+                if (getter != null) {
+                    return getter;
+                }
+            }
         }
 
         return null;
