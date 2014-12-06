@@ -1,5 +1,5 @@
 [![QQ Group](http://img.shields.io/badge/QQ-310491655-blue.svg)](http://shang.qq.com/wpa/qunwpa?idkey=c81a8f922d2b00422761558c4c547a4c4af778edcb0a70c99aadf9e33d80cb11)
-[![Maven](http://img.shields.io/badge/jetbrick--template-v2.0.3-brightgreen.svg)](http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22jetbrick-template%22)
+[![Maven](http://img.shields.io/badge/jetbrick--template-v2.0.4-brightgreen.svg)](http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22jetbrick-template%22)
 [![Build Status](https://travis-ci.org/subchen/jetbrick-template-2x.svg?branch=master)](https://travis-ci.org/subchen/jetbrick-template-2x)
 [![JDK](http://img.shields.io/badge/JDK-v6.0+-yellow.svg)](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
 [![License](http://img.shields.io/badge/License-Apache_2-red.svg)](http://www.apache.org/licenses/LICENSE-2.0)
@@ -97,7 +97,7 @@ Release 版本已发布到 Maven 中央库： http://central.maven.org/maven2/co
 <dependency>
     <groupId>com.github.subchen</groupId>
     <artifactId>jetbrick-template</artifactId>
-    <version>2.0.3</version>
+    <version>2.0.4</version>
 </dependency>
 ```
 
@@ -109,37 +109,37 @@ Thirdpart Webmvc Integrations
 <dependency>
     <groupId>com.github.subchen</groupId>
     <artifactId>jetbrick-template-web</artifactId>
-    <version>2.0.3</version>
+    <version>2.0.4</version>
 </dependency>
 <dependency>
     <groupId>com.github.subchen</groupId>
     <artifactId>jetbrick-template-jetbrickmvc</artifactId>
-    <version>2.0.3</version>
+    <version>2.0.4</version>
 </dependency>
 <dependency>
     <groupId>com.github.subchen</groupId>
     <artifactId>jetbrick-template-springmvc</artifactId>
-    <version>2.0.3</version>
+    <version>2.0.4</version>
 </dependency>
 <dependency>
     <groupId>com.github.subchen</groupId>
     <artifactId>jetbrick-template-jfinal</artifactId>
-    <version>2.0.3</version>
+    <version>2.0.4</version>
 </dependency>
 <dependency>
     <groupId>com.github.subchen</groupId>
     <artifactId>jetbrick-template-jodd</artifactId>
-    <version>2.0.3</version>
+    <version>2.0.4</version>
 </dependency>
 <dependency>
     <groupId>com.github.subchen</groupId>
     <artifactId>jetbrick-template-struts</artifactId>
-    <version>2.0.3</version>
+    <version>2.0.4</version>
 </dependency>
 <dependency>
     <groupId>com.github.subchen</groupId>
     <artifactId>jetbrick-template-nutz</artifactId>
-    <version>2.0.3</version>
+    <version>2.0.4</version>
 </dependency>
 ```
 
@@ -148,6 +148,13 @@ Thirdpart Webmvc Integrations
 =========================
 
 http://subchen.github.io/jetbrick-template/2x/download.html
+
+
+范例 Demos
+=========================
+
+https://github.com/subchen/jetbrick-template-2x-samples
+
 
 
 开源许可 License
