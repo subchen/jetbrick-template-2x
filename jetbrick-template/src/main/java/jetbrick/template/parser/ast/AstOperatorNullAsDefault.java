@@ -19,7 +19,6 @@
  */
 package jetbrick.template.parser.ast;
 
-import jetbrick.template.Errors;
 import jetbrick.template.runtime.InterpretContext;
 
 public final class AstOperatorNullAsDefault extends AstExpression {
@@ -34,7 +33,7 @@ public final class AstOperatorNullAsDefault extends AstExpression {
 
     @Override
     public Object execute(InterpretContext ctx) {
-        Object value  = objectExpression.execute(ctx);
+        Object value = objectExpression.execute(ctx);
         if (value != null) {
             return value;
         } else {

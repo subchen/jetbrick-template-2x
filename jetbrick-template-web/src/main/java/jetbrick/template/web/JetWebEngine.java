@@ -19,8 +19,8 @@
  */
 package jetbrick.template.web;
 
-import java.util.Properties;
 import java.util.Map;
+import java.util.Properties;
 import javax.servlet.ServletContext;
 import javax.servlet.http.*;
 import jetbrick.config.ConfigLoader;

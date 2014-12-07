@@ -19,11 +19,9 @@
  */
 package jetbrick.template.web.buildin;
 
-import java.net.URL;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse ;
-import jetbrick.io.IoUtils;
+import javax.servlet.http.HttpServletResponse;
 import jetbrick.template.runtime.InterpretContext;
 import jetbrick.template.runtime.ValueStack;
 import jetbrick.template.web.JetWebContext;
