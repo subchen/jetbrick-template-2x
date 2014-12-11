@@ -35,7 +35,7 @@ final class ValueContext {
         this.localContext = null;
     }
 
-    public Class<?> getType(String name) {
+    public Class<?> getType(String name, boolean fromInherited) {
         if (symbols != null) {
             Class<?> type = symbols.get(name);
             if (type != null) {
@@ -43,8 +43,8 @@ final class ValueContext {
             }
         }
 
-        if (inheritedContext != null) {
-            return inheritedContext.getType(name);
+        if (fromInherited && inheritedContext != null) {
+            return inheritedContext.getType(name, true);
         }
 
         return null;

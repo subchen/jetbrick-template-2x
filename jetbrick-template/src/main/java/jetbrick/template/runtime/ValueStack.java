@@ -121,22 +121,22 @@ public final class ValueStack {
      * 获取变量类型
      */
     public Class<?> getType(String name) {
-        return doGetType(name, current);
+        return doGetType(name, current, true);
     }
 
-    private Class<?> doGetType(String name, ValueContext which) {
+    private Class<?> doGetType(String name, ValueContext which, boolean fromInherited) {
         if (index == UNUSED_INDEX) {
             throw new EmptyStackException();
         }
 
         // 先找当前作用域
-        Class<?> type = which.getType(name);
+        Class<?> type = which.getType(name, fromInherited);
         if (type != null) {
             return type;
         }
 
         // 查找全局作用域
-        if (globalContext != null) {
+        if (fromInherited && globalContext != null) {
             return globalContext.getType(name);
         }
 
@@ -155,7 +155,7 @@ public final class ValueStack {
             value = NULL;
         } else {
             // 校验变量的类型是否匹配
-            Class<?> type = doGetType(name, current);
+            Class<?> type = doGetType(name, current, false);
             if (type != null) {
                 if (!ClassUtils.isInstance(type, value)) {
                     throw new IllegalStateException(Errors.format(Errors.VARIABLE_TYPE_INCONSISTENT, name));
@@ -183,7 +183,7 @@ public final class ValueStack {
             value = NULL;
         } else {
             // 校验变量的类型是否匹配
-            Class<?> type = doGetType(name, parent);
+            Class<?> type = doGetType(name, parent, false);
             if (type != null) {
                 if (!ClassUtils.isInstance(type, value)) {
                     throw new IllegalStateException(Errors.format(Errors.VARIABLE_TYPE_INCONSISTENT, name));
