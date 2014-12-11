@@ -71,7 +71,7 @@ final class ValueContext {
         if (inheritedContext != null) {
             value = inheritedContext.getLocal(name);
             if (value != null) {
-                return value;
+                return value; // 可能返回 ValueStack.NULL
             }
 
             value = inheritedContext.getPrivate(name);

@@ -33,8 +33,8 @@ public final class ValueStack {
     private static final int DEFAULT_CAPACITY = 8;
     private static final int UNUSED_INDEX = 0;
 
-    private final JetGlobalContext globalContext; // 全局变量
-    private final Map<String, Object> userContext; // 用户变量
+    private final JetGlobalContext globalContext; // 全局变量 (不会被修改)
+    private final Map<String, Object> userContext; // 用户变量 (不会被修改)
 
     private ValueContext[] contexts;
     private int index;
@@ -93,7 +93,7 @@ public final class ValueStack {
         value = current.getPrivate(name);
         if (value != null) {
             current.setLocal(name, value); // cache
-            return value;
+            return value == NULL ? null : value;
         }
 
         // 查找用户作用域
@@ -101,7 +101,7 @@ public final class ValueStack {
             value = userContext.get(name);
             if (value != null) {
                 current.setLocal(name, value); // cache
-                return value;
+                return value; // 不会出现 NULL
             }
         }
 
@@ -110,10 +110,7 @@ public final class ValueStack {
             value = globalContext.getValue(name);
             if (value != null) {
                 current.setLocal(name, value); // cache
-                if (value == NULL) {
-                    value = null;
-                }
-                return value;
+                return value; // 不会出现 NULL
             }
         }
 
