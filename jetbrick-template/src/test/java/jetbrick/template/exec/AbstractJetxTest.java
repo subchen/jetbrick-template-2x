@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Properties;
 import jetbrick.template.*;
 import jetbrick.util.ExceptionUtils;
+import jetbrick.util.StringUtils;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
 
@@ -73,6 +74,10 @@ public abstract class AbstractJetxTest {
 
     protected static String err(String value) {
         return value.replace("%s", "");
+    }
+
+    protected static String errbefore(String value) {
+        return StringUtils.substringBefore(value, "%s");
     }
 
     protected static String str(Object value) {

@@ -77,7 +77,7 @@ public final class Errors {
     public static final String EXPRESSION_INDEX_IS_VOID = "index is void";
     public static final String EXPRESSION_ARGUMENT_IS_VOID = "argument is void";
 
-    public static final String VARIABLE_TYPE_INCONSISTENT = "inconsistent class for variable: %s";
+    public static final String VARIABLE_TYPE_INCONSISTENT = "inconsistent class for variable: `%s` is not %s";
     public static final String VARIABLE_TYPE_MISMATCH = "type mismatch: the %s argument cannot convert from %s to %s";
 
     public static final String OPERATION_UNARY_UNDEFINED = "the operator `%s` is undefined for the argument type: %s";

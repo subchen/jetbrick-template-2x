@@ -26,7 +26,7 @@ public class DirectiveSetTest extends AbstractJetxTest {
     @Test
     public void testFailed() {
         thrown.expect(InterpretException.class);
-        thrown.expectMessage(CoreMatchers.containsString(err(Errors.VARIABLE_TYPE_INCONSISTENT)));
+        thrown.expectMessage(CoreMatchers.containsString(errbefore(Errors.VARIABLE_TYPE_INCONSISTENT)));
 
         eval("#set(int i=1)#set(i=1L)");
     }
