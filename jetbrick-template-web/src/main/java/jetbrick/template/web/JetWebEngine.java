@@ -118,6 +118,11 @@ public final class JetWebEngine {
             ctx.define(Map.class, JetWebContext.SESSION_SCOPE);
         }
 
+        ctx.define(String.class, JetWebContext.CONTEXT_PATH);
+        ctx.define(String.class, JetWebContext.WEBROOT_PATH);
+        ctx.define(String.class, JetWebContext.WEBROOT);
+        ctx.define(String.class, JetWebContext.BASE_PATH);
+
         ctx.set(JetWebContext.APPLICATION, sc);
         ctx.set(JetWebContext.APPLICATION_SCOPE, new ServletContextAttributeMap(sc));
 
