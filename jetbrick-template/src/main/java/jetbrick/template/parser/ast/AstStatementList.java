@@ -137,11 +137,12 @@ public final class AstStatementList extends AstStatement {
 
             AstText text = (AstText) stmt;
 
-            boolean trimLeft;
+            boolean trimWhitespacesLeft, trimCommentsLeft;
             boolean keepLeftNewLine = false;
             if (it.hasPrevious()) {
-                trimLeft = isAstDirective(it.peek(-1));
-                if (trimLeft) {
+                trimWhitespacesLeft = isAstDirective(it.peek(-1), false);
+                trimCommentsLeft = isAstDirective(it.peek(-1), true);
+                if (trimWhitespacesLeft) {
                     // inline directive, 对于一个内联的 #if, #for 等指令，后面有要求保留一个 NewLine
                     // @see https://github.com/subchen/jetbrick-template-1x/issues/25
                     AstStatement prev = it.peek(-1);
@@ -157,23 +158,26 @@ public final class AstStatementList extends AstStatement {
                     }
                 }
             } else {
-                trimLeft = (block != Tokens.AST_BLOCK_TEMPLATE);
+                trimWhitespacesLeft = (block != Tokens.AST_BLOCK_TEMPLATE);
+                trimCommentsLeft = trimWhitespacesLeft;
             }
 
-            boolean trimRight;
+            boolean trimWhitespacesRight, trimCommentsRight;
             if (it.hasNext()) {
-                trimRight = isAstDirective(it.peek(1));
+                trimWhitespacesRight = isAstDirective(it.peek(1), false);
+                trimCommentsRight = isAstDirective(it.peek(1), true);
             } else {
-                trimRight = (block != Tokens.AST_BLOCK_TEMPLATE);
+                trimWhitespacesRight = (block != Tokens.AST_BLOCK_TEMPLATE);
+                trimCommentsRight = trimWhitespacesRight;
             }
 
             // trim 指令两边的注释
             if (trimDirectiveComments) {
-                text.trimDirectiveComments(trimLeft, trimRight, trimDirectiveCommentsPrefix, trimDirectiveCommentsSuffix);
+                text.trimDirectiveComments(trimCommentsLeft, trimCommentsRight, trimDirectiveCommentsPrefix, trimDirectiveCommentsSuffix);
             }
             // trim 指令两边的空白内容
             if (trimDirectiveWhitespaces) {
-                text.trimDirectiveWhitespaces(trimLeft, trimRight, keepLeftNewLine);
+                text.trimDirectiveWhitespaces(trimWhitespacesLeft, trimWhitespacesRight, keepLeftNewLine);
             }
 
             // trim 掉 #tag 和 #macro 指令最后一个多余的 '\n'
@@ -191,9 +195,15 @@ public final class AstStatementList extends AstStatement {
         }
     }
 
-    // 将  #include/#call 当做 ${value} 这样的 value 来对待
-    private boolean isAstDirective(AstNode node) {
-        return (node instanceof AstDirective) && !(node instanceof AstDirectiveInclude || node instanceof AstDirectiveCall);
+    private boolean isAstDirective(AstNode node, boolean includeInlineDirective) {
+        if (node instanceof AstDirective) {
+            if (includeInlineDirective) {
+                return true;
+            }
+            // 将 #include/#call 当做 ${value} 这样的 value 来对待
+            return !(node instanceof AstDirectiveInclude || node instanceof AstDirectiveCall);
+        }
+        return false;
     }
 
     @Override

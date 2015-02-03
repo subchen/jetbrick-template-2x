@@ -31,4 +31,17 @@ public class TrimDirectiveCommentsTest extends AbstractJetxTest {
         sb.append("<!--#end-->");
         Assert.assertEquals("1\n2\n3\n", eval(sb.toString()));
     }
+
+    @Test
+    public void testIssue10() {
+        StringBuilder s = new StringBuilder();
+        s.append("<!-- #include('/sub.jetx') -->");
+        engine.set(DEFAULT_MAIN_FILE, s.toString());
+
+        s = new StringBuilder();
+        s.append("xxx");
+        engine.set("/sub.jetx", s.toString());
+
+        Assert.assertEquals("xxx", eval());
+    }
 }
