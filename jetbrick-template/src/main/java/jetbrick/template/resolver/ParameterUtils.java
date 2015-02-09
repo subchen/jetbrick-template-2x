@@ -19,6 +19,7 @@
  */
 package jetbrick.template.resolver;
 
+import java.lang.reflect.Array;
 import jetbrick.util.ArrayUtils;
 
 public final class ParameterUtils {
@@ -44,8 +45,8 @@ public final class ParameterUtils {
     /**
      * 生成方法调用的实际参数
      */
-    public static Object[] getActualArguments(Object[] arguments, int actualLength, boolean isVarArgs, int offset) {
-        if (isVarArgs) {
+    public static Object[] getActualArguments(Object[] arguments, int actualLength, Class<?> varArgsClass, int offset) {
+        if (varArgsClass != null) {
             Object[] args = new Object[actualLength];
 
             int fixedArgsLen = actualLength - offset - 1; // 固定参数个数
@@ -58,19 +59,19 @@ public final class ParameterUtils {
             // 处理可变参数
             int varArgsLen = arguments.length - fixedArgsLen;
             if (varArgsLen == 0) {
-                args[actualLength - 1] = ArrayUtils.EMPTY_OBJECT_ARRAY;
+                args[actualLength - 1] = Array.newInstance(varArgsClass, 0);
             } else {
-                Object[] varArgs = null;
+                Object varArgs = null;
                 if (varArgsLen == 1) {
                     Object arg = arguments[fixedArgsLen];
                     if (arg == null) {
-                        varArgs = ArrayUtils.EMPTY_OBJECT_ARRAY;
+                        varArgs = Array.newInstance(varArgsClass, 0);
                     } else if (Object[].class.isAssignableFrom(arg.getClass())) {
-                        varArgs = (Object[]) arg;
+                        varArgs = arg;
                     }
                 }
                 if (varArgs == null) {
-                    varArgs = new Object[varArgsLen];
+                    varArgs = Array.newInstance(varArgsClass, varArgsLen);
                     System.arraycopy(arguments, fixedArgsLen, varArgs, 0, varArgsLen);
                 }
                 args[actualLength - 1] = varArgs;

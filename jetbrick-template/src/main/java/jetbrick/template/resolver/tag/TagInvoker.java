@@ -26,16 +26,22 @@ import jetbrick.template.runtime.JetTagContext;
 public final class TagInvoker {
     private final MethodInfo method;
     private final int length;
-    private final boolean isVarArgs;
+    private final Class<?> varArgsClass;
 
     public TagInvoker(MethodInfo method) {
         this.method = method;
         this.length = method.getParameterCount();
-        this.isVarArgs = method.isVarArgs();
+
+        if (method.isVarArgs()) {
+            Class<?>[] types = method.getParameterTypes();
+            this.varArgsClass = types[types.length - 1].getComponentType();
+        } else {
+            this.varArgsClass = null;
+        }
     }
 
     public void invoke(JetTagContext ctx, Object[] arguments) {
-        arguments = ParameterUtils.getActualArguments(arguments, length, isVarArgs, 1);
+        arguments = ParameterUtils.getActualArguments(arguments, length, varArgsClass, 1);
         arguments[0] = ctx; // 第一个参数
 
         method.invoke(null, arguments);

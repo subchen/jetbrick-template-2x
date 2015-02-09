@@ -29,12 +29,18 @@ import jetbrick.template.resolver.ParameterUtils;
 final class ExtensionFunctionInvoker implements FunctionInvoker {
     private final MethodInfo method;
     private final int length;
-    private final boolean isVarArgs;
+    private final Class<?> varArgsClass;
 
     public ExtensionFunctionInvoker(MethodInfo method) {
         this.method = method;
         this.length = method.getParameterCount();
-        this.isVarArgs = method.isVarArgs();
+
+        if (method.isVarArgs()) {
+            Class<?>[] types = method.getParameterTypes();
+            this.varArgsClass = types[types.length - 1].getComponentType();
+        } else {
+            this.varArgsClass = null;
+        }
     }
 
     @Override
@@ -44,7 +50,7 @@ final class ExtensionFunctionInvoker implements FunctionInvoker {
 
     @Override
     public Object invoke(Object[] arguments) {
-        arguments = ParameterUtils.getActualArguments(arguments, length, isVarArgs, 0);
+        arguments = ParameterUtils.getActualArguments(arguments, length, varArgsClass, 0);
         return method.invoke(null, arguments);
     }
 

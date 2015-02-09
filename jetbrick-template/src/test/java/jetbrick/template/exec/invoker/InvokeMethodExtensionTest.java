@@ -10,6 +10,7 @@ public class InvokeMethodExtensionTest extends AbstractJetxTest {
     @Override
     public void initializeEngine() {
         engine.getGlobalResolver().registerMethods(StringUtils.class);
+        engine.getGlobalResolver().registerMethods(StrUtils.class);
         engine.getGlobalResolver().registerMethods(String.class);
     }
 
@@ -28,4 +29,21 @@ public class InvokeMethodExtensionTest extends AbstractJetxTest {
         Assert.assertEquals("123", eval("${'%s%s%s'.format(1,2,3)}"));
     }
 
+    @Test
+    public void testVarargsIssue() {
+        Assert.assertEquals("<a href=\"#\">?</a>", eval("${'?'.link('#')}"));
+    }
+
+    static class StrUtils {
+        public static String link(String title, String url, String... attributes) {
+            StringBuilder sb = new StringBuilder();
+            sb.append("<a href=\"");
+            sb.append(url);
+            sb.append('"');
+            sb.append('>');
+            sb.append(title);
+            sb.append("</a>");
+            return sb.toString();
+        }
+    }
 }
