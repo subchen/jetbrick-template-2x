@@ -57,16 +57,16 @@ public final class AstOperatorBinary extends AstExpression {
         Object o1 = lhs.execute(ctx);
         Object o2 = rhs.execute(ctx);
         if (o1 == null) {
-            if (o2 instanceof String) {
+            if (o2 instanceof String && operator == Tokens.PLUS) {
                 return o2;
             }
             throw new InterpretException(Errors.EXPRESSION_LHS_IS_NULL).set(lhs.getPosition());
         }
         if (o2 == null) {
-            if (o1 instanceof String) {
+            if (o1 instanceof String && operator == Tokens.PLUS) {
                 return o1;
             }
-            throw new InterpretException(Errors.EXPRESSION_RHS_IS_NULL).set(lhs.getPosition());
+            throw new InterpretException(Errors.EXPRESSION_RHS_IS_NULL).set(rhs.getPosition());
         }
 
         try {
