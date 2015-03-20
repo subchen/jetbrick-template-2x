@@ -40,6 +40,10 @@ public final class ServletResourceLoader extends AbstractResourceLoader {
         String path = PathUtils.concat(root, name);
 
         ServletContext sc = JetWebEngine.getServletContext();
+        if (sc == null) {
+            throw new IllegalStateException("ServletContext not found, please confirm that you are running at web servlet container.");
+        }
+        
         ServletResource resource = new ServletResource(sc, path);
         if (!resource.exist()) {
             return null;
