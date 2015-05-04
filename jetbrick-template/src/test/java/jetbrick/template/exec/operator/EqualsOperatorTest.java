@@ -70,4 +70,10 @@ public class EqualsOperatorTest extends AbstractJetxTest {
         Assert.assertEquals("true", eval("${true || false}"));
         Assert.assertEquals("false", eval("${false || false}"));
     }
+
+    @Test
+    public void testAndOrQuickPath() {
+        Assert.assertEquals("false", eval("${false && [].get(0)}"));
+        Assert.assertEquals("true", eval("${true || [].get(0)}"));
+    }
 }

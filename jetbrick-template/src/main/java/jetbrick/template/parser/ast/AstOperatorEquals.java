@@ -37,27 +37,26 @@ public final class AstOperatorEquals extends AstExpression {
     @Override
     public Object execute(InterpretContext ctx) throws InterpretException {
         Object o1 = lhs.execute(ctx);
-        Object o2 = (rhs != null) ? rhs.execute(ctx) : null;
 
         Object value;
         switch (operator) {
         case Tokens.IDENTICALLY_EQUAL:
-            value = (o1 == o2);
+            value = (o1 == rhs.execute(ctx));
             break;
         case Tokens.IDENTICALLY_EQUAL_NOT:
-            value = (o1 != o2);
+            value = (o1 != rhs.execute(ctx));
             break;
         case Tokens.EQ:
-            value = ALU.equals(o1, o2);
+            value = ALU.equals(o1, rhs.execute(ctx));
             break;
         case Tokens.NE:
-            value = ALU.equals(o1, o2).booleanValue() ? Boolean.FALSE : Boolean.TRUE;
+            value = ALU.equals(o1, rhs.execute(ctx)).booleanValue() ? Boolean.FALSE : Boolean.TRUE;
             break;
         case Tokens.AND:
-            value = ALU.isTrue(o1) && ALU.isTrue(o2) ? Boolean.TRUE : Boolean.FALSE;
+            value = ALU.isTrue(o1) && ALU.isTrue(rhs.execute(ctx)) ? Boolean.TRUE : Boolean.FALSE;
             break;
         case Tokens.OR:
-            value = ALU.isTrue(o1) || ALU.isTrue(o2) ? Boolean.TRUE : Boolean.FALSE;
+            value = ALU.isTrue(o1) || ALU.isTrue(rhs.execute(ctx)) ? Boolean.TRUE : Boolean.FALSE;
             break;
         case Tokens.NOT:
             value = ALU.isTrue(o1) ? Boolean.FALSE : Boolean.TRUE;
