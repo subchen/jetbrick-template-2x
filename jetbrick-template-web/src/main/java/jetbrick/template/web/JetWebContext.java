@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import jetbrick.web.servlet.map.*;
 
 /**
@@ -125,9 +126,13 @@ public final class JetWebContext extends HashMap<String, Object> {
         }
 
         if (SESSION_ENABLED) {
-            value = request.getSession().getAttribute(name);
-            if (value != null) {
-                return value;
+            // fixed: cannot create session after response has been committed
+            HttpSession session = request.getSession(false);
+            if (session != null) {
+                value = session.getAttribute(name);
+                if (value != null) {
+                    return value;
+                }
             }
         }
 
