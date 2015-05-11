@@ -220,8 +220,8 @@ public final class GlobalResolver {
     /**
      * 根据参数类型，查找一个匹配的 macro
      */
-    public JetTemplateMacro resolveMacro(String name, Class<?>[] argumentTypes) {
-        return macroResolver.resolve(name, argumentTypes);
+    public JetTemplateMacro resolveMacro(String name, Class<?>[] argumentTypes, boolean reloadable) {
+        return macroResolver.resolve(name, argumentTypes, reloadable);
     }
 
     /**

@@ -118,14 +118,14 @@ final class JetTemplateImpl implements JetTemplate {
         // 重建 MacroResolver
         macroResolver.clear();
 
-        // add declear macros
+        // add declared macros
         List<AstDirectiveMacro> macros = ctx.getDeclaredMacros();
         if (macros != null && macros.size() > 0) {
             for (AstDirectiveMacro macro : macros) {
                 macroResolver.register(new JetTemplateMacro(this, macro));
             }
         }
-        // add include macros
+        // add included macros
         List<String> files = ctx.getLoadMacroFiles();
         if (files != null && files.size() > 0) {
             for (String file : files) {
@@ -176,9 +176,9 @@ final class JetTemplateImpl implements JetTemplate {
 
     @Override
     public JetTemplateMacro resolveMacro(String name, Class<?>[] argumentTypes, boolean root) {
-        JetTemplateMacro macro = macroResolver.resolve(name, argumentTypes);
+        JetTemplateMacro macro = macroResolver.resolve(name, argumentTypes, reloadable);
         if (macro == null && root) {
-            macro = engine.getGlobalResolver().resolveMacro(name, argumentTypes);
+            macro = engine.getGlobalResolver().resolveMacro(name, argumentTypes, reloadable);
         }
         return macro;
     }

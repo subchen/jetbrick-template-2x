@@ -25,6 +25,7 @@ import jetbrick.template.*;
 public final class MacroResolver {
     private List<JetTemplate> loadedTemplates;
     private Map<String, JetTemplateMacro> decleardMacros;
+    private long lastCheckTimestamp = 0;
 
     public void clear() {
         loadedTemplates = null;
@@ -48,7 +49,7 @@ public final class MacroResolver {
         }
     }
 
-    public JetTemplateMacro resolve(String name, Class<?>[] argumentTypes) {
+    public JetTemplateMacro resolve(String name, Class<?>[] argumentTypes, boolean reloadable) {
         JetTemplateMacro macro;
 
         if (decleardMacros != null) {
@@ -59,6 +60,9 @@ public final class MacroResolver {
         }
 
         if (loadedTemplates != null) {
+            if (reloadable) {
+                checkImportedMacrosReload();
+            }
             for (JetTemplate template : loadedTemplates) {
                 macro = template.resolveMacro(name, argumentTypes, false);
                 if (macro != null) {
@@ -68,5 +72,17 @@ public final class MacroResolver {
         }
 
         return null;
+    }
+
+    // 如果外部 macro 文件被修改，尝试 reload
+    private void checkImportedMacrosReload() {
+        // 每 5 sec 检测一次
+        long now = System.currentTimeMillis();
+        if (now - lastCheckTimestamp > 5 * 1000) {
+            for (JetTemplate template : loadedTemplates) {
+                template.reload();
+            }
+            lastCheckTimestamp = now;
+        }
     }
 }
