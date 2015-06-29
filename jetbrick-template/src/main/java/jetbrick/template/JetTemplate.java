@@ -43,6 +43,8 @@ public interface JetTemplate {
 
     public Source getSource();
 
+    public boolean isReloadable();
+
     public long getLastModified();
 
     public JetTemplateOption getOption();

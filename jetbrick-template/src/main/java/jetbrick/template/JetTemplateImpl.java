@@ -194,6 +194,11 @@ final class JetTemplateImpl implements JetTemplate {
     }
 
     @Override
+    public boolean isReloadable() {
+        return reloadable;
+    }
+
+    @Override
     public long getLastModified() {
         return lastModified;
     }
@@ -218,4 +223,8 @@ final class JetTemplateImpl implements JetTemplate {
         return securityManager;
     }
 
+    @Override
+    public String toString() {
+        return getName();
+    }
 }

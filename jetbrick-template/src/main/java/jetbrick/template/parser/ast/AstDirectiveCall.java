@@ -20,6 +20,7 @@
 package jetbrick.template.parser.ast;
 
 import jetbrick.template.Errors;
+import jetbrick.template.JetTemplate;
 import jetbrick.template.JetTemplateMacro;
 import jetbrick.template.resolver.ParameterUtils;
 import jetbrick.template.runtime.InterpretContext;
@@ -47,9 +48,10 @@ public final class AstDirectiveCall extends AstDirective {
         }
 
         JetTemplateMacro macro = last;
-        if (macro == null) {
+        JetTemplate template = ctx.getTemplate();
+        if (macro == null || template.isReloadable()) {
             Class<?>[] argumentTypes = ParameterUtils.getParameterTypes(arguments);
-            macro = ctx.getTemplate().resolveMacro(name, argumentTypes, true);
+            macro = template.resolveMacro(name, argumentTypes, true);
             if (macro == null) {
                 throw new InterpretException(Errors.MACRO_NOT_FOUND, name).set(position);
             }
