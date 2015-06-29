@@ -1,5 +1,5 @@
 /**
- * Copyright 2013-2014 Guoqiang Chen, Shanghai, China. All rights reserved.
+ * Copyright 2013-2015 Guoqiang Chen, Shanghai, China. All rights reserved.
  *
  *   Author: Guoqiang Chen
  *    Email: subchen@gmail.com
@@ -43,7 +43,7 @@ public final class ServletResourceLoader extends AbstractResourceLoader {
         if (sc == null) {
             throw new IllegalStateException("ServletContext not found, please confirm that you are running at web servlet container.");
         }
-        
+
         ServletResource resource = new ServletResource(sc, path);
         if (!resource.exist()) {
             return null;
