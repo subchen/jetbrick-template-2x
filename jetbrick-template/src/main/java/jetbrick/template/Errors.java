@@ -89,7 +89,17 @@ public final class Errors {
     public static boolean isReflectIllegalArgument(Throwable e) {
         Class<?> cls = e.getClass();
         if (cls == IllegalArgumentException.class || cls == ClassCastException.class) {
-            String className = e.getStackTrace()[0].getClassName();
+            // https://github.com/subchen/jetbrick-template-2x/issues/17
+            StackTraceElement[] elements = e.getStackTrace();
+            if (elements == null || elements.length == 0) {
+                return false;
+            }
+
+            String className = elements[0].getClassName();
+            if (className == null) {
+                return false;
+            }
+            
             //@formatter:off
             return "sun.reflect.NativeMethodAccessorImpl".equals(className)
                 || "sun.reflect.GeneratedMethodAccessor1".equals(className)
