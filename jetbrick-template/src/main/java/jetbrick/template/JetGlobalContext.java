@@ -50,7 +50,7 @@ public final class JetGlobalContext {
         Class<?> type = symbols.get(name);
         if (type != null && value != null) {
             if (!type.isInstance(value)) {
-                throw new IllegalStateException(Errors.format(Errors.VARIABLE_TYPE_INCONSISTENT, name, type.getName()));
+                throw new IllegalStateException(Errors.format(Errors.VARIABLE_TYPE_INCONSISTENT, name, type.getName(), value.getClass().getName()));
             }
         }
         context.put(name, value);
