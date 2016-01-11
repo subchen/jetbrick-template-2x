@@ -30,6 +30,7 @@ public final class JetForIterator implements Iterator<Object> {
     protected final Iterator<?> iterator;
     protected final int size;
     protected int index; // index start by 1
+    protected JetForIterator outer;
 
     public JetForIterator(Object items) {
         if (items == null) {
@@ -126,5 +127,13 @@ public final class JetForIterator implements Iterator<Object> {
 
     public boolean isEven() {
         return index % 2 == 0;
+    }
+
+    public void setOuter(JetForIterator outer) {
+        this.outer = outer;
+    }
+
+    public JetForIterator getOuter() {
+        return outer;
     }
 }

@@ -46,8 +46,8 @@ public final class AstDirectiveFor extends AstDirective {
             ValueStack valueStack = ctx.getValueStack();
 
             // save outside variable which will be reset in #for
+            it.setOuter((JetForIterator) valueStack.getValue(Symbols.FOR));
             Object outsideIdentifier = valueStack.getValue(identifier);
-            Object outsideFor = valueStack.getValue(Symbols.FOR);
 
             // set this.for
             valueStack.setLocal(Symbols.FOR, it);
@@ -78,8 +78,8 @@ public final class AstDirectiveFor extends AstDirective {
             }
 
             // reset outside variable
-            valueStack.setLocal(Symbols.FOR, outsideFor);
             valueStack.setLocal(identifier, outsideIdentifier);
+            valueStack.setLocal(Symbols.FOR, it.getOuter());
 
         } else if (elseStatements != null) {
             elseStatements.execute(ctx);

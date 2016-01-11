@@ -30,6 +30,11 @@ public class DirectiveForTest extends AbstractJetxTest {
     }
 
     @Test
+    public void testForOuter() {
+        Assert.assertEquals("1.1,1.2,1.3,2.1,2.2,2.3,", eval("#for(x:[1,2])#for(y:[1,2,3])${for.outer.index}.${for.index},#end#end"));
+    }
+
+    @Test
     public void testForComplex() {
         StringBuilder sb = new StringBuilder();
         sb.append("#for(i:[1,2])");
