@@ -161,7 +161,7 @@ https://github.com/subchen/jetbrick-template-2x-samples
 ===================
 
 ```
-Copyright 2013-2015 Guoqiang Chen, Shanghai, China. All rights reserved.
+Copyright 2013-2016 Guoqiang Chen, Shanghai, China. All rights reserved.
 
   Author: Guoqiang Chen
    Email: subchen@gmail.com
