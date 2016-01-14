@@ -19,14 +19,12 @@
  */
 package jetbrick.template.web.springmvc;
 
-import java.beans.ConstructorProperties;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Properties;
 import jetbrick.template.JetEngine;
 import jetbrick.template.web.JetWebEngine;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.web.servlet.view.AbstractTemplateViewResolver;
+
+import java.util.Properties;
 
 public final class JetTemplateViewResolver extends AbstractTemplateViewResolver implements InitializingBean {
     private String configLocation;
