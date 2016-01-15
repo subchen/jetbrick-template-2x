@@ -22,8 +22,10 @@ package jetbrick.template.web.springmvc;
 import jetbrick.template.JetEngine;
 import jetbrick.template.web.JetWebEngine;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.AbstractTemplateViewResolver;
 
+import java.util.Locale;
 import java.util.Properties;
 
 public final class JetTemplateViewResolver extends AbstractTemplateViewResolver implements InitializingBean {
@@ -45,6 +47,16 @@ public final class JetTemplateViewResolver extends AbstractTemplateViewResolver 
     @Override
     protected Class<?> requiredViewClass() {
         return JetTemplateView.class;
+    }
+
+    @Override
+    protected View loadView(String viewName, Locale locale) throws Exception {
+        View view = super.loadView(viewName, locale);
+        if (view instanceof JetTemplateView) {
+            ((JetTemplateView) view).setAllowRequestOverride(false);
+            ((JetTemplateView) view).setAllowSessionOverride(false);
+        }
+        return view;
     }
 
     @Override
