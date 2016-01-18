@@ -27,6 +27,7 @@
         <module>jetbrick-template-jodd</module>
         <module>jetbrick-template-struts</module>
         <module>jetbrick-template-nutz</module>
+        <module>jetbrick-template-shiro</module>
     </modules>
 
     <scm>
