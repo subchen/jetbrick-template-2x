@@ -26,6 +26,7 @@ import java.lang.annotation.*;
  * 
  * @since 1.2.0
  * @author Guoqiang Chen
+ * @author Zhuo Ying
  */
 public final class JetAnnotations {
 
@@ -44,4 +45,9 @@ public final class JetAnnotations {
     public static @interface Tags {
     }
 
+    @Target(ElementType.METHOD)
+    @Retention(RetentionPolicy.RUNTIME)
+    public static @interface Name {
+        String value() default "";
+    }
 }

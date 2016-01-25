@@ -19,14 +19,21 @@
  */
 package jetbrick.template.resolver.tag;
 
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
-import jetbrick.bean.*;
+import jetbrick.bean.ExecutableUtils;
+import jetbrick.bean.KlassInfo;
+import jetbrick.bean.MethodInfo;
+import jetbrick.template.JetAnnotations;
 import jetbrick.template.resolver.SignatureUtils;
 import jetbrick.template.runtime.JetTagContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * 用于查找全局注册的 Tag.
@@ -60,6 +67,10 @@ public final class TagInvokerResolver {
      */
     public void register(MethodInfo method) {
         String name = method.getName();
+        JetAnnotations.Name rename = method.getMethod().getAnnotation(JetAnnotations.Name.class);
+        if (rename != null && !"".equals(rename.value())) {
+            name = rename.value();
+        }
 
         if (log.isInfoEnabled()) {
             StringBuffer sb = new StringBuffer();
