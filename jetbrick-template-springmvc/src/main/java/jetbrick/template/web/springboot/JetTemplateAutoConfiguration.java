@@ -23,22 +23,37 @@ import jetbrick.template.JetEngine;
 import jetbrick.template.web.springmvc.JetTemplateViewResolver;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
+
 @Configuration
 @ConditionalOnWebApplication
 @ConditionalOnClass(JetEngine.class)
-//@ConditionalOnProperty(value = "spring.jetbrick.template.enabled", havingValue = "true")
+@ConditionalOnProperty(value = "spring.jetbrick.template.enabled", havingValue = "true")
 @EnableConfigurationProperties(JetTemplateProperties.class)
 public class JetTemplateAutoConfiguration {
+
+    private static final Map<String, String> DEFAULT_CONFIGS;
+
+    static {
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("jetx.template.loaders", SpringClasspathResourceLoader.class.getName());        // use SpringClassPathResourceLoader by default
+        DEFAULT_CONFIGS = Collections.unmodifiableMap(map);
+    }
 
 
     @Bean
     @ConditionalOnMissingBean(JetTemplateViewResolver.class)
     public JetTemplateViewResolver jetTemplateViewResolver(JetTemplateProperties properties) {
+        mergeConfigs(properties.getConfig());
         JetTemplateViewResolver resolver = new JetTemplateViewResolver();
         resolver.setPrefix(properties.getPrefix());
         resolver.setSuffix(properties.getSuffix());
@@ -49,5 +64,14 @@ public class JetTemplateAutoConfiguration {
         resolver.setConfigProperties(properties.getConfig());
         resolver.setConfigLocation(properties.getConfigLocation());
         return resolver;
+    }
+
+    private void mergeConfigs(Properties props) {
+        for (String key : DEFAULT_CONFIGS.keySet()) {
+            if (props.containsKey(key) == false) {
+                String value = DEFAULT_CONFIGS.get(key);
+                props.put(key, value);
+            }
+        }
     }
 }
