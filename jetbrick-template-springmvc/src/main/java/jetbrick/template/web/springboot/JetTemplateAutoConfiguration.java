@@ -1,16 +1,16 @@
 /**
  * Copyright 2013-2016 Guoqiang Chen, Shanghai, China. All rights reserved.
- *
- *   Author: Guoqiang Chen
- *    Email: subchen@gmail.com
- *   WebURL: https://github.com/subchen
- *
+ * <p>
+ * Author: Guoqiang Chen
+ * Email: subchen@gmail.com
+ * WebURL: https://github.com/subchen
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -53,7 +53,7 @@ public class JetTemplateAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean(JetTemplateViewResolver.class)
     public JetTemplateViewResolver jetTemplateViewResolver(JetTemplateProperties properties) {
-        mergeConfigs(properties.getConfig());
+        mergeConfigs(properties);
         JetTemplateViewResolver resolver = new JetTemplateViewResolver();
         resolver.setPrefix(properties.getPrefix());
         resolver.setSuffix(properties.getSuffix());
@@ -66,11 +66,15 @@ public class JetTemplateAutoConfiguration {
         return resolver;
     }
 
-    private void mergeConfigs(Properties props) {
+    private void mergeConfigs(JetTemplateProperties properties) {
+        if (properties.getConfig() == null) {
+            properties.setConfig(new Properties());
+        }
+
         for (String key : DEFAULT_CONFIGS.keySet()) {
-            if (props.containsKey(key) == false) {
+            if (properties.getConfig().containsKey(key) == false) {
                 String value = DEFAULT_CONFIGS.get(key);
-                props.put(key, value);
+                properties.getConfig().put(key, value);
             }
         }
     }
