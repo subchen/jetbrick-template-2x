@@ -122,7 +122,7 @@ public class SpringClasspathResourceLoader extends AbstractResourceLoader {
                 return -1;
             }
             try {
-                return getURL().openConnection().getContentLengthLong();
+                return getURL().openConnection().getContentLength();
             } catch (IOException e) {
                 throw new IllegalStateException(e);
             }
