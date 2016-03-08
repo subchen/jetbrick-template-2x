@@ -27,7 +27,6 @@ import jetbrick.template.resolver.SignatureUtils;
 import jetbrick.template.runtime.JetTagContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
