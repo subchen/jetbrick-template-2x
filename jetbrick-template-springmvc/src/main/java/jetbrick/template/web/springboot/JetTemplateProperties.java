@@ -22,7 +22,6 @@ package jetbrick.template.web.springboot;
 import org.springframework.boot.autoconfigure.template.AbstractViewResolverProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.core.Ordered;
-
 import java.util.Properties;
 
 @ConfigurationProperties(prefix = "spring.jetbrick.template")
