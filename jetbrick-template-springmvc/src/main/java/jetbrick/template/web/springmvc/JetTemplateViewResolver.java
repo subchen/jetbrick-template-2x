@@ -24,7 +24,6 @@ import jetbrick.template.web.JetWebEngine;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.AbstractTemplateViewResolver;
-
 import java.util.Locale;
 import java.util.Properties;
 

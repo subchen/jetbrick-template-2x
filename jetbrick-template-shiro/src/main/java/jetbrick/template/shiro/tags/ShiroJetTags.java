@@ -24,7 +24,6 @@ import jetbrick.template.runtime.JetTagContext;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
-
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
@@ -48,8 +47,7 @@ public class ShiroJetTags {
      * Displays body content only if the current Subject (user) 'has' (implies)
      * the specified permission (i.e the user has the specified ability).
      */
-    public static void has_permission(JetTagContext ctx, String permission)
-            throws IOException {
+    public static void has_permission(JetTagContext ctx, String permission) throws IOException {
         final Subject subject = getSubject();
 
         if (subject.isPermitted(permission)) {
@@ -62,8 +60,7 @@ public class ShiroJetTags {
      * (not imply) the specified permission (i.e. the user lacks the specified
      * ability)
      */
-    public static void lacks_permission(JetTagContext ctx, String permission)
-            throws IOException {
+    public static void lacks_permission(JetTagContext ctx, String permission) throws IOException {
         final Subject subject = getSubject();
 
         if (!subject.isPermitted(permission)) {
@@ -75,8 +72,7 @@ public class ShiroJetTags {
      * Displays body content only if the current user has one of the specified
      * roles from a list of role names.
      */
-    public static void has_any_role(JetTagContext ctx, String... roles)
-            throws IOException {
+    public static void has_any_role(JetTagContext ctx, String... roles) throws IOException {
         final Subject subject = getSubject();
 
         boolean show = false;
@@ -96,8 +92,7 @@ public class ShiroJetTags {
      * Displays body content only if the current user does NOT have the
      * specified role (i.e. they explicitly lack the specified role)
      */
-    public static void lacks_role(JetTagContext ctx, String role)
-            throws IOException {
+    public static void lacks_role(JetTagContext ctx, String role) throws IOException {
         final Subject subject = getSubject();
 
         boolean show = !subject.hasRole(role);
@@ -191,18 +186,14 @@ public class ShiroJetTags {
     /**
      * Displays the user's principal (toString() method will be called).
      */
-    public static void principal(JetTagContext ctx) throws IOException,
-            IllegalAccessException, InvocationTargetException,
-            NoSuchMethodException {
+    public static void principal(JetTagContext ctx) throws IOException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
         principal(ctx, null);
     }
 
     /**
      * Displays the user's principal or a property of the user's principal.
      */
-    public static void principal(JetTagContext ctx, String property)
-            throws IOException, IllegalAccessException,
-            InvocationTargetException, NoSuchMethodException {
+    public static void principal(JetTagContext ctx, String property) throws IOException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
         final Subject subject = getSubject();
 
         String val = null;
