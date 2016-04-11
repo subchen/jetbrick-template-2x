@@ -19,9 +19,18 @@
  */
 package jetbrick.template.runtime.buildin;
 
+import jetbrick.util.DateUtils;
+import jetbrick.util.IdentifiedNameUtils;
+import jetbrick.util.JSONUtils;
+import jetbrick.util.StringEscapeUtils;
+import jetbrick.util.StringUtils;
+
 import java.text.DecimalFormat;
-import java.util.*;
-import jetbrick.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 
 public final class JetMethods {
 
@@ -156,6 +165,51 @@ public final class JetMethods {
 
     public static String toCapitalizeCamelCase(String s) {
         return IdentifiedNameUtils.toCapitalizeCamelCase(s);
+    }
+
+    public static String deleteWhitespace(String s) {
+        return StringUtils.deleteWhitespace(s);
+    }
+
+    public static String repeat(String s, String separator, int repeat) {
+        return StringUtils.repeat(s, separator, repeat);
+    }
+
+    public static String repeat(String s, int repeat) {
+        return repeat(s, "", repeat);
+    }
+
+    public static String abbreviate(String str, int maxWidth) {
+        return abbreviate(str, 0, maxWidth);
+    }
+
+    public static String abbreviate(String str, int offset, int maxWidth) {
+        if (str == null) {
+            return null;
+        }
+        if (maxWidth < 4) {
+            throw new IllegalArgumentException("Minimum abbreviation width is 4");
+        }
+        if (str.length() <= maxWidth) {
+            return str;
+        }
+        if (offset > str.length()) {
+            offset = str.length();
+        }
+        if (str.length() - offset < maxWidth - 3) {
+            offset = str.length() - (maxWidth - 3);
+        }
+        final String abrevMarker = "...";
+        if (offset <= 4) {
+            return str.substring(0, maxWidth - 3) + abrevMarker;
+        }
+        if (maxWidth < 7) {
+            throw new IllegalArgumentException("Minimum abbreviation width with offset is 7");
+        }
+        if (offset + maxWidth - 3 < str.length()) {
+            return abrevMarker + abbreviate(str.substring(offset), maxWidth - 3);
+        }
+        return abrevMarker + str.substring(str.length() - (maxWidth - 3));
     }
 
     //---- String escape -------------------------------------------------------
