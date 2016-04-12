@@ -1,16 +1,16 @@
 /**
  * Copyright 2013-2016 Guoqiang Chen, Shanghai, China. All rights reserved.
- *
- *   Author: Guoqiang Chen
- *    Email: subchen@gmail.com
- *   WebURL: https://github.com/subchen
- *
+ * <p>
+ * Author: Guoqiang Chen
+ * Email: subchen@gmail.com
+ * WebURL: https://github.com/subchen
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -25,6 +25,10 @@ import jetbrick.util.JSONUtils;
 import jetbrick.util.StringEscapeUtils;
 import jetbrick.util.StringUtils;
 
+import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -210,6 +214,44 @@ public final class JetMethods {
             return abrevMarker + abbreviate(str.substring(offset), maxWidth - 3);
         }
         return abrevMarker + str.substring(str.length() - (maxWidth - 3));
+    }
+
+    public static String md5Hex(String s) {
+        return md5Hex(s, "UTF-8");
+    }
+
+    public static String md5Hex(String s, String charsetName) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.reset();
+            md.update(s.getBytes(charsetName));
+            byte[] digest = md.digest();
+            BigInteger bigInteger = new BigInteger(1, digest);
+            return bigInteger.toString(16);
+        } catch (NoSuchAlgorithmException e) {
+            throw new AssertionError();
+        } catch (UnsupportedEncodingException e) {
+            throw new IllegalArgumentException(e);
+        }
+    }
+
+    public static String sha1Hex(String s) {
+        return sha1Hex(s, "UTF-8");
+    }
+
+    public static String sha1Hex(String s, String charsetName) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA1");
+            md.reset();
+            md.update(s.getBytes(charsetName));
+            byte[] digest = md.digest();
+            BigInteger bigInteger = new BigInteger(1, digest);
+            return bigInteger.toString(16);
+        } catch (NoSuchAlgorithmException e) {
+            throw new AssertionError();
+        } catch (UnsupportedEncodingException e) {
+            throw new IllegalArgumentException(e);
+        }
     }
 
     //---- String escape -------------------------------------------------------

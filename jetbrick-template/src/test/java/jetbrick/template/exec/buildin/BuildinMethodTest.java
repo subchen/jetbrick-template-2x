@@ -3,6 +3,7 @@ package jetbrick.template.exec.buildin;
 import jetbrick.template.exec.AbstractJetxTest;
 import jetbrick.template.runtime.InterpretException;
 import jetbrick.util.DateUtils;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -60,10 +61,19 @@ public class BuildinMethodTest extends AbstractJetxTest {
 
     @Test
     public void testString() {
+        // String::abbreviate
         Assert.assertEquals("123...", eval("${'1234567'.abbreviate(6)}"));
         Assert.assertEquals("1234567", eval("${'1234567'.abbreviate(7)}"));
         Assert.assertEquals("1234567", eval("${'1234567'.abbreviate(8)}"));
         Assert.assertEquals("1...", eval("${'1234567'.abbreviate(4)}"));
+
+        // String::md5Hex
+        Assert.assertEquals(DigestUtils.md5Hex("yingzhuo"), eval("${'yingzhuo'.md5Hex()}"));
+        Assert.assertEquals(DigestUtils.md5Hex("yingzhuo"), eval("${'yingzhuo'.md5Hex('UTF-8')}"));
+
+        // String::sha1Hex
+        Assert.assertEquals(DigestUtils.sha1Hex("yingzhuo"), eval("${'yingzhuo'.sha1Hex()}"));
+        Assert.assertEquals(DigestUtils.sha1Hex("yingzhuo"), eval("${'yingzhuo'.sha1Hex('UTF-8')}"));
     }
 
     @Test(expected = InterpretException.class)
