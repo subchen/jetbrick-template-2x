@@ -1,11 +1,13 @@
 package jetbrick.template.exec.buildin;
 
-import java.util.HashMap;
-import java.util.Map;
 import jetbrick.template.exec.AbstractJetxTest;
+import jetbrick.template.runtime.InterpretException;
 import jetbrick.util.DateUtils;
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class BuildinMethodTest extends AbstractJetxTest {
 
@@ -55,4 +57,18 @@ public class BuildinMethodTest extends AbstractJetxTest {
         Assert.assertEquals("&lt;&gt;", eval("${'<>'.escapeXml()}"));
         Assert.assertEquals("+", eval("${' '.escapeUrl()}"));
     }
+
+    @Test
+    public void testString() {
+        Assert.assertEquals("123...", eval("${'1234567'.abbreviate(6)}"));
+        Assert.assertEquals("1234567", eval("${'1234567'.abbreviate(7)}"));
+        Assert.assertEquals("1234567", eval("${'1234567'.abbreviate(8)}"));
+        Assert.assertEquals("1...", eval("${'1234567'.abbreviate(4)}"));
+    }
+
+    @Test(expected = InterpretException.class)
+    public void testStringWithException() {
+        eval("${'1234567'.abbreviate(3)}");
+    }
+
 }
