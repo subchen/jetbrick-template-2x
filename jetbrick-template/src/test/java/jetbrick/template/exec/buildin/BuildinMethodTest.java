@@ -5,7 +5,6 @@ import jetbrick.template.runtime.InterpretException;
 import jetbrick.util.DateUtils;
 import org.junit.Assert;
 import org.junit.Test;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -60,10 +59,19 @@ public class BuildinMethodTest extends AbstractJetxTest {
 
     @Test
     public void testString() {
+        // String::abbreviate
         Assert.assertEquals("123...", eval("${'1234567'.abbreviate(6)}"));
         Assert.assertEquals("1234567", eval("${'1234567'.abbreviate(7)}"));
         Assert.assertEquals("1234567", eval("${'1234567'.abbreviate(8)}"));
         Assert.assertEquals("1...", eval("${'1234567'.abbreviate(4)}"));
+
+        // String::md5Hex
+        Assert.assertEquals("1102ea8656d577d8f73fcc9e8cf9b182", eval("${'yingzhuo'.md5Hex()}"));
+        Assert.assertEquals("1102ea8656d577d8f73fcc9e8cf9b182", eval("${'yingzhuo'.md5Hex('UTF-8')}"));
+
+        // String::sha1Hex
+        Assert.assertEquals("aa8109651bbe5e60870190d93be97880edf954b1", eval("${'yingzhuo'.sha1Hex()}"));
+        Assert.assertEquals("aa8109651bbe5e60870190d93be97880edf954b1", eval("${'yingzhuo'.sha1Hex('UTF-8')}"));
     }
 
     @Test(expected = InterpretException.class)
