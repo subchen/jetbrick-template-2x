@@ -6,3 +6,19 @@ jdk:
   - openjdk6
 script:
   mvn test -Dmaven.test.skip=false -fae
+
+env:
+  global:
+   # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
+   #   via the "travis encrypt" command using the project repo's public key
+   - secure: "K3+Gu6phYpMyWoKaCEiit0HtW9LRxGGSCQpyKCE+luOnpkrKCOCfJYIFCpHoSFVdCyQeORsCVEQZ1uBVd2vtMEBNOH/qz8PjyMcFDdh9RL1P5Wwa0zmgnaIg54mVSBwIkpf/+7GzCd8NAKJhuKKrNWL47SMv931MZ1D/R9V//gM="
+
+addons:
+  coverity_scan:
+    project:
+      name: "subchen/jetbrick-template-2x"
+      description: "Build submitted via Travis CI"
+    notification_email: subchen@gmail.com
+    build_command_prepend: "mvn clean"
+    build_command:   "mvn -Dmaven.test.skip=false compile"
+    branch_pattern: master
