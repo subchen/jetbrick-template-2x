@@ -30,6 +30,7 @@ import java.util.Properties;
 public final class JetTemplateViewResolver extends AbstractTemplateViewResolver implements InitializingBean {
     private String configLocation;
     private Properties configProperties;
+    private JetEngine jetEngine;
 
     public JetTemplateViewResolver() {
         setViewClass(requiredViewClass());
@@ -41,6 +42,10 @@ public final class JetTemplateViewResolver extends AbstractTemplateViewResolver 
 
     public void setConfigProperties(Properties configProperties) {
         this.configProperties = configProperties;
+    }
+
+    public JetEngine getJetEngine() {
+        return jetEngine;
     }
 
     @Override
@@ -64,5 +69,6 @@ public final class JetTemplateViewResolver extends AbstractTemplateViewResolver 
         if (getSuffix() == null || getSuffix().length() == 0) {
             setSuffix(engine.getConfig().getTemplateSuffix());
         }
+        this.jetEngine = engine;
     }
 }

@@ -23,6 +23,9 @@ import jetbrick.template.JetConfig;
 import jetbrick.template.JetEngine;
 import jetbrick.template.loader.ClasspathResourceLoader;
 import jetbrick.template.web.springmvc.JetTemplateViewResolver;
+import jetbrick.template.web.tag.SpringedTags;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -59,5 +62,32 @@ public class JetTemplateAutoConfiguration {
         resolver.setConfigProperties(config);
         resolver.setConfigLocation(properties.getConfigLocation());
         return resolver;
+    }
+
+    @Bean
+    @ConditionalOnMissingBean(EnvHolder.class)
+    public EnvHolder envHolder() {
+        return EnvHolder.INSTANCE;
+    }
+
+    @Bean
+    public BeanPostProcessor autoRegiesterBeanPostProcessor() {
+        return new BeanPostProcessor() {
+            @Override
+            public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
+                return bean;
+            }
+
+            @Override
+            public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+                if (bean != null && bean.getClass() == JetTemplateViewResolver.class) {
+                    JetEngine engine = ((JetTemplateViewResolver) bean).getJetEngine();
+
+                    // 注册Tags
+                    engine.getGlobalResolver().registerTags(SpringedTags.class);
+                }
+                return bean;
+            }
+        };
     }
 }
