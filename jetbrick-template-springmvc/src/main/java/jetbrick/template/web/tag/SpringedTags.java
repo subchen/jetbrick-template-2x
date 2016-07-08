@@ -16,4 +16,23 @@ public class SpringedTags {
             ctx.getWriter().print(content);
         }
     }
+
+    @JetAnnotations.Name("actived_profile")
+    public static void activedProfile(JetTagContext ctx, String... profiles) throws IOException {
+        boolean ok = true;
+
+        // Environment#acceptsProfiles(String...) 是或关系
+        // 本方法是与关系
+        for (String profile : profiles) {
+            if (!EnvHolder.getEnvironment().acceptsProfiles(profile)) {
+                ok = false;
+                break;
+            }
+        }
+
+        if (ok) {
+            String content = ctx.getBodyContent();
+            ctx.getWriter().print(content);
+        }
+    }
 }
