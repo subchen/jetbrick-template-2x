@@ -205,16 +205,21 @@ public final class AstText extends AstStatement {
         JetWriter os = ctx.getWriter();
 
         if (encoder == null) {
-            if (os.isStreaming()) {
-                encoder = new ByteArrayEncoder(text, os.getCharset());
-            } else {
-                if (JdkUtils.IS_AT_LEAST_JAVA_7) {
-                    encoder = new Jdk7CharArrayEncoder(text);
-                } else {
-                    encoder = new Jdk6CharArrayEncoder(text);
+            synchronized (this) {
+                // double check
+                if (encoder == null) {
+                    if (os.isStreaming()) {
+                        encoder = new ByteArrayEncoder(text, os.getCharset());
+                    } else {
+                        if (JdkUtils.IS_AT_LEAST_JAVA_7) {
+                            encoder = new Jdk7CharArrayEncoder(text);
+                        } else {
+                            encoder = new Jdk6CharArrayEncoder(text);
+                        }
+                    }
+                    text = null; // free
                 }
             }
-            text = null; // free
         }
 
         try {
