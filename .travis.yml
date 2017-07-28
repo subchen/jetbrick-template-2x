@@ -9,16 +9,31 @@ script:
 
 env:
   global:
-   # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
-   #   via the "travis encrypt" command using the project repo's public key
+   # travis encrypt -r subchen/jetbrick-template-2x COVERITY_SCAN_TOKEN=project_token_from_coverity_scan
    - secure: "K3+Gu6phYpMyWoKaCEiit0HtW9LRxGGSCQpyKCE+luOnpkrKCOCfJYIFCpHoSFVdCyQeORsCVEQZ1uBVd2vtMEBNOH/qz8PjyMcFDdh9RL1P5Wwa0zmgnaIg54mVSBwIkpf/+7GzCd8NAKJhuKKrNWL47SMv931MZ1D/R9V//gM="
+   # travis encrypt -r subchen/jetbrick-template-2x MAVEN_DEPLOY_SECRET_PASSWD=......
+   - secure: "EzwvcpV7H/i7QhY3mp8lOV0sFgZAS3ZdkBzo8U2pJYibL3LmxBXk7J+MZV5UQdKkcA/lOQW3wUoMC0Gc+WlkIV4uPjrUrmFEijCtJrDGW15xxeYFNfUZzWK73jC5SXs8jJakV80weprc1lSHMPyJAz5lHC8rqqauG/z8ubIxNk0="
 
 addons:
+  # https://scan.coverity.com/travis_ci
   coverity_scan:
     project:
       name: "subchen/jetbrick-template-2x"
       description: "Build submitted via Travis CI"
-    notification_email: subchen@gmail.com
+    notification_email: "subchen@gmail.com"
     build_command_prepend: "mvn clean"
-    build_command:   "mvn -Dmaven.test.skip=false compile"
-    branch_pattern: master
+    build_command: "mvn compile -Dmaven.test.skip=false"
+    branch_pattern: "master"
+
+before_deploy:
+  - curl -fSL https://dl.bintray.com/subchen/download/maven/subchen-maven-deploy.tar.gz.enc -O
+  - openssl aes-256-cbc -k "$MAVEN_DEPLOY_SECRET_PASSWD" -in subchen-maven-deploy.tar.gz.enc -out subchen-maven-deploy.tar.gz -d
+  - tar -zxvf subchen-maven-deploy.tar.gz -C ~/
+
+deploy:
+  provider: script
+  script: make deploy
+  skip_cleanup: true
+  on:
+    tags: true
+    jdk: oraclejdk8
