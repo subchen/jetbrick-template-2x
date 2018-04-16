@@ -6,6 +6,10 @@ clean:
 	mvn clean
 	
 fmt:
+	for dir in $(shell ls | grep jetbrick); do \
+		cp -f LICENSE.txt $$dir/LICENSE.txt; \
+	done
+
 	mvn process-sources -P format
 
 test:
