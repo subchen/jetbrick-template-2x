@@ -27,7 +27,7 @@ public class DirectiveInvalidTest extends AbstractJetxTest {
     @Test
     public void testInvalid_missing_end() {
         thrown.expect(SyntaxException.class);
-        thrown.expectMessage(CoreMatchers.containsString("no viable alternative at input"));
+        thrown.expectMessage(CoreMatchers.containsString("mismatched input '<EOF>' expecting {DIRECTIVE_OPEN_ELSEIF, DIRECTIVE_ELSE, DIRECTIVE_END}"));
 
         eval("#if(true)123");
     }
