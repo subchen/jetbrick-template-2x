@@ -17,7 +17,7 @@
     <description>Next generation template engine for Java</description>
 
     <properties>
-        <antlr4.version>4.3</antlr4.version>
+        <antlr4.version>4.7.1</antlr4.version>
         <antlr4.listener>false</antlr4.listener>
         <antlr4.visitor>true</antlr4.visitor>
     </properties>
