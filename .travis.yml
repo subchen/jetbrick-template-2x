@@ -1,9 +1,9 @@
 language: java
 jdk:
+  - oraclejdk9
   - oraclejdk8
-  - oraclejdk7
   - openjdk7
-  - openjdk6
+
 script:
   mvn test -Dmaven.test.skip=false -fae
 
