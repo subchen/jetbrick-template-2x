@@ -211,7 +211,9 @@ public final class AstText extends AstStatement {
                     if (os.isStreaming()) {
                         encoder = new ByteArrayEncoder(text, os.getCharset());
                     } else {
-                        if (JdkUtils.IS_AT_LEAST_JAVA_7) {
+                        if (JdkUtils.IS_AT_LEAST_JAVA_9) {
+                            encoder = new Jdk9CharArrayEncoder(text);
+                        } else if (JdkUtils.IS_AT_LEAST_JAVA_7) {
                             encoder = new Jdk7CharArrayEncoder(text);
                         } else {
                             encoder = new Jdk6CharArrayEncoder(text);
@@ -254,10 +256,24 @@ public final class AstText extends AstStatement {
     }
 
     // 从 JDK7 开始，String.class 不在提供 offset 和 count
+    // 从 JDK9 开始，String.class 的 value 从 char[] 变成了 byte[]
     static final KlassInfo KLASS_STRING = KlassInfo.create(String.class);
     static final FieldInfo FIELD_STRING_VALUE = KLASS_STRING.getDeclaredField("value");
     static final FieldInfo FIELD_STRING_OFFSET = KLASS_STRING.getDeclaredField("offset");
     static final FieldInfo FIELD_STRING_COUNT = KLASS_STRING.getDeclaredField("count");
+
+    static final class Jdk9CharArrayEncoder implements TextEncoder {
+        final String text;
+
+        public Jdk9CharArrayEncoder(String text) {
+            this.text = text;
+        }
+
+        @Override
+        public void writeTo(JetWriter os) throws IOException {
+            os.print(text);
+        }
+    }
 
     static final class Jdk7CharArrayEncoder implements TextEncoder {
         final char[] chars;
