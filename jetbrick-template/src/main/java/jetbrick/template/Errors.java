@@ -85,8 +85,8 @@ public final class Errors {
 
     // ---------------------------------------------------------------------------------
 
-    // 判断是否是因为参数不匹配导致的错误
-    public static boolean isReflectIllegalArgument(Throwable e) {
+    // 判断是否是因为参数不匹配导致的错误，或者对象类型变更导致的不匹配
+    public static boolean isReflectIllegalArgumentException(Throwable e) {
         Class<?> cls = e.getClass();
         if (cls == IllegalArgumentException.class || cls == ClassCastException.class) {
             // https://github.com/subchen/jetbrick-template-2x/issues/17
@@ -95,16 +95,22 @@ public final class Errors {
                 return false;
             }
 
-            String className = elements[0].getClassName();
-            if (className == null) {
-                return false;
+            for (int i = 0; i < 2 && i < elements.length; i++) {
+                String className = elements[i].getClassName();
+                if (className != null) {
+                    //@formatter:off
+                    boolean matched =
+                           "sun.reflect.NativeMethodAccessorImpl".equals(className)
+                        || "sun.reflect.DelegatingMethodAccessorImpl".equals(className)
+                        || "sun.reflect.MethodAccessorImpl".equals(className)
+                        || className.startsWith("sun.reflect.GeneratedMethodAccessor")
+                        || className.startsWith("jetbrick.bean.asm.delegate.");
+                    //@formatter:on
+                    if (matched) {
+                        return true;
+                    }
+                }
             }
-
-            //@formatter:off
-            return "sun.reflect.NativeMethodAccessorImpl".equals(className)
-                || "sun.reflect.GeneratedMethodAccessor1".equals(className)
-                || className.startsWith("jetbrick.bean.asm.delegate.");
-            //@formatter:on
         }
         return false;
     }

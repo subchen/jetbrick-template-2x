@@ -91,7 +91,7 @@ public final class AstInvokeMethodStatic extends AstExpression {
                 return (invoker.isVoidResult()) ? ALU.VOID : null;
             }
         } catch (RuntimeException e) {
-            if (useLatest && Errors.isReflectIllegalArgument(e)) {
+            if (useLatest && Errors.isReflectIllegalArgumentException(e)) {
                 // 重新查找匹配的 Invoker
                 return doInvoke(ctx, null, arguments);
             }
