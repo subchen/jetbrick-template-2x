@@ -1,7 +1,6 @@
 language: java
 jdk:
-  - oraclejdk8
-  - openjdk7
+  - openjdk8
 
 script:
   mvn test -Dmaven.test.skip=false -fae
@@ -35,4 +34,4 @@ deploy:
   skip_cleanup: true
   on:
     tags: true
-    jdk: oraclejdk8
+    jdk: openjdk8
