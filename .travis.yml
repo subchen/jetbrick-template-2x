@@ -25,9 +25,9 @@ addons:
     branch_pattern: "master"
 
 before_deploy:
-  - curl -fSL https://dl.bintray.com/subchen/download/maven-deploy-config-1.0.tar.gz.enc -O
-  - openssl aes-256-cbc -k "$MAVEN_DEPLOY_SECRET_PASSWD" -in subchen-maven-deploy.tar.gz.enc -out subchen-maven-deploy.tar.gz -d
-  - tar -zxvf subchen-maven-deploy.tar.gz -C ~/
+  - curl -fSL https://dl.bintray.com/subchen/download/maven-deploy-config-1.0.tar.gz.enc -o maven-deploy-config.enc.tar.gz.enc
+  - openssl aes-256-cbc -k "$MAVEN_DEPLOY_SECRET_PASSWD" -in maven-deploy-config.enc.tar.gz.enc -out maven-deploy-config.enc.tar.gz -d
+  - tar -zxvf maven-deploy-config-1.0.tar.gz -C ~/
 
 deploy:
   provider: script
