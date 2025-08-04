@@ -13,6 +13,8 @@
     <artifactId>jetbrick-template-jfinal3</artifactId>
     <packaging>jar</packaging>
 
+    <name>jetbrick-template-jfinal3</name>
+
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>

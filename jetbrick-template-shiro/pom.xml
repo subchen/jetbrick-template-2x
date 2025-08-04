@@ -7,8 +7,12 @@
         <groupId>com.github.subchen</groupId>
         <version>2.2.0</version>
     </parent>
+
     <modelVersion>4.0.0</modelVersion>
     <artifactId>jetbrick-template-shiro</artifactId>
+    <packaging>jar</packaging>
+
+    <name>jetbrick-template-shiro</name>
 
     <dependencies>
         <!-- shiro -->

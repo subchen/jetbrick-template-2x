@@ -14,7 +14,7 @@
     <version>2.2.0</version>
     <packaging>pom</packaging>
 
-    <name>${project.artifactId}</name>
+    <name>jetbrick-template-parent</name>
     <description>jetbrick-template-2.x</description>
     <url>http://subchen.github.io/jetbrick-template/</url>
 

@@ -13,7 +13,7 @@
     <artifactId>jetbrick-template</artifactId>
     <packaging>jar</packaging>
 
-    <name>${project.artifactId}</name>
+    <name>jetbrick-template</name>
     <description>Next generation template engine for Java</description>
 
     <properties>

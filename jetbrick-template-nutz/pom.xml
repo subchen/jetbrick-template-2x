@@ -13,6 +13,8 @@
     <artifactId>jetbrick-template-nutz</artifactId>
     <packaging>jar</packaging>
 
+    <name>jetbrick-template-nutz</name>
+
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
