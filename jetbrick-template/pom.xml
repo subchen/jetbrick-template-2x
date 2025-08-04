@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.github.subchen</groupId>
         <artifactId>jetbrick-template-parent</artifactId>
-        <version>2.1.11</version>
+        <version>2.2.0</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -36,6 +36,8 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <sourceDirectory>${basedir}/src/main/antlr4</sourceDirectory>
+                    <outputDirectory>${basedir}/target/generated-sources/antlr4</outputDirectory>
                     <visitor>true</visitor>
                 </configuration>
             </plugin>
