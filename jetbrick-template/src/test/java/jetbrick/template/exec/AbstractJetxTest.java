@@ -20,7 +20,7 @@ public abstract class AbstractJetxTest {
 
     static {
         System.setProperty(org.slf4j.impl.SimpleLogger.DEFAULT_LOG_LEVEL_KEY, "ERROR");
-        jetbrick.bean.asm.AsmFactory.setThreshold(0);
+        //jetbrick.bean.asm.AsmFactory.setThreshold(0);
         //jetbrick.bean.asm.AsmFactory.setThreshold(Integer.MAX_VALUE);
     }
 

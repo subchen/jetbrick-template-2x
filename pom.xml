@@ -19,7 +19,7 @@
     <url>http://subchen.github.io/jetbrick-template/</url>
 
     <properties>
-        <jetbrick.commons.version>2.1.15</jetbrick.commons.version>
+        <jetbrick.commons.version>2.2.0</jetbrick.commons.version>
         <servlet.version>3.0.1</servlet.version>
         <slf4j.version>1.7.7</slf4j.version>
         <junit.version>4.11</junit.version>
