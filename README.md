@@ -98,7 +98,7 @@ Release 版本已发布到 Maven 中央库： http://central.maven.org/maven2/co
 <dependency>
     <groupId>com.github.subchen</groupId>
     <artifactId>jetbrick-template</artifactId>
-    <version>2.1.10</version>
+    <version>2.1.11</version>
 </dependency>
 ```
 
@@ -110,42 +110,42 @@ Thirdpart Webmvc Integrations
 <dependency>
     <groupId>com.github.subchen</groupId>
     <artifactId>jetbrick-template-web</artifactId>
-    <version>2.1.10</version>
+    <version>2.1.11</version>
 </dependency>
 <dependency>
     <groupId>com.github.subchen</groupId>
     <artifactId>jetbrick-template-jetbrickmvc</artifactId>
-    <version>2.1.10</version>
+    <version>2.1.11</version>
 </dependency>
 <dependency>
     <groupId>com.github.subchen</groupId>
     <artifactId>jetbrick-template-springmvc</artifactId>
-    <version>2.1.10</version>
+    <version>2.1.11</version>
 </dependency>
 <dependency>
     <groupId>com.github.subchen</groupId>
     <artifactId>jetbrick-template-jfinal</artifactId>
-    <version>2.1.10</version>
+    <version>2.1.11</version>
 </dependency>
 <dependency>
     <groupId>com.github.subchen</groupId>
     <artifactId>jetbrick-template-jfinal3</artifactId>
-    <version>2.1.10</version>
+    <version>2.1.11</version>
 </dependency>
 <dependency>
     <groupId>com.github.subchen</groupId>
     <artifactId>jetbrick-template-jodd</artifactId>
-    <version>2.1.10</version>
+    <version>2.1.11</version>
 </dependency>
 <dependency>
     <groupId>com.github.subchen</groupId>
     <artifactId>jetbrick-template-struts</artifactId>
-    <version>2.1.10</version>
+    <version>2.1.11</version>
 </dependency>
 <dependency>
     <groupId>com.github.subchen</groupId>
     <artifactId>jetbrick-template-nutz</artifactId>
-    <version>2.1.10</version>
+    <version>2.1.11</version>
 </dependency>
 ```
 

@@ -22,12 +22,7 @@ verify:
 	mvn verify -P oss
 
 deploy:
-	mvn clean deploy -P oss -DautoReleaseAfterClose=true
+	mvn clean deploy -P oss -DautoPublish=true
 
 version:
 	mvn versions:set -DgenerateBackupPoms=false -DnewVersion=$(version)
-
-bintray-upload:
-	jfrog bt u \
-	  ./jetbrick-template/target/jetbrick-template-2.1.9.jar \
-	  subchen/download/temp/0.2
